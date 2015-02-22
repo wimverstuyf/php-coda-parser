@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./src/Codelicious/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="Codelicious\Coda Test Suite">
+            <directory>./tests/Codelicious/Coda</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

@@ -13,7 +13,7 @@ spl_autoload_register(
       }
 
       if (isset($classes[$class])) {
-          require $path . strtolower($classes[$class]);
+          require $path . $classes[$class];
       }
   }
 );
