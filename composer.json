@@ -1,0 +1,19 @@
+{
+    "name": "codelicious/php-coda-parser",
+    "description": "PHP parser for Belgian CODA banking files",
+    "keywords": ["coda", "parsing"],
+    "homepage": "https://github.com/wimverstuyf/php-coda-parser",
+    "type": "library",
+	"license": "GPL-2.0",
+    "authors": [
+		{ "name": "Wim Verstuyf", "email": "wim.verstuyf@codelicious.be" }
+    ],
+	"require": {
+		"php": ">=5.3.0"
+	},
+	"autoload": {
+		"psr-0":{
+			"Codelicious": ["src/"]
+		}
+	}
+}
