@@ -1,5 +1,31 @@
 <?php
+
 namespace Codelicious\Coda;
+
+/**
+ * array(
+ *       {
+ * 			identification :
+ * 			new_situation :
+ * 			movements : array( )
+ * 			messages : array( )
+ * 			old_situation :
+ * 			summary :
+ *       }
+ *      )
+ * 
+ * 0 -> identification (beginopname) [required]
+ * 1 -> old situation (oud saldo) [required]
+ * 
+ *   2 -> movement (beweging)
+ *   3 -> information (aanvullende informatie)
+ * 
+ * 8 -> new situation (nieuw saldo) [required]
+ * 4 -> messages
+ * 9 -> summary (eindopname) [required]
+ * 
+ * empty file: 0, 1, 9
+ */
 
 /**
  * @package Codelicious\Coda
@@ -16,6 +42,8 @@ class Parser
 	 */
 	public function parse($coda_lines)
 	{
+		// if ($identification->version_code != "2")
+		//   throw "Version not supported"
 		return NULL;
 	}
 
