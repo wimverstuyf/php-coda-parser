@@ -8,6 +8,10 @@ spl_autoload_register(
       if ($classes === NULL) {
           $classes = array(
 			     'Codelicious\\Coda\\Parser' => '/Coda/Parser.php',
+           'Codelicious\\Coda\\TransformToSimplified' => '/Coda/TransformToSimplified.php',
+           'Codelicious\\Coda\\SimplifiedData\\AccountTransactions' => '/Coda/SimplifiedData/AccountTransactions.php',
+           'Codelicious\\Coda\\SimplifiedData\\Transaction'         => '/Coda/SimplifiedData/Transaction.php',
+           'Codelicious\\Coda\\SimplifiedData\\Account'             => '/Coda/SimplifiedData/Account.php',
            'Codelicious\\Coda\\Data\\AccountTransactions' => '/Coda/Data/AccountTransactions.php',
            'Codelicious\\Coda\\Data\\Identification'      => '/Coda/Data/Identification.php',
            'Codelicious\\Coda\\Data\\Message'             => '/Coda/Data/Message.php',
@@ -26,7 +30,6 @@ spl_autoload_register(
            'Codelicious\\Coda\\DetailParsers\\NewSituationParser'      => '/Coda/DetailParsers/NewSituationParser.php',
            'Codelicious\\Coda\\DetailParsers\\OriginalSituationParser' => '/Coda/DetailParsers/OriginalSituationParser.php',
            'Codelicious\\Coda\\DetailParsers\\SummaryParser'           => '/Coda/DetailParsers/SummaryParser.php',
-           'Codelicious\\Coda\\DetailParsers\\TransactionParser'       => '/Coda/DetailParsers/TransactionParser.php',
            'Codelicious\\Coda\\DetailParsers\\Transaction21Parser'     => '/Coda/DetailParsers/Transaction21Parser.php',
            'Codelicious\\Coda\\DetailParsers\\Transaction22Parser'     => '/Coda/DetailParsers/Transaction22Parser.php',
            'Codelicious\\Coda\\DetailParsers\\Transaction23Parser'     => '/Coda/DetailParsers/Transaction23Parser.php',

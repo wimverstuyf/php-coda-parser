@@ -1,6 +1,6 @@
 <?php
 
-namespace Codelicious\Coda\Data;
+namespace Codelicious\Coda\SimplifiedData;
 
 /**
  * @package Codelicious\Coda
@@ -9,10 +9,11 @@ namespace Codelicious\Coda\Data;
  */
 class AccountTransactions
 {
-	public $identification;
-	public $original_situation;
+	public $date; // creation_date
+	public $account;
+	public $original_balance; // up to 3 decimals
+	public $new_balance;
+	public $free_message;
+
 	public $transactions = array();
-	public $new_situation;
-	public $messages = array();
-	public $summary;
 }

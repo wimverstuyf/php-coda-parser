@@ -31,26 +31,22 @@ class NewSituationParser
 
 	private function add_account_info(&$coda8, $account_info)
 	{
-		if (substr($account_info, 0, 1) == "0")
-		{
+		if (substr($account_info, 0, 1) == "0") {
 			$coda8->account_number = substr($account_info, 0, 12);
 			$coda8->currency = substr($account_info, 13, 3);
 			$coda8->country = substr($account_info, 17, 2);
 		}
-		else if (substr($account_info, 0, 1) == "1")
-		{
+		else if (substr($account_info, 0, 1) == "1") {
 			$coda8->account_number = substr($account_info, 0, 34);
 			$coda8->currency = substr($account_info, 34, 3);
 		}
-		else if (substr($account_info, 0, 1) == "2")
-		{
+		else if (substr($account_info, 0, 1) == "2") {
 			$coda8->is_iban = TRUE;
 			$coda8->account_number = substr($account_info, 0, 31);
 			$coda8->currency = substr($account_info, 34, 3);
 			$coda8->country = "BE";
 		}
-		else if (substr($account_info, 0, 1) == "3")
-		{
+		else if (substr($account_info, 0, 1) == "3") {
 			$coda8->is_iban = TRUE;
 			$coda8->account_number = substr($account_info, 0, 34);
 			$coda8->currency = substr($account_info, 34, 3);

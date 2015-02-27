@@ -19,9 +19,9 @@ class IdentificationParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("05",          $result->application_code);
 		$this->assertEquals(FALSE,         $result->is_duplicate);
 		$this->assertEquals("0938409934",  $result->file_reference);
-		$this->assertEquals("CODELICIOUS", $result->recipient_name);
-		$this->assertEquals("GEBABEBB",    $result->bic);
-		$this->assertEquals("09029308273", $result->account_holder_identification_number);
+		$this->assertEquals("CODELICIOUS", $result->account_name);
+		$this->assertEquals("GEBABEBB",    $result->account_bic);
+		$this->assertEquals("09029308273", $result->account_company_identification_number);
 		$this->assertEquals("00001",       $result->external_application_code);
 		$this->assertEquals("984309",      $result->transaction_reference);
 		$this->assertEquals("834080",      $result->related_reference);

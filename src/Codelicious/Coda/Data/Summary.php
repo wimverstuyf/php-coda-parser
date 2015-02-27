@@ -9,6 +9,8 @@ namespace Codelicious\Coda\Data;
  */
 class Summary
 {
+	public $record_code = "9";
+
 	public $debet_amount;
 	public $credit_amount;
 }

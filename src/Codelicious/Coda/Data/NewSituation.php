@@ -9,6 +9,8 @@ namespace Codelicious\Coda\Data;
  */
 class NewSituation
 {
+	public $record_code = "8";
+
 	public $statement_sequence_number;
 	public $account_number;
 	public $is_iban = FALSE;

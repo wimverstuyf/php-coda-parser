@@ -9,14 +9,16 @@ namespace Codelicious\Coda\Data;
  */
 class Identification
 {
+	public $record_code = "0";
+	
 	public $creation_date;
 	public $bank_identification_number;
 	public $is_duplicate = FALSE;
 	public $application_code;
 	public $file_reference;
-	public $recipient_name;
-	public $bic;
-	public $account_holder_identification_number;
+	public $account_name;
+	public $account_bic;
+	public $account_company_identification_number;
 	public $external_application_code;
 	public $transaction_reference;
 	public $related_reference;

@@ -9,4 +9,10 @@ namespace Codelicious\Coda\Data;
  */
 class Transaction
 {
+	public $line21;
+	public $line22;
+	public $line23;
+	public $line31;
+	public $line32;
+	public $line33;
 }

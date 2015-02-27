@@ -9,6 +9,9 @@ namespace Codelicious\Coda\Data;
  */
 class Transaction32
 {
+	public $record_code = "3";
+	public $article_code = "2";
+
 	public $sequence_number;
 	public $sequence_number_detail;
 	public $message;

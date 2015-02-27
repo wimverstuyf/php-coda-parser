@@ -29,7 +29,7 @@ class OriginalSituationParser
 		$negative = substr($coda1_line, 42, 1) == "0" ? -1 : 1;
 		$coda1->amount = substr($coda1_line, 43, 15)*$negative;
 
-		$coda1->account_holder_name = trim(substr($coda1_line, 64, 26));
+		$coda1->account_name = trim(substr($coda1_line, 64, 26));
 		$coda1->account_description = trim(substr($coda1_line, 90, 35));
 		$coda1->sequence_number = trim(substr($coda1_line, 125, 3));
 
@@ -38,26 +38,22 @@ class OriginalSituationParser
 
 	private function add_account_info(&$coda1, $account_info, $account_type)
 	{
-		if ($account_type == "0")
-		{
+		if ($account_type == "0") {
 			$coda1->account_number = substr($account_info, 0, 12);
 			$coda1->account_currency = substr($account_info, 13, 3);
 			$coda1->account_country = substr($account_info, 17, 2);
 		}
-		else if ($account_type == "1")
-		{
+		else if ($account_type == "1") {
 			$coda1->account_number = substr($account_info, 0, 34);
 			$coda1->account_currency = substr($account_info, 34, 3);
 		}
-		else if ($account_type == "2")
-		{
+		else if ($account_type == "2") {
 			$coda1->is_iban = TRUE;
 			$coda1->account_number = substr($account_info, 0, 31);
 			$coda1->account_currency = substr($account_info, 34, 3);
 			$coda1->account_country = "BE";
 		}
-		else if ($account_type == "3")
-		{
+		else if ($account_type == "3") {
 			$coda1->is_iban = TRUE;
 			$coda1->account_number = substr($account_info, 0, 34);
 			$coda1->account_currency = substr($account_info, 34, 3);

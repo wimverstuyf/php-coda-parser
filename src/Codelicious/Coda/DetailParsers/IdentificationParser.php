@@ -24,9 +24,9 @@ class IdentificationParser
 		$coda0->application_code = trim(substr($coda0_line, 14, 2));
 		$coda0->is_duplicate = substr($coda0_line, 16, 1) == "D"?TRUE:FALSE;
 		$coda0->file_reference = trim(substr($coda0_line, 24, 10));
-		$coda0->recipient_name = trim(substr($coda0_line, 34, 26));
-		$coda0->bic = trim(substr($coda0_line, 60, 11));
-		$coda0->account_holder_identification_number = trim(substr($coda0_line, 71, 11));
+		$coda0->account_name = trim(substr($coda0_line, 34, 26));
+		$coda0->account_bic = trim(substr($coda0_line, 60, 11));
+		$coda0->account_company_identification_number = trim(substr($coda0_line, 71, 11));
 		$coda0->external_application_code = trim(substr($coda0_line, 83, 5));
 		$coda0->transaction_reference = trim(substr($coda0_line, 88, 16));
 		$coda0->related_reference = trim(substr($coda0_line, 104, 16));

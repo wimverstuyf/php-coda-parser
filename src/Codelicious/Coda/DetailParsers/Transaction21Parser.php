@@ -30,14 +30,12 @@ class Transaction21Parser
 		$coda21->transaction_code = trim(substr($coda21_line, 53, 8));
 
 		$coda21->has_structured_message = (substr($coda21_line, 61, 1) == "1")?TRUE:FALSE;
-		if ($coda21->has_structured_message)
-		{
+		if ($coda21->has_structured_message) {
 			$coda21->structured_message_type = substr($coda21_line, 62, 3);
 			$coda21->structured_message_full = substr($coda21_line, 65, 50);
 			$coda21->structured_message = $this->parse_structured_message($coda21->structured_message_full, $coda21->structured_message_type);
 		}
-		else
-		{
+		else {
 			$coda21->message = trim(substr($coda21_line, 62, 53));
 		}
 
@@ -52,13 +50,8 @@ class Transaction21Parser
 	{
 		$structured_message = NULL;
 
-		if ($type == "101" || $type == "102")
-		{
+		if ($type == "101" || $type == "102") {
 			$structured_message = substr($message, 0, 12);
-		}
-		elseif ($type == "105")
-		{
-			$structured_message = substr($message, 42, 12);
 		}
 
 		return $structured_message;

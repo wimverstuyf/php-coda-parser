@@ -9,6 +9,8 @@ namespace Codelicious\Coda\Data;
  */
 class OriginalSituation
 {
+	public $record_code = "1";
+
 	public $account_number_type;
 	public $statement_sequence_number;
 	public $account_number;
@@ -17,8 +19,7 @@ class OriginalSituation
 	public $is_iban = FALSE;
 	public $amount; // integer, last 3 digits are decimals
 	public $date;
-	public $account_holder_name;
+	public $account_name;
 	public $account_description;
 	public $sequence_number;
 }
-			

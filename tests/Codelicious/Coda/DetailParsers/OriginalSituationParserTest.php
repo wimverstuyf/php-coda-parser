@@ -22,7 +22,7 @@ class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(FALSE, $result->is_iban);
 		$this->assertEquals(-4004100, $result->amount);
 		$this->assertEquals("2014-12-24", $result->date);
-		$this->assertEquals("CODELICIOUS", $result->account_holder_name);
+		$this->assertEquals("CODELICIOUS", $result->account_name);
 		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->account_description);
 		$this->assertEquals("255", $result->sequence_number);
     }
