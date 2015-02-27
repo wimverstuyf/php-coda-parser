@@ -9,9 +9,9 @@ namespace Codelicious\Coda\SimplifiedData;
  */
 class AccountTransactions
 {
-	public $date; // creation_date
+	public $date;
 	public $account;
-	public $original_balance; // up to 3 decimals
+	public $original_balance;
 	public $new_balance;
 	public $free_message;
 

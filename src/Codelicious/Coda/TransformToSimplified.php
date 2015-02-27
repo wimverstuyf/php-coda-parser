@@ -52,7 +52,7 @@ class TransformToSimplified
 
 		if ($coda_identification) {
 			$account->name = $coda_identification->account_name;
-			$account->bic = $coda_identification->bic;
+			$account->bic = $coda_identification->account_bic;
 			$account->company_id = $coda_identification->account_company_identification_number;
 		}
 		if ($coda_original_situation) {

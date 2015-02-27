@@ -17,7 +17,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 		"31000100010007500005482        004800001001BVBA.BAKKER PIET                                                                  1 0",
 		"3200010001MAIN STREET 928                    5480 SOME CITY                                                                  0 0",
 		"3300010001SOME INFORMATION ABOUT THIS TRANSACTION                                                                            0 0",
-		"21000200000001200002835        0000000001767820251214001120000112/4554/46812   813                                 25121421401 0",
+		"21000200000001200002835        0000000002767820251214001120001101112455446812  813                                 25121421401 0",
 		"2200020000  ANOTHER MESSAGE                                           54875                       GEBCEEBB                   1 0",
 		"2300020000BE54805480215856                  EURBVBA.BAKKER PIET                         MESSAGE                              0 1",
 		"31000200010007500005482        004800001001BVBA.BAKKER PIET                                                                  1 0",
