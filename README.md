@@ -36,7 +36,7 @@ foreach ($statements as $statement) {
     echo $statement->new_balance . "\n";
 }
 ```
-
+    
 ## Statement structure
 
 There are 2 structures available. 'raw' which resembles the original file structure and contains all information and 'simple' which is a simplified version only containing the most important information.
@@ -45,22 +45,22 @@ Properties that are not supplied will be `null`.
 
 *   `Codelicious\Coda\Simple\Statement`
     *   `date` Date of the supplied file (format YYYY-MM-DD)
-    *   `account` Account-details for which the statements where created. An object implementing `Codelicious\Coda\Simple\Account`
-    *   `original_balance` Balance of the account before the transactions have been processed. Up to 3 decimals.
-    *   `new_balance` Balance of the account after the transactions have been processed. Up to 3 decimals.
-    *   `free_messages` A list of text-messages containing additional information
+    *   `account` Account for which the statements where created. An object implementing `Codelicious\Coda\Simple\Account`
+    *   `original_balance` Balance of the account before the transactions were processed. Up to 3 decimals.
+    *   `new_balance` Balance of the account after the transactions were processed. Up to 3 decimals.
+    *   `free_messages` A list of text messages containing additional information
     *   `transaction` A list of transactions implemented as `Codelicious\Coda\Simple\Transaction`
 *   `Codelicious\Coda\Simple\Account`
     *   `name` Name of the holder of the account
-    *   `bic` BIC - bankcode of the account
+    *   `bic` Bankcode of the account
     *   `company_id` Official Belgian company number of the account holder
-    *   `number` Number of the account
+    *   `number` Banknumber of the account
     *   `currency` Currency of the account
     *   `country` Country of the account
 *   `Codelicious\Coda\Simple\Transaction`
-    *   `account` Account-details of the other party of the transaction. An object implementing `Codelicious\Coda\Simple\Account`
+    *   `account` Account of the other party of the transaction. An object implementing `Codelicious\Coda\Simple\Account`
     *   `transaction_date` Date on which the transaction was requested
     *   `valuta_date` Date on which the transaction was executed by the bank
-    *   `amount` Amount of the transaction. Up to 3 decimals. Negative number for credit transaction.
+    *   `amount` Amount of the transaction. Up to 3 decimals. A negative number for credit transactions.
     *   `message` Message of the transaction
-    *   `structured_message` Structured messages of the transaction if available
+    *   `structured_message` Structured messages of the transaction (if available)
