@@ -21,8 +21,8 @@ class Transaction23Parser
 		
 		$coda23->sequence_number = trim(substr($coda23_line, 2, 4));
 		$coda23->sequence_number_detail = trim(substr($coda23_line, 6, 4));
-		$coda23->account_number_and_currency_other_party = trim(substr($coda23_line, 10, 37));
-		$coda23->account_name_other_party = trim(substr($coda23_line, 47, 35));
+		$coda23->other_account_number_and_currency = trim(substr($coda23_line, 10, 37));
+		$coda23->other_account_name = trim(substr($coda23_line, 47, 35));
 
 		$coda23->message = trim(substr($coda23_line, 82, 43));
 

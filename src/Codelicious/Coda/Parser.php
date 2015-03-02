@@ -13,32 +13,49 @@ class Parser
 	 * Read the given file and parse the content into an array of objects
 	 *
 	 * @param string $coda_file
+	 * @param string $output_format Possible values: raw, full (=not yet implemented), simple
 	 * @return array
 	 */
-	public function parseFile($coda_file)
+	public function parseFile($coda_file, $output_format="raw")
 	{
-		return $this->parse(file($coda_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
+		return $this->parse(file($coda_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES), $output_format);
 	}
 
 	/**
 	 * Parse the given array of string into an array of objects
 	 *
 	 * @param array $coda_lines
+	 * @param string $output_format Possible values: raw, full (=not yet implemented), simple
 	 * @return array
 	 */
-	public function parse($coda_lines)
+	public function parse($coda_lines, $output_format="raw")
 	{
 		$coda_lines = $this->convertToObjects($coda_lines);
 
-		$account_transaction_list = array();
+		$list = convertToRaw($coda_lines);
+
+		if ($output_format=="simple") {
+			$transformation = new \Codelicious\Coda\DetailParsers\TransformToSimple();
+			$list = $transformation->transform($list);
+		}
+		elseif ($output_format=="full") {
+			throw new Exception("Format 'full' not yet supported");
+		}
+
+		return $list;
+	}
+
+	private function convertToRaw($coda_lines)
+	{
+		$statements_list = array();
 
 		$current_account_transaction = NULL;
 		$current_transaction_sequence_number = NULL;
 		foreach ($coda_lines as $coda_line) {
 			if ($coda_line->record_code == "0") {
 				if ($current_account_transaction)
-					array_push($account_transaction_list, $current_account_transaction);
-				$current_account_transaction = new \Codelicious\Coda\Data\AccountTransactions();
+					array_push($statements_list, $current_account_transaction);
+				$current_account_transaction = new \Codelicious\Coda\Data\Statement();
 				$current_transaction_sequence_number = NULL;
 				$current_account_transaction->identification = $coda_line;
 			}
@@ -66,9 +83,9 @@ class Parser
 		}
 
 		if ($current_account_transaction)
-			array_push($account_transaction_list, $current_account_transaction);
+			array_push($statements_list, $current_account_transaction);
 
-		return $account_transaction_list;
+		return $statements_list;
 	}
 
 	private function convertToObjects($coda_lines)

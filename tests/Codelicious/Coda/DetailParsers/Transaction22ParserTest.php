@@ -18,7 +18,7 @@ class Transaction22ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("0000", $result->sequence_number_detail);
 		$this->assertEquals("ANOTHER MESSAGE", $result->message);
 		$this->assertEquals("54875", $result->client_reference);
-		$this->assertEquals("GEBCEEBB", $result->bic_other_party);
+		$this->assertEquals("GEBCEEBB", $result->other_account_bic);
 		$this->assertEquals("", $result->category_purpose);
 		$this->assertEquals("", $result->purpose);
     }

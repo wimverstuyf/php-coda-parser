@@ -24,7 +24,7 @@ class Transaction21Parser
 		$coda21->bank_reference = trim(substr($coda21_line, 10, 21));
 
 		$negative = substr($coda21_line, 31, 1) == "0" ? -1 : 1;
-		$coda21->amount = trim(substr($coda21_line, 32, 15))*$negative;
+		$coda21->amount = trim(substr($coda21_line, 32, 15)) * $negative / 1000;
 
 		$coda21->valuta_date = "20" . substr($coda21_line, 51, 2) . "-" . substr($coda21_line, 49, 2) . "-" . substr($coda21_line, 47, 2);
 		$coda21->transaction_code = trim(substr($coda21_line, 53, 8));

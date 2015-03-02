@@ -17,7 +17,7 @@ class Transaction21ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("0001", $result->sequence_number);
 		$this->assertEquals("0000", $result->sequence_number_detail);
 		$this->assertEquals("0001200002835", $result->bank_reference);
-		$this->assertEquals(-1767820, $result->amount);
+		$this->assertEquals(-1767.820, $result->amount);
 		$this->assertEquals("2014-12-25", $result->valuta_date);
 		$this->assertEquals("00112000", $result->transaction_code);
 		$this->assertEquals("112/4554/46812   813", $result->message);
@@ -43,7 +43,7 @@ class Transaction21ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("0001", $result->sequence_number);
 		$this->assertEquals("0000", $result->sequence_number_detail);
 		$this->assertEquals("0001200002835", $result->bank_reference);
-		$this->assertEquals(-2767820, $result->amount);
+		$this->assertEquals(-2767.820, $result->amount);
 		$this->assertEquals("2014-12-25", $result->valuta_date);
 		$this->assertEquals("00112000", $result->transaction_code);
 		$this->assertEmpty($result->message);

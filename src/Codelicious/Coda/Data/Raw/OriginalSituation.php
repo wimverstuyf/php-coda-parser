@@ -1,6 +1,6 @@
 <?php
 
-namespace Codelicious\Coda\Data;
+namespace Codelicious\Coda\Data\Raw;
 
 /**
  * @package Codelicious\Coda
@@ -11,15 +11,15 @@ class OriginalSituation
 {
 	public $record_code = "1";
 
-	public $account_number_type;
+	public $sequence_number;
 	public $statement_sequence_number;
+	public $account_name;
+	public $account_description;
+	public $account_number_type;
 	public $account_number;
 	public $account_currency;
 	public $account_country;
-	public $is_iban = FALSE;
-	public $amount; // integer, last 3 digits are decimals
+	public $account_is_iban = FALSE;
+	public $balance;
 	public $date;
-	public $account_name;
-	public $account_description;
-	public $sequence_number;
 }

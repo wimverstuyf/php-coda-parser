@@ -1,12 +1,12 @@
 <?php
 
-namespace Codelicious\Tests\Coda;
+namespace Codelicious\Tests\Coda\DetailParsers;
 
 class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $transform = new \Codelicious\Coda\TransformToSimplified();
+        $transform = new \Codelicious\Coda\DetailParsers\TransformToSimplified();
 
         $object = $this->createSample1();
 

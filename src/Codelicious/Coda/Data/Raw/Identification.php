@@ -1,6 +1,6 @@
 <?php
 
-namespace Codelicious\Coda\Data;
+namespace Codelicious\Coda\Data\Raw;
 
 /**
  * @package Codelicious\Coda

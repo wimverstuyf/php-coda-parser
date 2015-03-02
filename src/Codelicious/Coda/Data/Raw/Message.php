@@ -1,18 +1,17 @@
 <?php
 
-namespace Codelicious\Coda\SimplifiedData;
+namespace Codelicious\Coda\Data\Raw;
 
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
  * @license http://opensource.org/licenses/GPL-2.0 GPL-2.0
  */
-class Account
+class Message
 {
-	public $name;
-	public $bic;
-	public $company_id;
-	public $number;
-	public $currency;
-	public $country;
+	public $record_code = "4";
+
+	public $sequence_number;
+	public $sequence_number_detail;
+	public $content;
 }

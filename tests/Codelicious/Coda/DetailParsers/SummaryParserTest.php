@@ -14,7 +14,7 @@ class SummaryParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-		$this->assertEquals(16837520, $result->debet_amount);
-		$this->assertEquals(3967220, $result->credit_amount);
+		$this->assertEquals(16837.520, $result->debet_amount);
+		$this->assertEquals(3967.220, $result->credit_amount);
     }
 }

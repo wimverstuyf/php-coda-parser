@@ -19,8 +19,8 @@ class SummaryParser
 	{
 		$coda9 = new \Codelicious\Coda\Data\Summary();
 		
-		$coda9->debet_amount = substr($coda9_line, 22, 15)*1;
-		$coda9->credit_amount = substr($coda9_line, 37, 15)*1;
+		$coda9->debet_amount = substr($coda9_line, 22, 15)*1/1000;
+		$coda9->credit_amount = substr($coda9_line, 37, 15)*1/1000;
 
 		return $coda9;
 	}

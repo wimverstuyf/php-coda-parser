@@ -1,6 +1,6 @@
 <?php
 
-namespace Codelicious\Coda\Data;
+namespace Codelicious\Coda\Data\Raw;
 
 /**
  * @package Codelicious\Coda
@@ -13,9 +13,9 @@ class NewSituation
 
 	public $statement_sequence_number;
 	public $account_number;
-	public $is_iban = FALSE;
+	public $account_is_iban = FALSE;
 	public $account_currency;
 	public $account_country;
-	public $amount; // integer, last 3 digits are decimals
+	public $balance;
 	public $date;
 }

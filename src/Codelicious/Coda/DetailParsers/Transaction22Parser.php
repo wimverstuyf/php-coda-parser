@@ -23,7 +23,7 @@ class Transaction22Parser
 		$coda22->sequence_number_detail = trim(substr($coda22_line, 6, 4));
 		$coda22->message = trim(substr($coda22_line, 10, 53));
 		$coda22->client_reference = trim(substr($coda22_line, 63, 35));
-		$coda22->bic_other_party = trim(substr($coda22_line, 98, 11));
+		$coda22->other_account_bic = trim(substr($coda22_line, 98, 11));
 		$coda22->category_purpose = trim(substr($coda22_line, 117, 4));
 		$coda22->purpose = trim(substr($coda22_line, 121, 4));
 

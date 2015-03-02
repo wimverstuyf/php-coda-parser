@@ -1,44 +1,44 @@
 <?php
 
-namespace Codelicious\Coda;
+namespace Codelicious\Coda\DetailParsers;
 
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
  * @license http://opensource.org/licenses/GPL-2.0 GPL-2.0
  */
-class TransformToSimplified
+class TransformToSimple
 {
 	/**
-	 * Transform Data\AccountTransactions to SimplifiedData\AccountTransactions
+	 * Transform Data\Raw\Statements to Data\Simple\Statements
 	 *
-	 * @param Data\AccountTransactions $coda_account_transactions
-	 * @return SimplifiedData\AccountTransactions
+	 * @param Data\Raw\Statements $coda_statements
+	 * @return Data\Simple\Statements
 	 */
-	public function transform($coda_account_transactions)
+	public function transform($coda_statements)
 	{
-		$account_transactions = new \Codelicious\Coda\SimplifiedData\AccountTransactions();
+		$account_transactions = new \Codelicious\Coda\Data\Simple\Statement();
 
-		if ($coda_account_transactions->identification) {
-			$account_transactions->date = $coda_account_transactions->identification->creation_date;
+		if ($coda_statements->identification) {
+			$account_transactions->date = $coda_statements->identification->creation_date;
 		}
 		
-		$account_transactions->account = $this->transformToAccount($coda_account_transactions->identification, $coda_account_transactions->original_situation);
+		$account_transactions->account = $this->transformToAccount($coda_statements->identification, $coda_statements->original_situation);
 
-		if ($coda_account_transactions->original_situation) {
-			$account_transactions->original_balance = $coda_account_transactions->original_situation->amount / 1000;
+		if ($coda_statements->original_situation) {
+			$account_transactions->original_balance = $coda_statements->original_situation->balance;
 		}
 
-		if ($coda_account_transactions->new_situation) {
-			$account_transactions->new_balance = $coda_account_transactions->new_situation->amount / 1000;
+		if ($coda_statements->new_situation) {
+			$account_transactions->new_balance = $coda_statements->new_situation->balance;
 		}
 
-		if ($coda_account_transactions->messages) {
-			$account_transactions->free_message = $this->transformMessages($coda_account_transactions->messages);
+		if ($coda_statements->messages) {
+			$account_transactions->free_message = $this->transformMessages($coda_statements->messages);
 		}
 
-		if ($coda_account_transactions->transactions) {
-			foreach ($coda_account_transactions->transactions as $transaction) {
+		if ($coda_statements->transactions) {
+			foreach ($coda_statements->transactions as $transaction) {
 				array_push($account_transactions->transactions, $this->transformTransaction($transaction));
 			}
 		}
@@ -48,7 +48,7 @@ class TransformToSimplified
 
 	public function transformToAccount($coda_identification, $coda_original_situation)
 	{
-		$account = new \Codelicious\Coda\SimplifiedData\Account();
+		$account = new \Codelicious\Coda\Data\Simple\Account();
 
 		if ($coda_identification) {
 			$account->name = $coda_identification->account_name;
@@ -66,14 +66,14 @@ class TransformToSimplified
 
 	public function transformToOtherPartyAccount($coda_line22, $coda_line23)
 	{
-		$account = new \Codelicious\Coda\SimplifiedData\Account();
+		$account = new \Codelicious\Coda\Data\Simple\Account();
 
 		if ($coda_line22) {
-			$account->bic = $coda_line22->bic_other_party;
+			$account->bic = $coda_line22->other_account_bic;
 		}
 		if ($coda_line23) {
-			$account->number = $coda_line23->account_number_and_currency_other_party;
-			$account->name = $coda_line23->account_name_other_party;
+			$account->number = $coda_line23->other_account_number_and_currency;
+			$account->name = $coda_line23->other_account_name;
 
 			// let's try to parse number and currency
 			if ($account->number) {
@@ -87,7 +87,6 @@ class TransformToSimplified
 
 		return $account;
 	}
-
 
 	public function transformMessages($coda_messages)
 	{
@@ -105,13 +104,13 @@ class TransformToSimplified
 
 	public function transformTransaction($coda_transaction)
 	{
-		$transaction = new \Codelicious\Coda\SimplifiedData\Transaction();
+		$transaction = new \Codelicious\Coda\Data\Simple\Transaction();
 		$transaction->account = $this->transformToOtherPartyAccount($coda_transaction->line22, $coda_transaction->line23);
 
 		if ($coda_transaction->line21) {
 			$transaction->valuta_date = $coda_transaction->line21->valuta_date;
 			$transaction->transaction_date = $coda_transaction->line21->transaction_date;
-			$transaction->amount = $coda_transaction->line21->amount / 1000;
+			$transaction->amount = $coda_transaction->line21->amount;
 		}
 
 		if ($coda_transaction->line21 && $coda_transaction->line21->structured_message) {

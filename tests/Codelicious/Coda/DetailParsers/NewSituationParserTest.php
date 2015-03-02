@@ -16,10 +16,10 @@ class NewSituationParserTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals("225", $result->statement_sequence_number);
 		$this->assertEquals("001548226815", $result->account_number);
-        $this->assertEquals(FALSE, $result->is_iban);
-        $this->assertEquals("EUR", $result->currency);
-        $this->assertEquals("BE", $result->country);
-        $this->assertEquals(500012100, $result->amount);
+        $this->assertEquals(FALSE, $result->account_is_iban);
+        $this->assertEquals("EUR", $result->account_currency);
+        $this->assertEquals("BE", $result->account_country);
+        $this->assertEquals(500012.100, $result->balance);
         $this->assertEquals("2015-05-12", $result->date);
     }
 }

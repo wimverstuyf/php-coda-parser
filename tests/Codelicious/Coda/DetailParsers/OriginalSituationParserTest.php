@@ -19,8 +19,8 @@ class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("001548226815", $result->account_number);
 		$this->assertEquals("EUR", $result->account_currency);
 		$this->assertEquals("BE", $result->account_country);
-		$this->assertEquals(FALSE, $result->is_iban);
-		$this->assertEquals(-4004100, $result->amount);
+		$this->assertEquals(FALSE, $result->account_is_iban);
+		$this->assertEquals(-4004.100, $result->balance);
 		$this->assertEquals("2014-12-24", $result->date);
 		$this->assertEquals("CODELICIOUS", $result->account_name);
 		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->account_description);

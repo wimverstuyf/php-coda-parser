@@ -27,7 +27,7 @@ class OriginalSituationParser
 		$coda1->date = "20" . substr($coda1_line, 62, 2) . "-" . substr($coda1_line, 60, 2) . "-" . substr($coda1_line, 58, 2);
 
 		$negative = substr($coda1_line, 42, 1) == "0" ? -1 : 1;
-		$coda1->amount = substr($coda1_line, 43, 15)*$negative;
+		$coda1->balance = substr($coda1_line, 43, 15)*$negative / 1000;
 
 		$coda1->account_name = trim(substr($coda1_line, 64, 26));
 		$coda1->account_description = trim(substr($coda1_line, 90, 35));
