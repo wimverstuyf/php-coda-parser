@@ -1,7 +1,6 @@
 # php-coda-parser
 PHP parser for Belgian CODA banking files
 
-
 ## Installation
 
 Coming soon...
@@ -25,40 +24,43 @@ Packagist home page, then define your dependency on Codelicious/Coda in your `co
 use Codelicious\Coda\Parser;
 
 $parser = new Parser();
-$statements = $parser->parseFile('coda-file.cod');
+$statements = $parser->parseFile('coda-file.cod', 'simple');
 
 foreach ($statements as $statement) {
-    echo $statement->identification->creation_date . "\n";
+    echo $statement->date . "\n";
 
     foreach ($statement->transactions as $transaction) {
-        echo $transaction->amount . "\n";
+        echo $transaction->account->name . ": " . $transaction->amount . "\n";
     }
 
-    echo $statement->new_situation->balance . "\n";
+    echo $statement->new_balance . "\n";
 }
 ```
 
 ## Statement structure
 
-The returned statements have the following properties.
+There are 2 structures available. 'raw' which resembles the original file structure and contains all information and 'simple' which is a simplified version only containing the most important information.
+If you are unsure what to use you should use 'simple'.
 Properties that are not supplied will be `null`.
 
-*   `Codelicious\Coda\Statement`
-    *   `getNumber()` Statement sequence number
-    *   `getAccount()` An object implementing `Jejik\MT940\AccountInterface`
-    *   `getOpeningBalance()` An object implementing `Jejik\MT940\BalanceInterface`
-    *   `getClosingBalance()` An object implementing `Jejik\MT940\BalanceInterface`
-    *   `getTransactions()` An array of objects implementing `Jejik\MT940\TransactionInterface`
-*   `Codelicious\Coda\AccountInterface`
-    *   `getNumber()` The account number
-    *   `getName()` The account holder name
-*   `Codelicious\Coda\BalanceInterface`
-    *   `getCurrency()` 3-letter ISO 4217 currency code
-    *   `getAmount()` Balance amount
-    *   `getDate()` Balance date as a `\DateTime` object
-*   `Codelicious\Coda\TransactionInterface`
-    *   `getContraAccount()` An object implementing `Jejik\MT940\AccountInterface`
-    *   `getAmount()` Transaction amount
-    *   `getDescription()` Description text
-    *   `getValueDate()` Date of the transaction as a `\DateTime`
-    *   `getBookDate()` Date the transaction was booked as a `\DateTime`
+*   `Codelicious\Coda\Simple\Statement`
+    *   `date` Date of the supplied file (format YYYY-MM-DD)
+    *   `account` Account-details for which the statements where created. An object implementing `Codelicious\Coda\Simple\Account`
+    *   `original_balance` Balance of the account before the transactions have been processed. Up to 3 decimals.
+    *   `new_balance` Balance of the account after the transactions have been processed. Up to 3 decimals.
+    *   `free_messages` A list of text-messages containing additional information
+    *   `transaction` A list of transactions implemented as `Codelicious\Coda\Simple\Transaction`
+*   `Codelicious\Coda\Simple\Account`
+    *   `name` Name of the holder of the account
+    *   `bic` BIC - bankcode of the account
+    *   `company_id` Official Belgian company number of the account holder
+    *   `number` Number of the account
+    *   `currency` Currency of the account
+    *   `country` Country of the account
+*   `Codelicious\Coda\Simple\Transaction`
+    *   `account` Account-details of the other party of the transaction. An object implementing `Codelicious\Coda\Simple\Account`
+    *   `transaction_date` Date on which the transaction was requested
+    *   `valuta_date` Date on which the transaction was executed by the bank
+    *   `amount` Amount of the transaction. Up to 3 decimals. Negative number for credit transaction.
+    *   `message` Message of the transaction
+    *   `structured_message` Structured messages of the transaction if available

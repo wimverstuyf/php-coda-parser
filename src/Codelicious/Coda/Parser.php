@@ -13,7 +13,7 @@ class Parser
 	 * Read the given file and parse the content into an array of objects
 	 *
 	 * @param string $coda_file
-	 * @param string $output_format Possible values: raw, full (=not yet implemented), simple
+	 * @param string $output_format Possible values: raw, simple, full (=not yet implemented)
 	 * @return array
 	 */
 	public function parseFile($coda_file, $output_format="raw")
@@ -25,7 +25,7 @@ class Parser
 	 * Parse the given array of string into an array of objects
 	 *
 	 * @param array $coda_lines
-	 * @param string $output_format Possible values: raw, full (=not yet implemented), simple
+	 * @param string $output_format Possible values: raw, simple, full (=not yet implemented)
 	 * @return array
 	 */
 	public function parse($coda_lines, $output_format="raw")
