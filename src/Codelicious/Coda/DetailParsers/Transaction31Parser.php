@@ -17,7 +17,7 @@ class Transaction31Parser
 	 */
 	public function parse($coda31_line)
 	{
-		$coda31 = new \Codelicious\Coda\Data\Transaction31();
+		$coda31 = new \Codelicious\Coda\Data\Raw\Transaction31();
 		
 		$coda31->sequence_number = trim(substr($coda31_line, 2, 4));
 		$coda31->sequence_number_detail = trim(substr($coda31_line, 6, 4));

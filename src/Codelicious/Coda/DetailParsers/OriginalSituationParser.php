@@ -17,7 +17,7 @@ class OriginalSituationParser
 	 */
 	public function parse($coda1_line)
 	{
-		$coda1 = new \Codelicious\Coda\Data\OriginalSituation();
+		$coda1 = new \Codelicious\Coda\Data\Raw\OriginalSituation();
 		
 		$coda1->account_number_type = substr($coda1_line, 1, 1);
 		$coda1->statement_sequence_number = trim(substr($coda1_line, 2, 3));

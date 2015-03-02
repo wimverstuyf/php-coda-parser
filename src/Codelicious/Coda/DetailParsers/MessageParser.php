@@ -17,7 +17,7 @@ class MessageParser
 	 */
 	public function parse($coda4_line)
 	{
-		$coda4 = new \Codelicious\Coda\Data\Message();
+		$coda4 = new \Codelicious\Coda\Data\Raw\Message();
 		
 		$coda4->sequence_number = substr($coda4_line, 2, 4);
 		$coda4->sequence_number_detail = substr($coda4_line, 6, 4);

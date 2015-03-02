@@ -17,7 +17,7 @@ class SummaryParser
 	 */
 	public function parse($coda9_line)
 	{
-		$coda9 = new \Codelicious\Coda\Data\Summary();
+		$coda9 = new \Codelicious\Coda\Data\Raw\Summary();
 		
 		$coda9->debet_amount = substr($coda9_line, 22, 15)*1/1000;
 		$coda9->credit_amount = substr($coda9_line, 37, 15)*1/1000;

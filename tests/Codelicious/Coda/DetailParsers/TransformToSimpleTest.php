@@ -6,7 +6,7 @@ class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $transform = new \Codelicious\Coda\DetailParsers\TransformToSimplified();
+        $transform = new \Codelicious\Coda\DetailParsers\TransformToSimple();
 
         $object = $this->createSample1();
 

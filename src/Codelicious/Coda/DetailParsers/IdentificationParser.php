@@ -17,7 +17,7 @@ class IdentificationParser
 	 */
 	public function parse($coda0_line)
 	{
-		$coda0 = new \Codelicious\Coda\Data\Identification();
+		$coda0 = new \Codelicious\Coda\Data\Raw\Identification();
 
 		$coda0->creation_date = "20" . substr($coda0_line, 9, 2) . "-" . substr($coda0_line, 7, 2) . "-" . substr($coda0_line, 5, 2);
 		$coda0->bank_identification_number = trim(substr($coda0_line, 11, 3));

@@ -17,7 +17,7 @@ class NewSituationParser
 	 */
 	public function parse($coda8_line)
 	{
-		$coda8 = new \Codelicious\Coda\Data\NewSituation();
+		$coda8 = new \Codelicious\Coda\Data\Raw\NewSituation();
 
 		$this->add_account_info($coda8, substr($coda8_line, 4, 37));
 		$coda8->statement_sequence_number = trim(substr($coda8_line, 1, 3));
