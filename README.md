@@ -1,6 +1,8 @@
 # php-coda-parser
 PHP parser for Belgian CODA banking files
 
+[![Build Status](https://secure.travis-ci.org/wimverstuyf/php-coda-parser.png?branch=master)](https://travis-ci.org/wimverstuyf/php-coda-parser)
+
 ## Installation
 
 Coming soon...
