@@ -5,7 +5,6 @@ PHP parser for Belgian CODA banking files
 
 ## Installation
 
-Coming soon...
 You can install Codelicious/Coda using Composer. You can read more about Composer and its main repository at
 [http://packagist.org](http://packagist.org "Packagist"). First install Composer for your project using the instructions on the
 Packagist home page, then define your dependency on Codelicious/Coda in your `composer.json` file.
@@ -13,7 +12,7 @@ Packagist home page, then define your dependency on Codelicious/Coda in your `co
 ```json
     {
         "require": {
-            "codelicious/coda": ">=0.1"
+            "codelicious/php-coda-parser": "dev-master"
         }
     }
 ```
