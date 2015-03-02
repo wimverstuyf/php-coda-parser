@@ -45,7 +45,7 @@ Properties that are not supplied will be `null`.
 
 *   `Codelicious\Coda\Simple\Statement`
     *   `date` Date of the supplied file (format YYYY-MM-DD)
-    *   `account` Account for which the statements where created. An object implementing `Codelicious\Coda\Simple\Account`
+    *   `account` Account for which the statements were created. An object implementing `Codelicious\Coda\Simple\Account`
     *   `original_balance` Balance of the account before the transactions were processed. Up to 3 decimals.
     *   `new_balance` Balance of the account after the transactions were processed. Up to 3 decimals.
     *   `free_messages` A list of text messages containing additional information
