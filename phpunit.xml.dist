@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit bootstrap="./src/Codelicious/autoload.php"
+<phpunit bootstrap="./src/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -8,7 +8,7 @@
 >
     <testsuites>
         <testsuite name="Codelicious\Coda Test Suite">
-            <directory>./tests/Codelicious/Coda</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
