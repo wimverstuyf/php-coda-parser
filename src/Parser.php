@@ -36,7 +36,12 @@ class Parser
 
 		if ($output_format=="simple") {
 			$transformation = new \Codelicious\Coda\DetailParsers\TransformToSimple();
-			$list = $transformation->transform($list);
+
+			$raw_list = $list;
+			$list = array();
+			foreach ($raw_list as $raw) {
+				array_push($list, $transformation->transform($raw));
+			}
 		}
 		elseif ($output_format=="full") {
 			throw new Exception("Format 'full' not yet supported");
