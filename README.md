@@ -17,6 +17,13 @@ Packagist home page, then define your dependency on Codelicious/Coda in your `co
     }
 ```
 
+
+## Demo / API
+
+You can try the parser at [https://eenvoudigfactureren.be/coda](https://eenvoudigfactureren.be/coda). 
+An open API is also available at the same page if you don't feel like hosting the code yourself.
+
+
 ## Usage
 
 ```php
