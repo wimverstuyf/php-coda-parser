@@ -18,6 +18,7 @@ class Transaction31
 	public $transaction_code;
 	public $message;
 	public $has_structured_message = FALSE;
+	public $structured_message_type;
 	public $structured_message_full;
 	public $structured_message;
 }

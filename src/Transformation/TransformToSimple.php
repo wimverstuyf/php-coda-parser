@@ -30,7 +30,8 @@ class TransformToSimple implements TransformationInterface
 	public function transform(Data\Raw\Statement $coda_statements)
 	{
 		$transactionClass = $this->getSimpleObjectDefinitions();
-		$account_transactions = new $transactionClass[ self::CLASS_TRANSACTION ]();
+		/* @var $account_transactions Data\Simple\Statement */
+		$account_transactions = new $transactionClass[ self::CLASS_STATEMENT ]();
 
 		if ($coda_statements->identification) {
 			$account_transactions->date = $coda_statements->identification->creation_date;
