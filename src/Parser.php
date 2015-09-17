@@ -2,6 +2,8 @@
 
 namespace Codelicious\Coda;
 
+use \Codelicious\Coda\DetailParsers;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,6 +11,12 @@ namespace Codelicious\Coda;
  */
 class Parser
 {
+	/**
+	 * DetailParsers instances
+	 * @var array
+	 */
+	protected $_detailParsers;
+
 	/**
 	 * Read the given file and parse the content into an array of objects
 	 *
@@ -27,6 +35,7 @@ class Parser
 	 * @param array $coda_lines
 	 * @param string $output_format Possible values: raw, simple, full (=not yet implemented)
 	 * @return array
+	 * @throws Exception
 	 */
 	public function parse($coda_lines, $output_format="raw")
 	{
@@ -48,6 +57,37 @@ class Parser
 		}
 
 		return $list;
+	}
+
+	public function setDetailParser(array $detailParsers)
+	{
+		$this->_detailParsers = $detailParsers;
+	}
+
+	/**
+	 * Return the current detail parser setted or initialized a valid set
+	 * @return array
+	 */
+	public function getDetailParsers()
+	{
+		if (empty($this->_detailParsers))
+		{
+			$this->_detailParsers = array(
+				new DetailParsers\IdentificationParser(),
+				new DetailParsers\OriginalSituationParser(),
+				new DetailParsers\Transaction21Parser(),
+				new DetailParsers\Transaction22Parser(),
+				new DetailParsers\Transaction23Parser(),
+				new DetailParsers\Transaction31Parser(),
+				new DetailParsers\Transaction32Parser(),
+				new DetailParsers\Transaction33Parser(),
+				new DetailParsers\MessageParser(),
+				new DetailParsers\NewSituationParser(),
+				new DetailParsers\SummaryParser(),
+			);
+		}
+
+		return $this->_detailParsers;
 	}
 
 	private function convertToRaw($coda_lines)
@@ -114,22 +154,5 @@ class Parser
 		}
 
 		return $object_list;
-	}
-
-	private function getDetailParsers()
-	{
-		return array(
-			new \Codelicious\Coda\DetailParsers\IdentificationParser(),
-			new \Codelicious\Coda\DetailParsers\OriginalSituationParser(),
-			new \Codelicious\Coda\DetailParsers\Transaction21Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction22Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction23Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction31Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction32Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction33Parser(),
-			new \Codelicious\Coda\DetailParsers\MessageParser(),
-			new \Codelicious\Coda\DetailParsers\NewSituationParser(),
-			new \Codelicious\Coda\DetailParsers\SummaryParser(),
-			);
 	}
 }

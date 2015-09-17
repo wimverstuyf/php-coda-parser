@@ -31,6 +31,9 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     public function testSample1()
     {
         $parser = new \Codelicious\Coda\Parser();
+        $parser->setDetailParser(array(
+
+        ));
 
         $result = $parser->parse($this->getSample1());
 
@@ -103,5 +106,16 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($tr3->transaction_date);
         $this->assertNotEmpty($tr3->valuta_date);
         $this->assertNotEmpty($tr3->message);
+    }
+
+    public function testSetAndGetParserDetail()
+    {
+        $parser = new \Codelicious\Coda\Parser();
+        $parsers = $parser->getDetailParsers();
+        array_pop($parsers);
+
+        $this->assertCount(count($parsers) + 1, $parser->getDetailParsers());
+        $parser->setDetailParser($parsers);
+        $this->assertCount(count($parsers), $parser->getDetailParsers());
     }
 }
