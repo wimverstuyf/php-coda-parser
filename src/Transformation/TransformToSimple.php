@@ -2,7 +2,7 @@
 
 namespace Codelicious\Coda\Transformation;
 
-use Codelicious\Coda\DetailParsers\Data;
+use Codelicious\Coda\Data;
 
 /**
  * @package Codelicious\Coda
