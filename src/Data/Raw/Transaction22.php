@@ -17,6 +17,8 @@ class Transaction22
 	public $message;
 	public $client_reference;
 	public $other_account_bic;
+	public $transaction_type;
+	public $iso_reason_return_code;
 	public $category_purpose;
 	public $purpose;
 }
