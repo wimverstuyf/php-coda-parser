@@ -11,6 +11,10 @@ use Codelicious\Coda\Data;
  */
 interface TransformationInterface
 {
+	const CLASS_TRANSACTION = 'transaction';
+	const CLASS_ACCOUNT = 'account';
+	const CLASS_STATEMENT = 'statement';
+
 	/**
 	 * Transform Data\Raw\Statements to Data\Simple\Statements
 	 *
@@ -29,4 +33,18 @@ interface TransformationInterface
 	public function transformTransaction(Data\Raw\Transaction $coda_transaction);
 
 	public function concatenateTransactionMessages(Data\Raw\Transaction $coda_transaction);
+
+	/**
+	 * Define an array of string, each element contains the type of object supported by the transformation
+	 *
+	 * @param array $definition
+	 *
+	 * @return $this
+	 */
+	public function setSimpleObjectsDefinition(array $definition);
+
+	/**
+	 * @return array
+	 */
+	public function getSimpleObjectDefinitions();
 }

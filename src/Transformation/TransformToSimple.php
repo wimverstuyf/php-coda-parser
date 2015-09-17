@@ -3,8 +3,6 @@
 namespace Codelicious\Coda\Transformation;
 
 use Codelicious\Coda\Data;
-use Codelicious\Coda\Data\Simple\Account;
-use Codelicious\Coda\Data\Simple\Transaction;
 
 /**
  * @package Codelicious\Coda
@@ -14,6 +12,15 @@ use Codelicious\Coda\Data\Simple\Transaction;
 class TransformToSimple implements TransformationInterface
 {
 	/**
+	 * @var array
+	 */
+	protected $_definitionObjects = array(
+		self::CLASS_TRANSACTION => '\Codelicious\Coda\Data\Simple\Transaction',
+	    self::CLASS_ACCOUNT     => '\Codelicious\Coda\Data\Simple\Account',
+	    self::CLASS_STATEMENT   => '\Codelicious\Coda\Data\Simple\Statement',
+	);
+
+	/**
 	 * Transform Data\Raw\Statements to Data\Simple\Statements
 	 *
 	 * @param Data\Raw\Statement $coda_statements
@@ -22,7 +29,8 @@ class TransformToSimple implements TransformationInterface
 	 */
 	public function transform(Data\Raw\Statement $coda_statements)
 	{
-		$account_transactions = new \Codelicious\Coda\Data\Simple\Statement();
+		$transactionClass = $this->getSimpleObjectDefinitions();
+		$account_transactions = new $transactionClass[ self::CLASS_TRANSACTION ]();
 
 		if ($coda_statements->identification) {
 			$account_transactions->date = $coda_statements->identification->creation_date;
@@ -53,7 +61,8 @@ class TransformToSimple implements TransformationInterface
 
 	public function transformToAccount(Data\Raw\Identification $coda_identification, Data\Raw\OriginalSituation $coda_original_situation)
 	{
-		$account = new Account();
+		$accountClass = $this->getSimpleObjectDefinitions();
+		$account = new $accountClass[ self::CLASS_ACCOUNT ]();
 
 		if ($coda_identification) {
 			$account->name = $coda_identification->account_name;
@@ -71,7 +80,8 @@ class TransformToSimple implements TransformationInterface
 
 	public function transformToOtherPartyAccount(Data\Raw\Transaction22 $coda_line22,Data\Raw\Transaction23 $coda_line23 = null)
 	{
-		$account = new Account();
+		$accountClass = $this->getSimpleObjectDefinitions();
+		$account = new $accountClass[ self::CLASS_ACCOUNT ]();
 
 		if ($coda_line22) {
 			$account->bic = $coda_line22->other_account_bic;
@@ -109,7 +119,9 @@ class TransformToSimple implements TransformationInterface
 
 	public function transformTransaction(Data\Raw\Transaction $coda_transaction)
 	{
-		$transaction = new Transaction();
+		$transactionClass = $this->getSimpleObjectDefinitions();
+		$transaction = new $transactionClass[ self::CLASS_TRANSACTION ]();
+
 		$transaction->account = $this->transformToOtherPartyAccount($coda_transaction->line22, $coda_transaction->line23);
 
 		if ($coda_transaction->line21) {
@@ -159,5 +171,19 @@ class TransformToSimple implements TransformationInterface
 		}
 
 		return $message;
+	}
+
+	public function setSimpleObjectsDefinition(array $definitions)
+	{
+		foreach ($definitions as $type => $definition)
+		{
+			$this->_definitionObjects[ $type ]= $$definition;
+		}
+		return $this;
+	}
+
+	public function getSimpleObjectDefinitions()
+	{
+		return $this->_definitionObjects;
 	}
 }
