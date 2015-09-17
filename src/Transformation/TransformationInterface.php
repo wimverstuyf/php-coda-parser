@@ -2,7 +2,7 @@
 
 namespace Codelicious\Coda\Transformation;
 
-use Codelicious\Coda\DetailParsers\Data;
+use Codelicious\Coda\Data;
 
 /**
  * @package Codelicious\Coda
@@ -14,7 +14,7 @@ interface TransformationInterface
 	/**
 	 * Transform Data\Raw\Statements to Data\Simple\Statements
 	 *
-	 * @param Data\Raw\Statements $coda_statements
+	 * @param Data\Raw\Statement $coda_statements
 	 *
 	 * @return Data\Simple\Statements
 	 */
