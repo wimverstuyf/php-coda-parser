@@ -3,7 +3,7 @@
 namespace Codelicious\Coda;
 
 use \Codelicious\Coda\DetailParsers;
-use \Codelicious\Coda\Data\Raw\Transaction;
+use \Codelicious\Coda\Data\Raw;
 
 /**
  * @package Codelicious\Coda
@@ -101,7 +101,7 @@ class Parser
 			if ($coda_line->record_code == "0") {
 				if ($current_account_transaction)
 					array_push($statements_list, $current_account_transaction);
-				$current_account_transaction = new \Codelicious\Coda\Data\Raw\Statement();
+				$current_account_transaction = new Raw\Statement();
 				$current_transaction_sequence_number = NULL;
 				$current_account_transaction->identification = $coda_line;
 			}
@@ -122,7 +122,7 @@ class Parser
 				if ($trans_idx < 0 || $current_transaction_sequence_number != $coda_line->sequence_number) {
 					$trans_idx += 1;
 					$current_transaction_sequence_number = $coda_line->sequence_number;
-					array_push($current_account_transaction->transactions, new Transaction());
+					array_push($current_account_transaction->transactions, new Raw\Transaction());
 				}
 				$current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code} = $coda_line;
 			}
