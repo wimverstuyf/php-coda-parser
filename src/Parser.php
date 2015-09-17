@@ -2,8 +2,10 @@
 
 namespace Codelicious\Coda;
 
-use \Codelicious\Coda\DetailParsers;
-use \Codelicious\Coda\Data\Raw;
+use Codelicious\Coda\Data\Raw;
+use Codelicious\Coda\DetailParsers;
+use Codelicious\Coda\Transformation\TransformationInterface;
+use Codelicious\Coda\Transformation\TransformToSimple;
 
 /**
  * @package Codelicious\Coda
@@ -40,23 +42,45 @@ class Parser
 	 */
 	public function parse($coda_lines, $output_format="raw")
 	{
-		$coda_lines = $this->convertToObjects($coda_lines);
-
-		$list = $this->convertToRaw($coda_lines);
+		$rawLines = $this->parseToRaw($coda_lines);
 
 		if ($output_format=="simple") {
-			$transformation = new DetailParsers\TransformToSimple();
-
-			$raw_list = $list;
-			$list = array();
-			foreach ($raw_list as $raw) {
-				array_push($list, $transformation->transform($raw));
-			}
+			$transformation = new TransformToSimple();
+			return $this->transformRaw($rawLines, $transformation);
 		}
 		elseif ($output_format=="full") {
 			throw new Exception("Format 'full' not yet supported");
 		}
 
+		return $rawLines;
+	}
+
+	/**
+	 * Convert an array of coda line to an array of raw coda lines
+	 * @param array $codaLines
+	 *
+	 * @return array
+	 */
+	public function parseToRaw(array $codaLines)
+	{
+		$codaLines = $this->convertToObjects($codaLines);
+		return $this->convertToRaw($codaLines);
+	}
+
+	/**
+	 * Transform raw result to useful results through the $transformation
+	 * @param array                   $rawList
+	 * @param TransformationInterface $transformation
+	 *
+	 * @return array
+	 */
+	public function transformRaw(array $rawList, TransformationInterface $transformation)
+	{
+		$list = array();
+		foreach ($rawList as $raw)
+		{
+			array_push($list, $transformation->transform($raw));
+		}
 		return $list;
 	}
 
