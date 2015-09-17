@@ -18,15 +18,15 @@ interface TransformationInterface
 	 *
 	 * @return Data\Simple\Statements
 	 */
-	public function transform($coda_statements);
+	public function transform(Data\Raw\Statement $coda_statements);
 
-	public function transformToAccount($coda_identification, $coda_original_situation);
+	public function transformToAccount(Data\Raw\Identification $coda_identification, Data\Raw\OriginalSituation $coda_original_situation);
 
-	public function transformToOtherPartyAccount($coda_line22, $coda_line23);
+	public function transformToOtherPartyAccount(Data\Raw\Transaction22 $coda_line22, Data\Raw\Transaction23 $coda_line23);
 
-	public function transformMessages($coda_messages);
+	public function transformMessages(Data\Raw\Message $coda_messages);
 
-	public function transformTransaction($coda_transaction);
+	public function transformTransaction(Data\Raw\Transaction $coda_transaction);
 
-	public function concatenateTransactionMessages($coda_transaction);
+	public function concatenateTransactionMessages(Data\Raw\Transaction $coda_transaction);
 }

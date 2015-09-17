@@ -19,7 +19,7 @@ class TransformToSimple implements TransformationInterface
 	 * @param Data\Raw\Statements $coda_statements
 	 * @return Data\Simple\Statements
 	 */
-	public function transform($coda_statements)
+	public function transform(Data\Raw\Statement $coda_statements)
 	{
 		$account_transactions = new \Codelicious\Coda\Data\Simple\Statement();
 
@@ -50,7 +50,7 @@ class TransformToSimple implements TransformationInterface
 		return $account_transactions;
 	}
 
-	public function transformToAccount($coda_identification, $coda_original_situation)
+	public function transformToAccount(Data\Raw\Identification $coda_identification, Data\Raw\OriginalSituation $coda_original_situation)
 	{
 		$account = new Account();
 
@@ -68,7 +68,7 @@ class TransformToSimple implements TransformationInterface
 		return $account;
 	}
 
-	public function transformToOtherPartyAccount($coda_line22, $coda_line23)
+	public function transformToOtherPartyAccount(Data\Raw\Transaction22 $coda_line22,Data\Raw\Transaction23 $coda_line23)
 	{
 		$account = new Account();
 
@@ -92,7 +92,7 @@ class TransformToSimple implements TransformationInterface
 		return $account;
 	}
 
-	public function transformMessages($coda_messages)
+	public function transformMessages(Data\Raw\Message $coda_messages)
 	{
 		$message = "";
 
@@ -106,7 +106,7 @@ class TransformToSimple implements TransformationInterface
 		return $message;
 	}
 
-	public function transformTransaction($coda_transaction)
+	public function transformTransaction(Data\Raw\Transaction $coda_transaction)
 	{
 		$transaction = new Transaction();
 		$transaction->account = $this->transformToOtherPartyAccount($coda_transaction->line22, $coda_transaction->line23);
@@ -128,7 +128,7 @@ class TransformToSimple implements TransformationInterface
 		return $transaction;
 	}
 
-	public function concatenateTransactionMessages($coda_transaction)
+	public function concatenateTransactionMessages(Data\Raw\Transaction $coda_transaction)
 	{
 		$message = "";
 
