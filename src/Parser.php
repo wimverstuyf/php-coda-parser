@@ -3,6 +3,7 @@
 namespace Codelicious\Coda;
 
 use \Codelicious\Coda\DetailParsers;
+use \Codelicious\Coda\Data\Raw\Transaction;
 
 /**
  * @package Codelicious\Coda
@@ -44,7 +45,7 @@ class Parser
 		$list = $this->convertToRaw($coda_lines);
 
 		if ($output_format=="simple") {
-			$transformation = new \Codelicious\Coda\DetailParsers\TransformToSimple();
+			$transformation = new DetailParsers\TransformToSimple();
 
 			$raw_list = $list;
 			$list = array();
@@ -121,7 +122,7 @@ class Parser
 				if ($trans_idx < 0 || $current_transaction_sequence_number != $coda_line->sequence_number) {
 					$trans_idx += 1;
 					$current_transaction_sequence_number = $coda_line->sequence_number;
-					array_push($current_account_transaction->transactions, new \Codelicious\Coda\Data\Raw\Transaction());
+					array_push($current_account_transaction->transactions, new Transaction());
 				}
 				$current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code} = $coda_line;
 			}
