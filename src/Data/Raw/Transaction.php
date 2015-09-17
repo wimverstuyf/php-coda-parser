@@ -9,10 +9,33 @@ namespace Codelicious\Coda\Data\Raw;
  */
 class Transaction
 {
+	/***
+	 * @var Transaction21
+	 */
 	public $line21;
+
+	/***
+	 * @var Transaction22
+	 */
 	public $line22;
+
+	/***
+	 * @var Transaction23
+	 */
 	public $line23;
+
+	/***
+	 * @var Transaction31
+	 */
 	public $line31;
+
+	/***
+	 * @var Transaction32
+	 */
 	public $line32;
+
+	/***
+	 * @var Transaction33
+	 */
 	public $line33;
 }
