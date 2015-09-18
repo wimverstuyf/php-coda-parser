@@ -23,16 +23,15 @@ class TransformToSimpleWithSepaDirectDebit extends TransformToSimple
 		$transaction = parent::transformTransaction($coda_transaction);
 
 		$this->transformTransactionWithSdd($coda_transaction, $transaction);
-
 		return $transaction;
 	}
 
-	public function transformTransactionWithSdd(Data\Raw\Transaction21SepaDirectDebit $coda_transaction, Data\Simple\TransactionSepaDirectDebit $transaction)
+	public function transformTransactionWithSdd(Data\Raw\Transaction $coda_transaction, Data\Simple\TransactionSepaDirectDebit $transaction)
 	{
-		$transaction->sddType = $coda_transaction->sepa_direct_debit_type;
-		$transaction->sddScheme = $coda_transaction->sepa_direct_debit_scheme;
-		$transaction->sddPaid = $coda_transaction->sepa_direct_debit_paid_reason;
-		$transaction->sddMandat = $coda_transaction->sepa_direct_debit_mandate_ref;
-		$transaction->sddCommunication = $coda_transaction->sepa_direct_debit_communication;
+		$transaction->sddType = $coda_transaction->line21->sepa_direct_debit_type;
+		$transaction->sddScheme = $coda_transaction->line21->sepa_direct_debit_scheme;
+		$transaction->sddPaid = $coda_transaction->line21->sepa_direct_debit_paid_reason;
+		$transaction->sddMandat = $coda_transaction->line21->sepa_direct_debit_mandate_ref;
+		$transaction->sddCommunication = $coda_transaction->line21->sepa_direct_debit_communication;
 	}
 }
