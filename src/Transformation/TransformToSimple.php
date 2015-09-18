@@ -171,7 +171,7 @@ class TransformToSimple implements TransformationInterface
 			}
 		}
 
-		if (!$message && $coda_transaction->line22->client_reference)
+		if (!$message && $coda_transaction->line22 && $coda_transaction->line22->client_reference)
 		{
 			$message = $coda_transaction->line22->client_reference;
 		}
