@@ -1,17 +1,30 @@
 <?php
 
-namespace Codelicious\Coda;
-
-function str2Data($data, $startPosition, $length)
+function codaStr2Data($data, $startPosition, $length)
 {
 	return trim(substr($data, $startPosition, $length));
 }
 
-function valueObjectCopy2Object($initialObject, $copyObject)
+/**
+ * Copy the value object fields (public) to the other one
+ * @param object $initialObject
+ * @param object $copyObject
+ */
+function codaValueObjectCopy2Object($initialObject, $copyObject)
 {
 	foreach ($initialObject as $key => $value)
 	{
-		echo $key, '-', $value, PHP_EOL;
 		$copyObject->$key = $value;
 	}
+}
+
+/**
+ * Convert a coda date to an iso format
+ * @param string $dateCoda
+ *
+ * @return string
+ */
+function coda2Date($dateCoda)
+{
+	return '20' . substr($dateCoda, 4, 2) . '-' . substr($dateCoda, 2, 2) . '-' . substr($dateCoda, 0, 2);
 }
