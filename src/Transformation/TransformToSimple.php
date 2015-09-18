@@ -3,8 +3,6 @@
 namespace Codelicious\Coda\Transformation;
 
 use Codelicious\Coda\Data;
-use Codelicious\Coda\Data\Simple\Account;
-use Codelicious\Coda\Data\Simple\Transaction;
 
 /**
  * @package Codelicious\Coda
@@ -14,14 +12,26 @@ use Codelicious\Coda\Data\Simple\Transaction;
 class TransformToSimple implements TransformationInterface
 {
 	/**
+	 * @var array
+	 */
+	protected $_definitionObjects = array(
+		self::CLASS_TRANSACTION => '\Codelicious\Coda\Data\Simple\Transaction',
+	    self::CLASS_ACCOUNT     => '\Codelicious\Coda\Data\Simple\Account',
+	    self::CLASS_STATEMENT   => '\Codelicious\Coda\Data\Simple\Statement',
+	);
+
+	/**
 	 * Transform Data\Raw\Statements to Data\Simple\Statements
 	 *
-	 * @param Data\Raw\Statements $coda_statements
-	 * @return Data\Simple\Statements
+	 * @param Data\Raw\Statement $coda_statements
+	 *
+	 * @return Data\Simple\Statement
 	 */
-	public function transform($coda_statements)
+	public function transform(Data\Raw\Statement $coda_statements)
 	{
-		$account_transactions = new \Codelicious\Coda\Data\Simple\Statement();
+		$transactionClass = $this->getSimpleObjectDefinitions();
+		/* @var $account_transactions Data\Simple\Statement */
+		$account_transactions = new $transactionClass[ self::CLASS_STATEMENT ]();
 
 		if ($coda_statements->identification) {
 			$account_transactions->date = $coda_statements->identification->creation_date;
@@ -50,9 +60,10 @@ class TransformToSimple implements TransformationInterface
 		return $account_transactions;
 	}
 
-	public function transformToAccount($coda_identification, $coda_original_situation)
+	public function transformToAccount(Data\Raw\Identification $coda_identification, Data\Raw\OriginalSituation $coda_original_situation)
 	{
-		$account = new Account();
+		$accountClass = $this->getSimpleObjectDefinitions();
+		$account = new $accountClass[ self::CLASS_ACCOUNT ]();
 
 		if ($coda_identification) {
 			$account->name = $coda_identification->account_name;
@@ -68,9 +79,10 @@ class TransformToSimple implements TransformationInterface
 		return $account;
 	}
 
-	public function transformToOtherPartyAccount($coda_line22, $coda_line23)
+	public function transformToOtherPartyAccount(Data\Raw\Transaction22 $coda_line22 = null, Data\Raw\Transaction23 $coda_line23 = null)
 	{
-		$account = new Account();
+		$accountClass = $this->getSimpleObjectDefinitions();
+		$account = new $accountClass[ self::CLASS_ACCOUNT ]();
 
 		if ($coda_line22) {
 			$account->bic = $coda_line22->other_account_bic;
@@ -92,7 +104,7 @@ class TransformToSimple implements TransformationInterface
 		return $account;
 	}
 
-	public function transformMessages($coda_messages)
+	public function transformMessages(array $coda_messages)
 	{
 		$message = "";
 
@@ -106,9 +118,11 @@ class TransformToSimple implements TransformationInterface
 		return $message;
 	}
 
-	public function transformTransaction($coda_transaction)
+	public function transformTransaction(Data\Raw\Transaction $coda_transaction)
 	{
-		$transaction = new Transaction();
+		$transactionClass = $this->getSimpleObjectDefinitions();
+		$transaction = new $transactionClass[ self::CLASS_TRANSACTION ]();
+
 		$transaction->account = $this->transformToOtherPartyAccount($coda_transaction->line22, $coda_transaction->line23);
 
 		if ($coda_transaction->line21) {
@@ -128,7 +142,7 @@ class TransformToSimple implements TransformationInterface
 		return $transaction;
 	}
 
-	public function concatenateTransactionMessages($coda_transaction)
+	public function concatenateTransactionMessages(Data\Raw\Transaction $coda_transaction)
 	{
 		$message = "";
 
@@ -157,6 +171,25 @@ class TransformToSimple implements TransformationInterface
 			}
 		}
 
+		if (!$message && $coda_transaction->line22 && $coda_transaction->line22->client_reference)
+		{
+			$message = $coda_transaction->line22->client_reference;
+		}
+
 		return $message;
+	}
+
+	public function setSimpleObjectsDefinition(array $definitions)
+	{
+		foreach ($definitions as $type => $definition)
+		{
+			$this->_definitionObjects[ $type ]= $definition;
+		}
+		return $this;
+	}
+
+	public function getSimpleObjectDefinitions()
+	{
+		return $this->_definitionObjects;
 	}
 }

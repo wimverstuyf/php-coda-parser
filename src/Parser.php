@@ -29,7 +29,12 @@ class Parser
 	 */
 	public function parseFile($coda_file, $output_format="raw")
 	{
-		return $this->parse(file($coda_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES), $output_format);
+		return $this->parse($this->fileToCodaLines($coda_file), $output_format);
+	}
+
+	public function fileToCodaLines($coda_file)
+	{
+		return file($coda_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 	}
 
 	/**

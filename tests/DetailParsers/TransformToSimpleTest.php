@@ -47,7 +47,7 @@ class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("EUR", $tr1->account->currency);
         $this->assertEmpty($tr1->account->country);
 
-        $this->assertEquals("", $tr2->message);
+        $this->assertEquals("54875", $tr2->message);
         $this->assertEquals("112455446812", $tr2->structured_message);
 
         $this->assertEmpty($tr3->account->name);

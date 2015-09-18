@@ -18,6 +18,10 @@ class Transaction21
 	public $amount;
 	public $valuta_date;
 	public $transaction_code;
+	public $transaction_code_type;
+	public $transaction_code_family;
+	public $transaction_code_operation;
+	public $transaction_code_category;
 	public $message;
 	public $has_structured_message = FALSE;
 	public $structured_message_type;
