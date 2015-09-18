@@ -183,7 +183,7 @@ class TransformToSimple implements TransformationInterface
 	{
 		foreach ($definitions as $type => $definition)
 		{
-			$this->_definitionObjects[ $type ]= $$definition;
+			$this->_definitionObjects[ $type ]= $definition;
 		}
 		return $this;
 	}
