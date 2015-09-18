@@ -2,11 +2,14 @@
 
 namespace Codelicious\Tests\Coda\DetailParsers;
 
+use \Codelicious\Coda\Transformation\TransformToSimple;
+use \Codelicious\Coda\Parser;
+
 class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $transform = new \Codelicious\Coda\DetailParsers\TransformToSimple();
+        $transform = new TransformToSimple();
 
         $object = $this->createSample1();
 
@@ -53,7 +56,7 @@ class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
 
     public function createSample1()
     {
-        $parser = new \Codelicious\Coda\Parser();
+        $parser = new Parser();
 
         $content = array(
         "0000018011520105        0938409934CODELICIOUS               GEBABEBB   09029308273 00001          984309          834080       2",

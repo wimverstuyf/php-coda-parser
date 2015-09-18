@@ -2,6 +2,11 @@
 
 namespace Codelicious\Coda;
 
+use Codelicious\Coda\Data\Raw;
+use Codelicious\Coda\DetailParsers;
+use Codelicious\Coda\Transformation\TransformationInterface;
+use Codelicious\Coda\Transformation\TransformToSimple;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,6 +14,12 @@ namespace Codelicious\Coda;
  */
 class Parser
 {
+	/**
+	 * DetailParsers instances
+	 * @var array
+	 */
+	protected $_detailParsers;
+
 	/**
 	 * Read the given file and parse the content into an array of objects
 	 *
@@ -27,27 +38,81 @@ class Parser
 	 * @param array $coda_lines
 	 * @param string $output_format Possible values: raw, simple, full (=not yet implemented)
 	 * @return array
+	 * @throws Exception
 	 */
 	public function parse($coda_lines, $output_format="raw")
 	{
-		$coda_lines = $this->convertToObjects($coda_lines);
-
-		$list = $this->convertToRaw($coda_lines);
+		$rawLines = $this->parseToRaw($coda_lines);
 
 		if ($output_format=="simple") {
-			$transformation = new \Codelicious\Coda\DetailParsers\TransformToSimple();
-
-			$raw_list = $list;
-			$list = array();
-			foreach ($raw_list as $raw) {
-				array_push($list, $transformation->transform($raw));
-			}
+			$transformation = new TransformToSimple();
+			return $this->transformRaw($rawLines, $transformation);
 		}
 		elseif ($output_format=="full") {
 			throw new Exception("Format 'full' not yet supported");
 		}
 
+		return $rawLines;
+	}
+
+	/**
+	 * Convert an array of coda line to an array of raw coda lines
+	 * @param array $codaLines
+	 *
+	 * @return array
+	 */
+	public function parseToRaw(array $codaLines)
+	{
+		$codaLines = $this->convertToObjects($codaLines);
+		return $this->convertToRaw($codaLines);
+	}
+
+	/**
+	 * Transform raw result to useful results through the $transformation
+	 * @param array                   $rawList
+	 * @param TransformationInterface $transformation
+	 *
+	 * @return array
+	 */
+	public function transformRaw(array $rawList, TransformationInterface $transformation)
+	{
+		$list = array();
+		foreach ($rawList as $raw)
+		{
+			array_push($list, $transformation->transform($raw));
+		}
 		return $list;
+	}
+
+	public function setDetailParser(array $detailParsers)
+	{
+		$this->_detailParsers = $detailParsers;
+	}
+
+	/**
+	 * Return the current detail parser setted or initialized a valid set
+	 * @return array
+	 */
+	public function getDetailParsers()
+	{
+		if (empty($this->_detailParsers))
+		{
+			$this->_detailParsers = array(
+				new DetailParsers\IdentificationParser(),
+				new DetailParsers\OriginalSituationParser(),
+				new DetailParsers\Transaction21Parser(),
+				new DetailParsers\Transaction22Parser(),
+				new DetailParsers\Transaction23Parser(),
+				new DetailParsers\Transaction31Parser(),
+				new DetailParsers\Transaction32Parser(),
+				new DetailParsers\Transaction33Parser(),
+				new DetailParsers\MessageParser(),
+				new DetailParsers\NewSituationParser(),
+				new DetailParsers\SummaryParser(),
+			);
+		}
+
+		return $this->_detailParsers;
 	}
 
 	private function convertToRaw($coda_lines)
@@ -60,7 +125,7 @@ class Parser
 			if ($coda_line->record_code == "0") {
 				if ($current_account_transaction)
 					array_push($statements_list, $current_account_transaction);
-				$current_account_transaction = new \Codelicious\Coda\Data\Raw\Statement();
+				$current_account_transaction = new Raw\Statement();
 				$current_transaction_sequence_number = NULL;
 				$current_account_transaction->identification = $coda_line;
 			}
@@ -81,7 +146,7 @@ class Parser
 				if ($trans_idx < 0 || $current_transaction_sequence_number != $coda_line->sequence_number) {
 					$trans_idx += 1;
 					$current_transaction_sequence_number = $coda_line->sequence_number;
-					array_push($current_account_transaction->transactions, new \Codelicious\Coda\Data\Raw\Transaction());
+					array_push($current_account_transaction->transactions, new Raw\Transaction());
 				}
 				$current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code} = $coda_line;
 			}
@@ -114,22 +179,5 @@ class Parser
 		}
 
 		return $object_list;
-	}
-
-	private function getDetailParsers()
-	{
-		return array(
-			new \Codelicious\Coda\DetailParsers\IdentificationParser(),
-			new \Codelicious\Coda\DetailParsers\OriginalSituationParser(),
-			new \Codelicious\Coda\DetailParsers\Transaction21Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction22Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction23Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction31Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction32Parser(),
-			new \Codelicious\Coda\DetailParsers\Transaction33Parser(),
-			new \Codelicious\Coda\DetailParsers\MessageParser(),
-			new \Codelicious\Coda\DetailParsers\NewSituationParser(),
-			new \Codelicious\Coda\DetailParsers\SummaryParser(),
-			);
 	}
 }

@@ -7,7 +7,7 @@ namespace Codelicious\Coda\DetailParsers;
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
  * @license http://opensource.org/licenses/GPL-2.0 GPL-2.0
  */
-class Transaction32Parser
+class Transaction32Parser implements ParserInterface
 {
 	/**
 	 * Parse the given string containing 32 into a Transaction-object

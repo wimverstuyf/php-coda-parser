@@ -1,13 +1,17 @@
 <?php
 
-namespace Codelicious\Coda\DetailParsers;
+namespace Codelicious\Coda\Transformation;
+
+use Codelicious\Coda\Data;
+use Codelicious\Coda\Data\Simple\Account;
+use Codelicious\Coda\Data\Simple\Transaction;
 
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
  * @license http://opensource.org/licenses/GPL-2.0 GPL-2.0
  */
-class TransformToSimple
+class TransformToSimple implements TransformationInterface
 {
 	/**
 	 * Transform Data\Raw\Statements to Data\Simple\Statements
@@ -48,7 +52,7 @@ class TransformToSimple
 
 	public function transformToAccount($coda_identification, $coda_original_situation)
 	{
-		$account = new \Codelicious\Coda\Data\Simple\Account();
+		$account = new Account();
 
 		if ($coda_identification) {
 			$account->name = $coda_identification->account_name;
@@ -66,7 +70,7 @@ class TransformToSimple
 
 	public function transformToOtherPartyAccount($coda_line22, $coda_line23)
 	{
-		$account = new \Codelicious\Coda\Data\Simple\Account();
+		$account = new Account();
 
 		if ($coda_line22) {
 			$account->bic = $coda_line22->other_account_bic;
@@ -104,7 +108,7 @@ class TransformToSimple
 
 	public function transformTransaction($coda_transaction)
 	{
-		$transaction = new \Codelicious\Coda\Data\Simple\Transaction();
+		$transaction = new Transaction();
 		$transaction->account = $this->transformToOtherPartyAccount($coda_transaction->line22, $coda_transaction->line23);
 
 		if ($coda_transaction->line21) {

@@ -7,7 +7,7 @@ namespace Codelicious\Coda\DetailParsers;
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
  * @license http://opensource.org/licenses/GPL-2.0 GPL-2.0
  */
-class IdentificationParser
+class IdentificationParser implements ParserInterface
 {
 	/**
 	 * Parse the given string containing 0 into an identification-object
