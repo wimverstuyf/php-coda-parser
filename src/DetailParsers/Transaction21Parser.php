@@ -25,7 +25,7 @@ class Transaction21Parser implements ParserInterface
 		$coda21->sequence_number_detail = codaStr2Data($coda21_line, 6, 4);
 		$coda21->bank_reference = codaStr2Data($coda21_line, 10, 21);
 
-		$negative = substr($coda21_line, 31, 1) == "0" ? -1 : 1;
+		$negative = substr($coda21_line, 31, 1) == "1" ? -1 : 1;
 		$coda21->amount = codaStr2Data($coda21_line, 32, 15) * $negative / 1000;
 
 		$coda21->valuta_date = coda2Date(codaStr2Data($coda21_line, 47, 6));

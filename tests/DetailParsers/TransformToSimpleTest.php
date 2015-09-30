@@ -18,8 +18,8 @@ class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($at->account);
         $this->assertEquals(3, count($at->transactions));
         $this->assertEquals("2015-01-18", $at->date);
-        $this->assertEquals(-4004.1, $at->original_balance);
-        $this->assertEquals(500012.1, $at->new_balance);
+        $this->assertEquals(4004.1, $at->original_balance);
+        $this->assertEquals(-500012.1, $at->new_balance);
         $this->assertEquals("THIS IS A PUBLIC MESSAGE", $at->free_message);
 
         $this->assertEquals("CODELICIOUS", $at->account->name);
@@ -36,7 +36,7 @@ class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($tr1->account);
         $this->assertEquals("2014-12-25", $tr1->transaction_date);
         $this->assertEquals("2014-12-25", $tr1->valuta_date);
-        $this->assertEquals(767.823, $tr1->amount);
+        $this->assertEquals(-767.823, $tr1->amount);
         $this->assertEquals("112/4554/46812   813ANOTHER MESSAGEMESSAGE", $tr1->message);
         $this->assertEmpty($tr1->structured_message);
 

@@ -23,7 +23,7 @@ class NewSituationParser implements ParserInterface
 		$coda8->statement_sequence_number = trim(substr($coda8_line, 1, 3));
 		$coda8->date = "20" . substr($coda8_line, 61, 2) . "-" . substr($coda8_line, 59, 2) . "-" . substr($coda8_line, 57, 2);
 
-		$negative = substr($coda8_line, 41, 1) == "0" ? -1 : 1;
+		$negative = substr($coda8_line, 41, 1) == "1" ? -1 : 1;
 		$coda8->balance = substr($coda8_line, 42, 15)*$negative / 1000;
 
 		return $coda8;

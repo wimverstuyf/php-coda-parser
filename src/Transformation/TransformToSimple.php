@@ -16,8 +16,8 @@ class TransformToSimple implements TransformationInterface
 	 */
 	protected $_definitionObjects = array(
 		self::CLASS_TRANSACTION => '\Codelicious\Coda\Data\Simple\Transaction',
-	    self::CLASS_ACCOUNT     => '\Codelicious\Coda\Data\Simple\Account',
-	    self::CLASS_STATEMENT   => '\Codelicious\Coda\Data\Simple\Statement',
+		self::CLASS_ACCOUNT     => '\Codelicious\Coda\Data\Simple\Account',
+		self::CLASS_STATEMENT   => '\Codelicious\Coda\Data\Simple\Statement',
 	);
 
 	/**

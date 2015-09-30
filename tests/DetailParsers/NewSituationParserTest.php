@@ -19,7 +19,7 @@ class NewSituationParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(FALSE, $result->account_is_iban);
         $this->assertEquals("EUR", $result->account_currency);
         $this->assertEquals("BE", $result->account_country);
-        $this->assertEquals(500012.100, $result->balance);
+        $this->assertEquals(-500012.100, $result->balance);
         $this->assertEquals("2015-05-12", $result->date);
     }
 }
