@@ -18,6 +18,6 @@ class Transaction23ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("0000", $result->sequence_number_detail);
 		$this->assertEquals("BE54805480215856                  EUR", $result->other_account_number_and_currency);
 		$this->assertEquals("BVBA.BAKKER PIET", $result->other_account_name);
-		$this->assertEquals("MESSAGE", $result->message);
+		$this->assertEquals(" MESSAGE ", $result->message);
     }
 }

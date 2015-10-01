@@ -1,5 +1,17 @@
 <?php
 
+
+/**
+ * Trim multiple spaces in beginning or end to single space
+ */
+function trim_space($string)
+{
+	$string = preg_replace('/^ +/', ' ', $string);
+	$string = preg_replace('/ +$/', ' ', $string);
+	return $string;
+}
+
+
 function codaStr2Data($data, $startPosition, $length)
 {
 	return trim(substr($data, $startPosition, $length));

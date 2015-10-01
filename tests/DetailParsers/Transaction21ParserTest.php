@@ -20,7 +20,7 @@ class Transaction21ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1767.820, $result->amount);
 		$this->assertEquals("2014-12-25", $result->valuta_date);
 		$this->assertEquals("00112000", $result->transaction_code);
-		$this->assertEquals("112/4554/46812   813", $result->message);
+		$this->assertEquals("112/4554/46812   813 ", $result->message);
 		$this->assertFalse($result->has_structured_message);
 		$this->assertEquals(NULL, $result->structured_message_type);
 		$this->assertEquals(NULL, $result->structured_message_full);

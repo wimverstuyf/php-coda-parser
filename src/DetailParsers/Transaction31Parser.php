@@ -33,7 +33,7 @@ class Transaction31Parser implements ParserInterface
 		}
 		else
 		{
-			$coda31->message = trim(substr($coda31_line, 40, 73));
+			$coda31->message = trim_space(substr($coda31_line, 40, 73));
 		}
 
 		return $coda31;

@@ -24,7 +24,7 @@ class Transaction23Parser implements ParserInterface
 		$coda23->other_account_number_and_currency = trim(substr($coda23_line, 10, 37));
 		$coda23->other_account_name = trim(substr($coda23_line, 47, 35));
 
-		$coda23->message = trim(substr($coda23_line, 82, 43));
+		$coda23->message = trim_space(substr($coda23_line, 82, 43));
 
 		return $coda23;
 	}

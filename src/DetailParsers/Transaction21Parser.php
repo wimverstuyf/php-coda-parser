@@ -43,7 +43,7 @@ class Transaction21Parser implements ParserInterface
 			$coda21->structured_message = $this->parse_structured_message($coda21->structured_message_full, $coda21->structured_message_type);
 		}
 		else {
-			$coda21->message = codaStr2Data($coda21_line, 62, 53);
+			$coda21->message = trim_space(substr($coda21_line, 62, 53));
 		}
 
 		$coda21->transaction_date = coda2Date(codaStr2Data($coda21_line, 115, 6));

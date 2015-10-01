@@ -16,6 +16,6 @@ class Transaction33ParserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("0001", $result->sequence_number);
         $this->assertEquals("0001", $result->sequence_number_detail);
-        $this->assertEquals("SOME INFORMATION ABOUT THIS TRANSACTION", $result->message);
+        $this->assertEquals("SOME INFORMATION ABOUT THIS TRANSACTION ", $result->message);
     }
 }

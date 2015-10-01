@@ -176,7 +176,7 @@ class TransformToSimple implements TransformationInterface
 			$message = $coda_transaction->line22->client_reference;
 		}
 
-		return $message;
+		return trim($message);
 	}
 
 	public function setSimpleObjectsDefinition(array $definitions)

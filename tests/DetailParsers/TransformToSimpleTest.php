@@ -37,7 +37,7 @@ class TransformToSimplifiedTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("2014-12-25", $tr1->transaction_date);
         $this->assertEquals("2014-12-25", $tr1->valuta_date);
         $this->assertEquals(-767.823, $tr1->amount);
-        $this->assertEquals("112/4554/46812   813ANOTHER MESSAGEMESSAGE", $tr1->message);
+        $this->assertEquals("112/4554/46812   813  ANOTHER MESSAGE  MESSAGE", $tr1->message);
         $this->assertEmpty($tr1->structured_message);
 
         $this->assertEquals("BVBA.BAKKER PIET", $tr1->account->name);
