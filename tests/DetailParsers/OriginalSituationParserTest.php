@@ -4,15 +4,15 @@ namespace Codelicious\Tests\Coda\DetailParsers;
 
 class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSample1()
-    {
-        $parser = new \Codelicious\Coda\DetailParsers\OriginalSituationParser();
+	public function testSample1()
+	{
+		$parser = new \Codelicious\Coda\DetailParsers\OriginalSituationParser();
 
-        $sample = "10155001548226815 EUR0BE                  0000000004004100241214CODELICIOUS               PROFESSIONAL ACCOUNT               255";
+		$sample = "10155001548226815 EUR0BE                  0000000004004100241214CODELICIOUS               PROFESSIONAL ACCOUNT               255";
 
-        $this->assertEquals(TRUE, $parser->accept_string($sample));
+		$this->assertEquals(TRUE, $parser->accept_string($sample));
 
-        $result = $parser->parse($sample);
+		$result = $parser->parse($sample);
 
 		$this->assertEquals("0", $result->account_number_type);
 		$this->assertEquals("155", $result->statement_sequence_number);
@@ -25,5 +25,5 @@ class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("CODELICIOUS", $result->account_name);
 		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->account_description);
 		$this->assertEquals("255", $result->sequence_number);
-    }
+	}
 }
