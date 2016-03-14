@@ -12,11 +12,16 @@ Packagist home page, then define your dependency on Codelicious/Coda in your `co
 ```json
     {
         "require": {
-            "codelicious/php-coda-parser": "dev-master"
+            "codelicious/php-coda-parser": "^1.0"
         }
     }
 ```
 
+Or you can execute the following command in your project root to install this library:
+
+```sh
+composer require codelicious/php-coda-parser:^1.0
+```
 
 ## Demo / API
 
