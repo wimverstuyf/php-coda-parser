@@ -60,7 +60,7 @@ class TransformToSimple implements TransformationInterface
 		return $account_transactions;
 	}
 
-	public function transformToAccount(Data\Raw\Identification $coda_identification, Data\Raw\OriginalSituation $coda_original_situation)
+	public function transformToAccount(Data\Raw\Identification $coda_identification = null, Data\Raw\OriginalSituation $coda_original_situation = null)
 	{
 		$accountClass = $this->getSimpleObjectDefinitions();
 		$account = new $accountClass[ self::CLASS_ACCOUNT ]();
