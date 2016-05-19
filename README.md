@@ -56,22 +56,22 @@ There are 2 structures available. 'raw' which resembles the original file struct
 If you are unsure what to use you should use 'simple'.
 Properties that are not supplied will be `null`.
 
-*   `Codelicious\Coda\Simple\Statement`
+*   `Codelicious\Coda\Data\Simple\Statement`
     *   `date` Date of the supplied file (format YYYY-MM-DD)
-    *   `account` Account for which the statements were created. An object implementing `Codelicious\Coda\Simple\Account`
+    *   `account` Account for which the statements were created. An object implementing `Codelicious\Coda\Data\Simple\Account`
     *   `original_balance` Balance of the account before the transactions were processed. Up to 3 decimals.
     *   `new_balance` Balance of the account after the transactions were processed. Up to 3 decimals.
     *   `free_messages` A list of text messages containing additional information
-    *   `transaction` A list of transactions implemented as `Codelicious\Coda\Simple\Transaction`
-*   `Codelicious\Coda\Simple\Account`
+    *   `transaction` A list of transactions implemented as `Codelicious\Coda\Data\Simple\Transaction`
+*   `Codelicious\Coda\Data\Simple\Account`
     *   `name` Name of the holder of the account
     *   `bic` Bankcode of the account
     *   `company_id` Official Belgian company number of the account holder
     *   `number` Banknumber of the account
     *   `currency` Currency of the account
     *   `country` Country of the account
-*   `Codelicious\Coda\Simple\Transaction`
-    *   `account` Account of the other party of the transaction. An object implementing `Codelicious\Coda\Simple\Account`
+*   `Codelicious\Coda\Data\Simple\Transaction`
+    *   `account` Account of the other party of the transaction. An object implementing `Codelicious\Coda\Data\Simple\Account`
     *   `transaction_date` Date on which the transaction was requested
     *   `valuta_date` Date on which the transaction was executed by the bank
     *   `amount` Amount of the transaction. Up to 3 decimals. A negative number for credit transactions.
