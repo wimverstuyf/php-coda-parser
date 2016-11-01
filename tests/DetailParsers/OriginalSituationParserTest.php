@@ -26,4 +26,17 @@ class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->account_description);
 		$this->assertEquals("255", $result->sequence_number);
 	}
+
+	public function testAccountIsIbanIsSetCorrectly ()
+	{
+		$parser = new \Codelicious\Coda\DetailParsers\OriginalSituationParser();
+
+		$sample = "13155001548226815 EUR0BE                  0000000004004100241214CODELICIOUS               PROFESSIONAL ACCOUNT               255";
+
+		$this->assertEquals(TRUE, $parser->accept_string($sample));
+
+		$result = $parser->parse($sample);
+
+		$this->assertEquals(TRUE, $result->account_is_iban);
+	}
 }
