@@ -9,10 +9,33 @@ namespace Codelicious\Coda\Data\Raw;
  */
 class Statement
 {
+	/**
+	 * @var Identification
+	 */
 	public $identification;
+
+	/**
+	 * @var OriginalSituation
+	 */
 	public $original_situation;
+
+	/**
+	 * @var Transaction[]
+	 */
 	public $transactions = array();
+
+	/**
+	 * @var NewSituation
+	 */
 	public $new_situation;
+
+	/**
+	 * @var Message[]
+	 */
 	public $messages = array();
+
+	/**
+	 * @var Summary
+	 */
 	public $summary;
 }
