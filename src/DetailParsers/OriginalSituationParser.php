@@ -36,7 +36,12 @@ class OriginalSituationParser implements ParserInterface
 		return $coda1;
 	}
 
-	private function add_account_info(&$coda1, $account_info, $account_type)
+	/**
+	 * @param \Codelicious\Coda\Data\Raw\OriginalSituation $coda1
+	 * @param string $account_info
+	 * @param string $account_type
+	 */
+	private function add_account_info($coda1, $account_info, $account_type)
 	{
 		if ($account_type == "0") {
 			$coda1->account_number = substr($account_info, 0, 12);
@@ -48,13 +53,13 @@ class OriginalSituationParser implements ParserInterface
 			$coda1->account_currency = substr($account_info, 34, 3);
 		}
 		else if ($account_type == "2") {
-			$coda1->is_iban = TRUE;
+			$coda1->account_is_iban = TRUE;
 			$coda1->account_number = substr($account_info, 0, 31);
 			$coda1->account_currency = substr($account_info, 34, 3);
 			$coda1->account_country = "BE";
 		}
 		else if ($account_type == "3") {
-			$coda1->is_iban = TRUE;
+			$coda1->account_is_iban = TRUE;
 			$coda1->account_number = substr($account_info, 0, 34);
 			$coda1->account_currency = substr($account_info, 34, 3);
 		}
