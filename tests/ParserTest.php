@@ -31,7 +31,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     public function testSample1()
     {
         $parser = new \Codelicious\Coda\Parser();
-        $parser->setDetailParser([]);
+        $parser->setDetailParser(array());
 
         $result = $parser->parse($this->getSample1());
 
