@@ -12,10 +12,7 @@ class NewSituation
 	public $record_code = "8";
 
 	public $statement_sequence_number;
-	public $account_number;
-	public $account_is_iban = FALSE;
-	public $account_currency;
-	public $account_country;
+	public $account;
 	public $balance;
 	public $date;
 }
