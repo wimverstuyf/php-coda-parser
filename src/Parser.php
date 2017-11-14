@@ -153,7 +153,12 @@ class Parser
 					$current_transaction_sequence_number = $coda_line->sequence_number;
 					array_push($current_account_transaction->transactions, new Raw\Transaction());
 				}
-				$current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code} = $coda_line;
+
+				if (is_null($current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code})) {
+					$current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code} = $coda_line;
+				} else {
+					$current_account_transaction->transactions[$trans_idx]->{'line'.$coda_line->record_code.$coda_line->article_code}->message .= $coda_line->message;
+				}
 			}
 		}
 

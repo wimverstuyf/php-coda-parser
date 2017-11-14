@@ -1,0 +1,24 @@
+0000011101772505        00265207  BOUWBEDRIJF VOOR GROTE WERKREDBEBB   00330158420 00000                                       2
+10139138536152215 EUR0BE                  0000000017752120101017BOUWBEDRIJF VOOR GROTE WERKBC-Bedrijfsrekening               138
+2100010000JRFC00120DSCCOCACAERT0000000000005000111017001500001101000003505158                                      11101713901 0
+2200010000                                                                                        KREDBEBB                   1 0
+2300010000BE22313215646432                     KLANT1 MET NAAM1                                                              0 1
+3100010001JRFC00120DSCCOCACAERT001500001001KLANT1 MET NAAM1                                                                  1 0
+3200010001GROTE WEG            32            3215    HASSELT                                                                 0 0
+2100020000KLIM03284DSCICDEVATVA0000000000025000111017001500001101000003515846                                      11101713901 0
+2200020000                                                                                        BBRUBEBB                   1 0
+2300020000BE25646548413215                     KLANT2 NAAM2                                                                  0 1
+3100020001KLIM03284DSCICDEVATVA001500001001KLANT2 NAAM2                                                                      1 0
+3200020001VOETGANGERSTRAAT 26                1215        ANTWERPEN                                                           0 0
+2100030000OL69IXSTASSCCOXSOVDGS0000000000020000111017001500001101000003154982                                      11101713901 0
+2200030000                                                                                        KREDBEBB                   1 0
+2300030000BE32135468465432                     KLANT3 NAAMï                                                                  0 1
+3100030001OL69IXSTASSCCOXSOVDGS001500001001KLANT3 NAAMï                                                                      1 0
+3200030001KLEIN WEGELKEN        1            8423    LEUVEN                                                                  0 0
+2100040000KACS00321DSCTIXEIKDVA0000000000030000111017001500001101000002133131                                      11101713901 0
+2200040000                                                                                        GEBABEBB                   1 0
+2300040000BE23156453132168                     KLANT4 - NAAM4 MET                                                            0 1
+3100040001KACS00321DSCTIXEIKDVA001500001001KLANT4 - NAAM4 MET                                                                1 0
+3200040001EIKENSTRAAT 25                     2141 BRUGGE                                                                     0 0
+8139138536152215 EUR0BE                  0000000017832120111017                                                                0
+9               000022000000000000000000000000080000                                                                           1

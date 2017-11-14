@@ -26,8 +26,6 @@ interface TransformationInterface
 
 	public function transformToAccount(Data\Raw\Identification $coda_identification, Data\Raw\OriginalSituation $coda_original_situation);
 
-	public function transformToOtherPartyAccount(Data\Raw\Transaction22 $coda_line22, Data\Raw\Transaction23 $coda_line23 = null);
-
 	public function transformMessages(array $coda_messages);
 
 	public function transformTransaction(Data\Raw\Transaction $coda_transaction);
