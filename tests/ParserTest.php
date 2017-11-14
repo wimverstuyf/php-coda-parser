@@ -2,6 +2,8 @@
 
 namespace Codelicious\Tests\Coda;
 
+use Codelicious\Coda\Parser;
+
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
     private function getSample1()
@@ -30,7 +32,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSample1()
     {
-        $parser = new \Codelicious\Coda\Parser();
+        $parser = new Parser();
         $parser->setDetailParser(array());
 
         $result = $parser->parse($this->getSample1());
@@ -70,10 +72,9 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($tr3->line33);
     }
 
-
     public function testSample1SimpleFormat()
     {
-        $parser = new \Codelicious\Coda\Parser();
+        $parser = new Parser();
 
         $result = $parser->parse($this->getSample1(), "simple");
 
@@ -108,7 +109,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetParserDetail()
     {
-        $parser = new \Codelicious\Coda\Parser();
+        $parser = new Parser();
         $parsers = $parser->getDetailParsers();
         array_pop($parsers);
 
@@ -116,4 +117,51 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $parser->setDetailParser($parsers);
         $this->assertCount(count($parsers), $parser->getDetailParsers());
     }
+    
+	public function testMessageOnMultipleLinesMovementBlock()
+	{
+		$parser = new Parser();
+		$result = $parser->parseFile('Samples/sample3.cod', 'simple');
+		
+		$this->assertEquals("Message goes here and continues here or here", $result[0]->transactions[0]->message);
+	}
+	
+	public function testMessageOnMultipleLinesInformationBlock()
+	{
+		$parser = new Parser();
+		$result = $parser->parseFile('Samples/sample4.cod', 'simple');
+		
+		$this->assertEquals("Europese overschrijving (zie bijlage)  + 17.233,54Van: COMPANY BLABLABLAH BVBA - BE64NOT PR", $result[0]->transactions[0]->message);
+	}
+	
+	
+	public function testNoAccount()
+	{
+		$parser = new Parser();
+		$result = $parser->parseFile('Samples/sample2.cod', 'simple');
+		
+		$this->assertEmpty($result[0]->transactions[0]->account->name);
+		$this->assertEmpty($result[0]->transactions[0]->account->company_id);
+		$this->assertEquals("Zichtrekening nr  21354598   - 2,11Justification in annex 00001680", $result[0]->transactions[0]->message);
+	}
+	
+	public function testHas4EntriesWithStructuredMessage()
+	{
+		$parser = new Parser();
+		$result = $parser->parseFile('Samples/sample1.cod', 'simple');
+		
+		$this->assertCount(1, $result);
+		$this->assertEquals(17752.12, $result[0]->original_balance);
+		$this->assertEquals(17832.12, $result[0]->new_balance);
+		$this->assertEquals("2017-10-11", $result[0]->date);
+		$this->assertEmpty($result[0]->free_message);
+		
+		$this->assertCount(4, $result[0]->transactions);
+		$this->assertEmpty($result[0]->transactions[0]->message);
+		$this->assertEquals("000003505158", $result[0]->transactions[0]->structured_message);
+		$this->assertEquals(5, $result[0]->transactions[0]->amount);
+		$this->assertEquals("KLANT1 MET NAAM1", $result[0]->transactions[0]->account->name);
+		$this->assertEquals("BE22313215646432", $result[0]->transactions[0]->account->number);
+	}
+
 }
