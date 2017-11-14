@@ -121,7 +121,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 	public function testMessageOnMultipleLinesMovementBlock()
 	{
 		$parser = new Parser();
-		$result = $parser->parseFile('Samples/sample3.cod', 'simple');
+		$result = $parser->parseFile($this->getSamplePath('sample3.cod'), 'simple');
 		
 		$this->assertEquals("Message goes here and continues here or here", $result[0]->transactions[0]->message);
 	}
@@ -129,7 +129,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 	public function testMessageOnMultipleLinesInformationBlock()
 	{
 		$parser = new Parser();
-		$result = $parser->parseFile('Samples/sample4.cod', 'simple');
+		$result = $parser->parseFile($this->getSamplePath('sample4.cod'), 'simple');
 		
 		$this->assertEquals("Europese overschrijving (zie bijlage)  + 17.233,54Van: COMPANY BLABLABLAH BVBA - BE64NOT PR", $result[0]->transactions[0]->message);
 	}
@@ -138,7 +138,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 	public function testNoAccount()
 	{
 		$parser = new Parser();
-		$result = $parser->parseFile('Samples/sample2.cod', 'simple');
+		$result = $parser->parseFile($this->getSamplePath('sample2.cod'), 'simple');
 		
 		$this->assertEmpty($result[0]->transactions[0]->account->name);
 		$this->assertEmpty($result[0]->transactions[0]->account->company_id);
@@ -148,7 +148,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 	public function testHas4EntriesWithStructuredMessage()
 	{
 		$parser = new Parser();
-		$result = $parser->parseFile('Samples/sample1.cod', 'simple');
+		$result = $parser->parseFile($this->getSamplePath('sample1.cod'), 'simple');
 		
 		$this->assertCount(1, $result);
 		$this->assertEquals(17752.12, $result[0]->original_balance);
@@ -162,6 +162,11 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(5, $result[0]->transactions[0]->amount);
 		$this->assertEquals("KLANT1 MET NAAM1", $result[0]->transactions[0]->account->name);
 		$this->assertEquals("BE22313215646432", $result[0]->transactions[0]->account->number);
+	}
+	
+	private function getSamplePath($sampleFile)
+	{
+		return __DIR__ . DIRECTORY_SEPARATOR .'Samples' . DIRECTORY_SEPARATOR . $sampleFile;
 	}
 
 }
