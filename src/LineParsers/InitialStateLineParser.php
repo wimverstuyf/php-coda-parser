@@ -1,6 +1,9 @@
 <?php
 
 namespace Codelicious\Coda\LineParsers;
+
+use function Codelicious\Coda\Helpers\formatDateString;
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\InitialStateLine;
 
 /**
@@ -20,24 +23,24 @@ class InitialStateLineParser implements LineParserInterface
 		$negative = substr($codaLine, 42, 1) == "1" ? -1 : 1;
 		
 		list($accountIsIban, $accountNumber, $accountCurrency, $accountCountry) =
-			$this->add_account_info(substr($codaLine, 5, 37), $accountNumberType);
+			$this->addAccountInfo(substr($codaLine, 5, 37), $accountNumberType);
 		
 		return new InitialStateLine(
-			trim(substr($codaLine, 125, 3)),
-			trim(substr($codaLine, 2, 3)),
-			trim(substr($codaLine, 64, 26)),
-			trim(substr($codaLine, 90, 35)),
+			getTrimmedData($codaLine, 125, 3),
+			getTrimmedData($codaLine, 2, 3),
+			getTrimmedData($codaLine, 64, 26),
+			getTrimmedData($codaLine, 90, 35),
 			$accountNumberType,
 			$accountNumber,
 			$accountCurrency,
 			$accountCountry,
 			$accountIsIban,
 			substr($codaLine, 43, 15)*$negative / 1000,
-			"20" . substr($codaLine, 62, 2) . "-" . substr($codaLine, 60, 2) . "-" . substr($codaLine, 58, 2)
+			formatDateString(substr($codaLine, 58, 6))
 		);
 	}
 
-	private function add_account_info(string $account_info, string $account_type)
+	private function addAccountInfo(string $account_info, string $account_type)
 	{
 		$accountIsIban = false;
 		$accountNumber = "";

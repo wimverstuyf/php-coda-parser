@@ -2,8 +2,8 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\coda2Date;
-use function Codelicious\Coda\Helpers\codaStr2Data;
+use function Codelicious\Coda\Helpers\formatDateString;
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\TransactionPart1Line;
 use Codelicious\Coda\Statements\SepaDirectDebit;
@@ -22,7 +22,7 @@ class TransactionPart1LineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		$negative = substr($codaLine, 31, 1) == "1" ? -1 : 1;
-		$hasStructuredMessage = (codaStr2Data($codaLine, 61, 1) == "1")?true:false;
+		$hasStructuredMessage = (getTrimmedData($codaLine, 61, 1) == "1")?true:false;
 		if ($hasStructuredMessage) {
 			$structuredMessageType = substr($codaLine, 62, 3);
 			$structuredMessageFull = substr($codaLine, 65, 50);
@@ -32,8 +32,8 @@ class TransactionPart1LineParser implements LineParserInterface
 			$message = trimSpace(substr($codaLine, 62, 53));
 		}
 		
-		$transactionCode = codaStr2Data($codaLine, 53, 8);
-		$transactionCodeFamily = codaStr2Data($transactionCode, 3, 2);
+		$transactionCode = getTrimmedData($codaLine, 53, 8);
+		$transactionCodeFamily = getTrimmedData($transactionCode, 3, 2);
 		
 		if ($hasStructuredMessage && $structuredMessageType == '127')
 		{
@@ -41,24 +41,24 @@ class TransactionPart1LineParser implements LineParserInterface
 		}
 		
 		return new TransactionPart1Line(
-			codaStr2Data($codaLine, 2, 4),
-			codaStr2Data($codaLine, 6, 4),
-			codaStr2Data($codaLine, 10, 21),
-			codaStr2Data($codaLine, 32, 15) * $negative / 1000,
-			coda2Date(codaStr2Data($codaLine, 47, 6)),
+			getTrimmedData($codaLine, 2, 4),
+			getTrimmedData($codaLine, 6, 4),
+			getTrimmedData($codaLine, 10, 21),
+			getTrimmedData($codaLine, 32, 15) * $negative / 1000,
+			formatDateString(getTrimmedData($codaLine, 47, 6)),
 			$transactionCode,
-			codaStr2Data($transactionCode, 1, 2),
+			getTrimmedData($transactionCode, 1, 2),
 			$transactionCodeFamily,
-			codaStr2Data($transactionCode, 5, 3),
-			codaStr2Data($transactionCode, 0, 1),
+			getTrimmedData($transactionCode, 5, 3),
+			getTrimmedData($transactionCode, 0, 1),
 			$message,
 			$hasStructuredMessage,
 			$structuredMessageType,
 			$structuredMessageFull,
 			$structuredMessage,
-			coda2Date(codaStr2Data($codaLine, 115, 6)),
-			codaStr2Data($codaLine, 121, 3),
-			codaStr2Data($codaLine, 124, 1),
+			formatDateString(getTrimmedData($codaLine, 115, 6)),
+			getTrimmedData($codaLine, 121, 3),
+			getTrimmedData($codaLine, 124, 1),
 			$sepaInfo
 		);
 	}
@@ -76,15 +76,15 @@ class TransactionPart1LineParser implements LineParserInterface
 		}
 		
 		return new SepaDirectDebit(
-			coda2Date(codaStr2Data($structuredMessageFull, 0, 6)),
-			codaStr2Data($structuredMessageFull, 6, 1),
-			codaStr2Data($structuredMessageFull, 7, 1),
-			codaStr2Data($structuredMessageFull, 8, 1),
-			codaStr2Data($structuredMessageFull, 9, 35),
-			codaStr2Data($structuredMessageFull, 44, 35),
-			codaStr2Data($structuredMessageFull, 79, 62),
-			codaStr2Data($structuredMessageFull, 141, 1),
-			codaStr2Data($structuredMessageFull, 142, 4)
+			formatDateString(getTrimmedData($structuredMessageFull, 0, 6)),
+			getTrimmedData($structuredMessageFull, 6, 1),
+			getTrimmedData($structuredMessageFull, 7, 1),
+			getTrimmedData($structuredMessageFull, 8, 1),
+			getTrimmedData($structuredMessageFull, 9, 35),
+			getTrimmedData($structuredMessageFull, 44, 35),
+			getTrimmedData($structuredMessageFull, 79, 62),
+			getTrimmedData($structuredMessageFull, 141, 1),
+			getTrimmedData($structuredMessageFull, 142, 4)
 		);
 	}
 	

@@ -2,6 +2,7 @@
 
 namespace Codelicious\Coda\LineParsers;
 
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\InformationPart1Line;
 
@@ -28,10 +29,10 @@ class InformationPart1LineParser implements LineParserInterface
 		}
 		
 		return new InformationPart1Line(
-			trim(substr($codaLine, 2, 4)),
-			trim(substr($codaLine, 6, 4)),
-			trim(substr($codaLine, 10, 21)),
-			trim(substr($codaLine, 31, 8)),
+			getTrimmedData($codaLine, 2, 4),
+			getTrimmedData($codaLine, 6, 4),
+			getTrimmedData($codaLine, 10, 21),
+			getTrimmedData($codaLine, 31, 8),
 			$message,
 			$hasStructuredMessage,
 			$structuredMessageType,

@@ -2,6 +2,7 @@
 
 namespace Codelicious\Coda\LineParsers;
 
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\TransactionPart2Line;
 
@@ -19,15 +20,15 @@ class TransactionPart2LineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new TransactionPart2Line(
-			trim(substr($codaLine, 2, 4)),
-			trim(substr($codaLine, 6, 4)),
+			getTrimmedData($codaLine, 2, 4),
+			getTrimmedData($codaLine, 6, 4),
 			trimSpace(substr($codaLine, 10, 53)),
-			trim(substr($codaLine, 63, 35)),
-			trim(substr($codaLine, 98, 11)),
-			trim(substr($codaLine, 112, 1)),
-			trim(substr($codaLine, 113, 4)),
-			trim(substr($codaLine, 117, 4)),
-			trim(substr($codaLine, 121, 4))
+			getTrimmedData($codaLine, 63, 35),
+			getTrimmedData($codaLine, 98, 11),
+			getTrimmedData($codaLine, 112, 1),
+			getTrimmedData($codaLine, 113, 4),
+			getTrimmedData($codaLine, 117, 4),
+			getTrimmedData($codaLine, 121, 4)
 		);
 	}
 	

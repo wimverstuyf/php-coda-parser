@@ -2,6 +2,7 @@
 
 namespace Codelicious\Coda\LineParsers;
 
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\MessageLine;
 
 /**
@@ -20,7 +21,7 @@ class MessageLineParser implements LineParserInterface
 		return new MessageLine(
 			substr($codaLine, 2, 4),
 			substr($codaLine, 6, 4),
-			trim(substr($codaLine, 32, 80))
+			getTrimmedData($codaLine, 32, 80)
 		);
 	}
 	

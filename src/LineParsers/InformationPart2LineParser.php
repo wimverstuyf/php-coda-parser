@@ -2,6 +2,7 @@
 
 namespace Codelicious\Coda\LineParsers;
 
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\InformationPart2Line;
 
@@ -19,8 +20,8 @@ class InformationPart2LineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new InformationPart2Line(
-			trim(substr($codaLine, 2, 4)),
-			trim(substr($codaLine, 6, 4)),
+			getTrimmedData($codaLine, 2, 4),
+			getTrimmedData($codaLine, 6, 4),
 			trimSpace(substr($codaLine, 10, 105))
 		);
 	}

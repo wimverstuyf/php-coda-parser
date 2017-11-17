@@ -52,7 +52,7 @@ function trimSpace($string)
 }
 
 
-function codaStr2Data($data, $startPosition, $length)
+function getTrimmedData($data, $startPosition, $length)
 {
 	return trim(substr($data, $startPosition, $length));
 }
@@ -63,7 +63,7 @@ function codaStr2Data($data, $startPosition, $length)
  *
  * @return string
  */
-function coda2Date($dateCoda)
+function formatDateString($dateCoda)
 {
 	return '20' . substr($dateCoda, 4, 2) . '-' . substr($dateCoda, 2, 2) . '-' . substr($dateCoda, 0, 2);
 }

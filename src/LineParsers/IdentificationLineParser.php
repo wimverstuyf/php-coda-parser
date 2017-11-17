@@ -1,6 +1,9 @@
 <?php
 
 namespace Codelicious\Coda\LineParsers;
+
+use function Codelicious\Coda\Helpers\formatDateString;
+use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\IdentificationLine;
 
 /**
@@ -17,18 +20,18 @@ class IdentificationLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new IdentificationLine(
-			"20" . substr($codaLine, 9, 2) . "-" . substr($codaLine, 7, 2) . "-" . substr($codaLine, 5, 2),
-			trim(substr($codaLine, 11, 3)),
+			formatDateString(substr($codaLine, 5, 6)),
+			getTrimmedData($codaLine, 11, 3),
 			substr($codaLine, 16, 1) == "D"?true:false,
-			trim(substr($codaLine, 14, 2)),
-			trim(substr($codaLine, 24, 10)),
-			trim(substr($codaLine, 34, 26)),
-			trim(substr($codaLine, 60, 11)),
-			trim(substr($codaLine, 71, 11)),
-			trim(substr($codaLine, 83, 5)),
-			trim(substr($codaLine, 88, 16)),
-			trim(substr($codaLine, 104, 16)),
-			trim(substr($codaLine, 127, 1))
+			getTrimmedData($codaLine, 14, 2),
+			getTrimmedData($codaLine, 24, 10),
+			getTrimmedData($codaLine, 34, 26),
+			getTrimmedData($codaLine, 60, 11),
+			getTrimmedData($codaLine, 71, 11),
+			getTrimmedData($codaLine, 83, 5),
+			getTrimmedData($codaLine, 88, 16),
+			getTrimmedData($codaLine, 104, 16),
+			getTrimmedData($codaLine, 127, 1)
 		);
 	}
 	
