@@ -37,7 +37,7 @@ class TransactionPart1LineParser implements LineParserInterface
 		}
 		
 		$transactionCode = getTrimmedData($codaLine, 53, 8);
-		$transactionCodeFamily = getTrimmedData($transactionCode, 3, 2);
+		$transactionCodeFamily = getTrimmedData($transactionCode, 1, 2);
 		
 		$sepaInfo = null;
 		if ($hasStructuredMessage && $structuredMessageType == '127')
@@ -52,10 +52,10 @@ class TransactionPart1LineParser implements LineParserInterface
 			getTrimmedData($codaLine, 32, 15) * $negative / 1000,
 			formatDateString(getTrimmedData($codaLine, 47, 6)),
 			$transactionCode,
-			getTrimmedData($transactionCode, 1, 2),
+			getTrimmedData($transactionCode, 0, 1), // type
 			$transactionCodeFamily,
-			getTrimmedData($transactionCode, 5, 3),
-			getTrimmedData($transactionCode, 0, 1),
+			getTrimmedData($transactionCode, 3, 2), // operation
+			getTrimmedData($transactionCode, 5, 3), // category
 			$message,
 			$hasStructuredMessage,
 			$structuredMessageType,

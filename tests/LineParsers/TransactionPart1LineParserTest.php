@@ -78,7 +78,7 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('05', $result->getTransactionCodeFamily());
 		$this->assertEquals('03', $result->getTransactionCodeOperation());
 		$this->assertEquals('000', $result->getTransactionCodeCategory());
-		$this->assertNull($result->getMessage());
+		$this->assertEmpty($result->getMessage());
 		$this->assertTrue($result->isHasStructuredMessage());
 		$this->assertEquals('127', $result->getStructuredMessageType());
 		$this->assertEquals('050815112BEA123XXXXXXXXXXX                  M123  ', $result->getStructuredMessageFull());
