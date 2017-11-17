@@ -2,13 +2,13 @@
 
 namespace Codelicious\Tests\Coda\DetailParsers;
 
-use \Codelicious\Coda\DetailParsers\Transaction21SepaDirectDebitParser;
+use \Codelicious\Coda\LineParsers\TransactionPart1SepaDirectDebitParser;
 
 class Transaction21SepaDirectDebitParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-			$parser = new Transaction21SepaDirectDebitParser();
+			$parser = new TransactionPart1SepaDirectDebitParser();
 
 			$sample = '2100280000VAAS00026BSDDXXXXXXXX1000000000050000050815005030001127050815112BEA123XXXXXXXXXXX                  M123  25121421401 0';
 

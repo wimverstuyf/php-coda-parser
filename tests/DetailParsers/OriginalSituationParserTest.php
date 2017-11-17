@@ -6,7 +6,7 @@ class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSample1()
 	{
-		$parser = new \Codelicious\Coda\DetailParsers\OriginalSituationParser();
+		$parser = new \Codelicious\Coda\LineParsers\InitialStateLineParser();
 
 		$sample = "10155001548226815 EUR0BE                  0000000004004100241214CODELICIOUS               PROFESSIONAL ACCOUNT               255";
 
@@ -29,7 +29,7 @@ class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
 
 	public function testAccountIsIbanIsSetCorrectly ()
 	{
-		$parser = new \Codelicious\Coda\DetailParsers\OriginalSituationParser();
+		$parser = new \Codelicious\Coda\LineParsers\InitialStateLineParser();
 
 		$sample = "13155001548226815 EUR0BE                  0000000004004100241214CODELICIOUS               PROFESSIONAL ACCOUNT               255";
 

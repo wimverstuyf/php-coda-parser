@@ -6,7 +6,7 @@ class Transaction22ParserTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSample1()
 	{
-		$parser = new \Codelicious\Coda\DetailParsers\Transaction22Parser();
+		$parser = new \Codelicious\Coda\LineParsers\TransactionPart2LineParser();
 
 		$sample = "2200010000  ANOTHER MESSAGE                                           54875                       GEBCEEBB                   1 0";
 

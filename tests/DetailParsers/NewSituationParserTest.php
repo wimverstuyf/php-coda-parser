@@ -6,7 +6,7 @@ class NewSituationParserTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSample1()
 	{
-        $parser = new \Codelicious\Coda\DetailParsers\NewSituationParser();
+        $parser = new \Codelicious\Coda\LineParsers\NewStateLineParser();
 
         $sample = "8225001548226815 EUR0BE                  1000000500012100120515                                                                0";
 

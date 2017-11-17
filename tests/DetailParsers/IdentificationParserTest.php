@@ -6,7 +6,7 @@ class IdentificationParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $parser = new \Codelicious\Coda\DetailParsers\IdentificationParser();
+        $parser = new \Codelicious\Coda\LineParsers\IdentificationLineParser();
 
         $sample = "0000018011520105        0938409934CODELICIOUS               GEBABEBB   09029308273 00001          984309          834080       2";
 

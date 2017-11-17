@@ -6,7 +6,7 @@ class Transaction33ParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $parser = new \Codelicious\Coda\DetailParsers\Transaction33Parser();
+        $parser = new \Codelicious\Coda\LineParsers\InformationPart3LineParser();
 
         $sample = "3300010001SOME INFORMATION ABOUT THIS TRANSACTION                                                                            0 0";
 

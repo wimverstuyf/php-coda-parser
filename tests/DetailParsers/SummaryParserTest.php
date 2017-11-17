@@ -6,7 +6,7 @@ class SummaryParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $parser = new \Codelicious\Coda\DetailParsers\SummaryParser();
+        $parser = new \Codelicious\Coda\LineParsers\EndSummaryLineParser();
 
         $sample = "9               000015000000016837520000000003967220                                                                           1";
 

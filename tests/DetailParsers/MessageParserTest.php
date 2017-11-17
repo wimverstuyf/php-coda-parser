@@ -6,7 +6,7 @@ class MessageParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
-        $parser = new \Codelicious\Coda\DetailParsers\MessageParser();
+        $parser = new \Codelicious\Coda\LineParsers\MessageLineParser();
 
         $sample = "4 00010005                      THIS IS A PUBLIC MESSAGE                                                                       0";
 
@@ -21,7 +21,7 @@ class MessageParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSample2()
     {
-        $parser = new \Codelicious\Coda\DetailParsers\MessageParser();
+        $parser = new \Codelicious\Coda\LineParsers\MessageLineParser();
 
         $sample = "4 00020000                                              ACCOUNT INFORMATION                                                    1";
 
