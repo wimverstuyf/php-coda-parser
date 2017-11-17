@@ -2,7 +2,7 @@
 
 namespace Codelicious\Tests\Coda\LineParsers;
 
-class NewSituationParserTest extends \PHPUnit_Framework_TestCase
+class NewStateLineParserTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSample1()
 	{

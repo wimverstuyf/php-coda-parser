@@ -4,7 +4,7 @@ namespace Codelicious\Tests\Coda\LineParsers;
 
 use Codelicious\Coda\LineParsers\InitialStateLineParser;
 
-class OriginalSituationParserTest extends \PHPUnit_Framework_TestCase
+class InitialStateLineParserTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSample1()
 	{

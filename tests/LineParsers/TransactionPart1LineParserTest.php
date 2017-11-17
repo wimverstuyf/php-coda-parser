@@ -5,7 +5,7 @@ namespace Codelicious\Tests\Coda\LineParsers;
 use Codelicious\Coda\LineParsers\TransactionPart1LineParser;
 use Codelicious\Coda\Statements\SepaDirectDebit;
 
-class Transaction21ParserTest extends \PHPUnit_Framework_TestCase
+class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testSample1()
     {
