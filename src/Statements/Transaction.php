@@ -18,7 +18,7 @@ class Transaction
 	/** @var SepaDirectDebit|null */
 	private $sepaDirectDebit;
 	
-	public function __construct($account, $transactionDate, $valutaDate, $amount, $message, $structuredMessage, $sepaDirectDebit)
+	public function __construct(AccountOtherParty $account, $transactionDate, $valutaDate, $amount, $message, $structuredMessage, $sepaDirectDebit)
 	{
 		$this->account = $account;
 		$this->transactionDate = $transactionDate;
@@ -29,6 +29,9 @@ class Transaction
 		$this->sepaDirectDebit = $sepaDirectDebit;
 	}
 	
+	/**
+	 * @return AccountOtherParty
+	 */
 	public function getAccount()
 	{
 		return $this->account;

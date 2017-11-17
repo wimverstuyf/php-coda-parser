@@ -3,6 +3,7 @@
 namespace Codelicious\Coda\Helpers;
 
 use Codelicious\Coda\Lines\LineInterface;
+use Codelicious\Coda\Lines\LineType;
 
 /**
  * @param array $lines
@@ -11,12 +12,12 @@ use Codelicious\Coda\Lines\LineInterface;
  */
 function getFirstLineOfType(array $lines, LineType $type)
 {
-	$line = reset(array_filter(
+	$filteredLines = array_filter(
 		$lines,
 		function(LineInterface $line) use ($type) {
 			return $line->getType() == $type;
-		})
-	);
+		});
+	$line = reset($filteredLines);
 	
 	return $line?$line:null;
 }

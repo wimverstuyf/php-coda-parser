@@ -20,6 +20,10 @@ class InformationPart1LineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		$hasStructuredMessage = (substr($codaLine, 39, 1) == "1")?TRUE:FALSE;
+		$structuredMessageType = "";
+		$structuredMessageFull = "";
+		$structuredMessage = "";
+		$message = "";
 		if ($hasStructuredMessage) {
 			$structuredMessageType = substr($codaLine, 40, 3);
 			$structuredMessageFull = substr($codaLine, 43, 70);

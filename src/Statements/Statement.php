@@ -52,6 +52,9 @@ class Statement
 		return $this->informationalMessage;
 	}
 	
+	/**
+	 * @return Transaction[]
+	 */
 	public function getTransactions(): array
 	{
 		return $this->transactions;

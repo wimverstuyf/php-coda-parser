@@ -23,6 +23,10 @@ class TransactionPart1LineParser implements LineParserInterface
 	{
 		$negative = substr($codaLine, 31, 1) == "1" ? -1 : 1;
 		$hasStructuredMessage = (getTrimmedData($codaLine, 61, 1) == "1")?true:false;
+		$structuredMessageType = "";
+		$structuredMessageFull = "";
+		$structuredMessage = "";
+		$message = "";
 		if ($hasStructuredMessage) {
 			$structuredMessageType = substr($codaLine, 62, 3);
 			$structuredMessageFull = substr($codaLine, 65, 50);
@@ -35,6 +39,7 @@ class TransactionPart1LineParser implements LineParserInterface
 		$transactionCode = getTrimmedData($codaLine, 53, 8);
 		$transactionCodeFamily = getTrimmedData($transactionCode, 3, 2);
 		
+		$sepaInfo = null;
 		if ($hasStructuredMessage && $structuredMessageType == '127')
 		{
 			$sepaInfo = $this->parseSepaDirectDebit($transactionCodeFamily, $structuredMessageType, $structuredMessageFull);

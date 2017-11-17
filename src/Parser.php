@@ -71,7 +71,7 @@ class Parser implements ParserInterface
 		$idx = -1;
 		
 		foreach($lines as $line) {
-			if (!$statements || $line->getType() == LineType::Identification) {
+			if (!$statements || $line->getType()->getValue() == LineType::Identification) {
 				$idx += 1;
 				$statements[$idx] = [];
 			}
