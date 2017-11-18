@@ -86,7 +86,7 @@ class TransactionParser
 			]);
 		
 		$message = implode('', array_map(function($line) {
-				$line->getMessage();
+				return $line->getMessage();
 			}, $transactionLines));
 		
 		if (!$message) {
@@ -99,7 +99,7 @@ class TransactionParser
 				]);
 			
 			$message = implode('', array_map(function($line) {
-				$line->getMessage();
+				return $line->getMessage();
 			}, $informationLines));
 		}
 		

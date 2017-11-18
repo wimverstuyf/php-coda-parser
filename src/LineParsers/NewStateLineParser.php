@@ -19,18 +19,18 @@ class NewStateLineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$negative = substr($codaLine, 41, 1) == "1" ? -1 : 1;
+		$negative = mb_substr($codaLine, 41, 1) == "1" ? -1 : 1;
 		
 		return new NewStateLine(
 			getTrimmedData($codaLine, 1, 3),
-			substr($codaLine, 4, 37), // don't further parse info as it is already present in coda1-line
-			substr($codaLine, 42, 15)*$negative / 1000,
-			formatDateString(substr($codaLine, 57, 6))
+			mb_substr($codaLine, 4, 37), // don't further parse info as it is already present in coda1-line
+			mb_substr($codaLine, 42, 15)*$negative / 1000,
+			formatDateString(mb_substr($codaLine, 57, 6))
 		);
 	}
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 1) == "8";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "8";
 	}
 }

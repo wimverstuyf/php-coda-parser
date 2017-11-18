@@ -42,8 +42,8 @@ class AccountOtherPartyParser
 			if ($number) {
 				$lastSpace = strrpos($number, " ");
 				if ($lastSpace !== false) {
-					$currency = trim(substr($number, $lastSpace));
-					$number = trim(substr($number, 0, $lastSpace));
+					$currency = trim(mb_substr($number, $lastSpace));
+					$number = trim(mb_substr($number, 0, $lastSpace));
 				}
 			}
 		}

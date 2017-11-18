@@ -19,14 +19,14 @@ class MessageLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new MessageLine(
-			substr($codaLine, 2, 4),
-			substr($codaLine, 6, 4),
+			mb_substr($codaLine, 2, 4),
+			mb_substr($codaLine, 6, 4),
 			getTrimmedData($codaLine, 32, 80)
 		);
 	}
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 1) == "4";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "4";
 	}
 }

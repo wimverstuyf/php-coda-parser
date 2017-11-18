@@ -17,16 +17,16 @@ class MessageParser
 	 */
 	public function parse(array $lines): string
 	{
-		$message = "";
+		$messageString = "";
 		
 		foreach ($lines as $message) {
 			$trimmed_content = trim($message->getContent());
-			if ($trimmed_content && $message) {
-				$message .= " ";
+			if ($trimmed_content && $messageString) {
+				$messageString .= " ";
 			}
-			$message .= $trimmed_content;
+			$messageString .= $trimmed_content;
 		}
 		
-		return $message;
+		return $messageString;
 	}
 }

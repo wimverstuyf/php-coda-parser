@@ -21,19 +21,19 @@ class TransactionPart1LineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$negative = substr($codaLine, 31, 1) == "1" ? -1 : 1;
+		$negative = mb_substr($codaLine, 31, 1) == "1" ? -1 : 1;
 		$hasStructuredMessage = (getTrimmedData($codaLine, 61, 1) == "1")?true:false;
 		$structuredMessageType = "";
 		$structuredMessageFull = "";
 		$structuredMessage = "";
 		$message = "";
 		if ($hasStructuredMessage) {
-			$structuredMessageType = substr($codaLine, 62, 3);
-			$structuredMessageFull = substr($codaLine, 65, 50);
+			$structuredMessageType = mb_substr($codaLine, 62, 3);
+			$structuredMessageFull = mb_substr($codaLine, 65, 50);
 			$structuredMessage = $this->parseStructuredMessage($structuredMessageFull, $structuredMessageType);
 		}
 		else {
-			$message = trimSpace(substr($codaLine, 62, 53));
+			$message = trimSpace(mb_substr($codaLine, 62, 53));
 		}
 		
 		$transactionCode = getTrimmedData($codaLine, 53, 8);
@@ -103,7 +103,7 @@ class TransactionPart1LineParser implements LineParserInterface
 		$structured_message = null;
 
 		if ($type == "101" || $type == "102") {
-			$structured_message = substr($message, 0, 12);
+			$structured_message = mb_substr($message, 0, 12);
 		}
 
 		return $structured_message;
@@ -111,6 +111,6 @@ class TransactionPart1LineParser implements LineParserInterface
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 2) == "21";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 2) == "21";
 	}
 }

@@ -49,13 +49,16 @@ function trimSpace($string)
 {
 	$string = preg_replace('/^ +/', ' ', $string);
 	$string = preg_replace('/ +$/', ' ', $string);
+	if ($string === " ") {
+		$string = "";
+	}
 	return $string;
 }
 
 
 function getTrimmedData($data, $startPosition, $length)
 {
-	return trim(substr($data, $startPosition, $length));
+	return trim(mb_substr($data, $startPosition, $length));
 }
 
 /**
@@ -66,5 +69,5 @@ function getTrimmedData($data, $startPosition, $length)
  */
 function formatDateString($dateCoda)
 {
-	return '20' . substr($dateCoda, 4, 2) . '-' . substr($dateCoda, 2, 2) . '-' . substr($dateCoda, 0, 2);
+	return '20' . mb_substr($dateCoda, 4, 2) . '-' . mb_substr($dateCoda, 2, 2) . '-' . mb_substr($dateCoda, 0, 2);
 }

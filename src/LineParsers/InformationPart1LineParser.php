@@ -19,17 +19,17 @@ class InformationPart1LineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$hasStructuredMessage = (substr($codaLine, 39, 1) == "1")?TRUE:FALSE;
+		$hasStructuredMessage = (mb_substr($codaLine, 39, 1) == "1")?TRUE:FALSE;
 		$structuredMessageType = "";
 		$structuredMessageFull = "";
 		$structuredMessage = "";
 		$message = "";
 		if ($hasStructuredMessage) {
-			$structuredMessageType = substr($codaLine, 40, 3);
-			$structuredMessageFull = substr($codaLine, 43, 70);
+			$structuredMessageType = mb_substr($codaLine, 40, 3);
+			$structuredMessageFull = mb_substr($codaLine, 43, 70);
 			$structuredMessage = $this->parseStructuredMessage($structuredMessageFull, $structuredMessageType);
 		} else {
-			$message = trimSpace(substr($codaLine, 40, 73));
+			$message = trimSpace(mb_substr($codaLine, 40, 73));
 		}
 		
 		return new InformationPart1Line(
@@ -50,9 +50,9 @@ class InformationPart1LineParser implements LineParserInterface
 		$structuredMessage = null;
 
 		if ($type == "101" || $type == "102") {
-			$structuredMessage = substr($message, 0, 12);
+			$structuredMessage = mb_substr($message, 0, 12);
 		} elseif ($type == "105") {
-			$structuredMessage = substr($message, 42, 12);
+			$structuredMessage = mb_substr($message, 42, 12);
 		}
 
 		return $structuredMessage;
@@ -60,6 +60,6 @@ class InformationPart1LineParser implements LineParserInterface
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 2) == "31";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 2) == "31";
 	}
 }

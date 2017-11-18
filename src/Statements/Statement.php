@@ -17,13 +17,13 @@ class Statement
 	private $transactions;
 	private $informationMessage;
 	
-	public function __construct($date, $account, $initialBalance, $newBalance, $informationMessage, array $transactions)
+	public function __construct($date, $account, $initialBalance, $newBalance, $informationalMessage, array $transactions)
 	{
 		$this->date = $date;
 		$this->account = $account;
 		$this->initialBalance = $initialBalance;
 		$this->newBalance = $newBalance;
-		$this->informationMessage = $informationMessage;
+		$this->informationalMessage = $informationalMessage;
 		$this->transactions = $transactions;
 	}
 	
@@ -32,7 +32,7 @@ class Statement
 		return $this->date;
 	}
 	
-	public function getAccount()
+	public function getAccount(): Account
 	{
 		return $this->account;
 	}

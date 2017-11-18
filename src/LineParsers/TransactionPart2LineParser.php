@@ -22,7 +22,7 @@ class TransactionPart2LineParser implements LineParserInterface
 		return new TransactionPart2Line(
 			getTrimmedData($codaLine, 2, 4),
 			getTrimmedData($codaLine, 6, 4),
-			trimSpace(substr($codaLine, 10, 53)),
+			trimSpace(mb_substr($codaLine, 10, 53)),
 			getTrimmedData($codaLine, 63, 35),
 			getTrimmedData($codaLine, 98, 11),
 			getTrimmedData($codaLine, 112, 1),
@@ -34,6 +34,6 @@ class TransactionPart2LineParser implements LineParserInterface
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 2) == "22";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 2) == "22";
 	}
 }

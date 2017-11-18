@@ -22,12 +22,12 @@ class InformationPart2LineParser implements LineParserInterface
 		return new InformationPart2Line(
 			getTrimmedData($codaLine, 2, 4),
 			getTrimmedData($codaLine, 6, 4),
-			trimSpace(substr($codaLine, 10, 105))
+			trimSpace(mb_substr($codaLine, 10, 105))
 		);
 	}
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 2) == "32";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 2) == "32";
 	}
 }

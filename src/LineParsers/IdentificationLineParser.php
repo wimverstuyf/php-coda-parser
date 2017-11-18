@@ -20,9 +20,9 @@ class IdentificationLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new IdentificationLine(
-			formatDateString(substr($codaLine, 5, 6)),
+			formatDateString(mb_substr($codaLine, 5, 6)),
 			getTrimmedData($codaLine, 11, 3),
-			substr($codaLine, 16, 1) == "D"?true:false,
+			mb_substr($codaLine, 16, 1) == "D"?true:false,
 			getTrimmedData($codaLine, 14, 2),
 			getTrimmedData($codaLine, 24, 10),
 			getTrimmedData($codaLine, 34, 26),
@@ -43,6 +43,6 @@ class IdentificationLineParser implements LineParserInterface
 	 */
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 1) == "0";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "0";
 	}
 }

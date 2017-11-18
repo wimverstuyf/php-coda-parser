@@ -17,13 +17,13 @@ class EndSummaryLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new EndSummaryLine(
-			substr($codaLine, 22, 15)*1/1000, // taken from the account (=debetomzet)
-			substr($codaLine, 37, 15)*1/1000 // added to the account (=creditomzet)
+			mb_substr($codaLine, 22, 15)*1/1000, // taken from the account (=debetomzet)
+			mb_substr($codaLine, 37, 15)*1/1000 // added to the account (=creditomzet)
 		);
 	}
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 1) == "9";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "9";
 	}
 }

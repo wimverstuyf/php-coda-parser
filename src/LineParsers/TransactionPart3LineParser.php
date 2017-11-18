@@ -24,12 +24,12 @@ class TransactionPart3LineParser implements LineParserInterface
 			getTrimmedData($codaLine, 6, 4),
 			getTrimmedData($codaLine, 10, 37),
 			getTrimmedData($codaLine, 47, 35),
-			trimSpace(substr($codaLine, 82, 43))
+			trimSpace(mb_substr($codaLine, 82, 43))
 		);
 	}
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 2) == "23";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 2) == "23";
 	}
 }

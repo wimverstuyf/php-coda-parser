@@ -19,11 +19,11 @@ class InitialStateLineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$accountNumberType = substr($codaLine, 1, 1);
-		$negative = substr($codaLine, 42, 1) == "1" ? -1 : 1;
+		$accountNumberType = mb_substr($codaLine, 1, 1);
+		$negative = mb_substr($codaLine, 42, 1) == "1" ? -1 : 1;
 		
 		list($accountIsIban, $accountNumber, $accountCurrency, $accountCountry) =
-			$this->addAccountInfo(substr($codaLine, 5, 37), $accountNumberType);
+			$this->addAccountInfo(mb_substr($codaLine, 5, 37), $accountNumberType);
 		
 		return new InitialStateLine(
 			getTrimmedData($codaLine, 125, 3),
@@ -35,8 +35,8 @@ class InitialStateLineParser implements LineParserInterface
 			$accountCurrency,
 			$accountCountry,
 			$accountIsIban,
-			substr($codaLine, 43, 15)*$negative / 1000,
-			formatDateString(substr($codaLine, 58, 6))
+			mb_substr($codaLine, 43, 15)*$negative / 1000,
+			formatDateString(mb_substr($codaLine, 58, 6))
 		);
 	}
 
@@ -48,24 +48,24 @@ class InitialStateLineParser implements LineParserInterface
 		$accountCountry = "";
 
 		if ($account_type == "0") {
-			$accountNumber = substr($account_info, 0, 12);
-			$accountCurrency = substr($account_info, 13, 3);
-			$accountCountry = substr($account_info, 17, 2);
+			$accountNumber = mb_substr($account_info, 0, 12);
+			$accountCurrency = mb_substr($account_info, 13, 3);
+			$accountCountry = mb_substr($account_info, 17, 2);
 		}
 		else if ($account_type == "1") {
-			$accountNumber = substr($account_info, 0, 34);
-			$accountCurrency = substr($account_info, 34, 3);
+			$accountNumber = mb_substr($account_info, 0, 34);
+			$accountCurrency = mb_substr($account_info, 34, 3);
 		}
 		else if ($account_type == "2") {
 			$accountIsIban = TRUE;
-			$accountNumber = substr($account_info, 0, 31);
-			$accountCurrency = substr($account_info, 34, 3);
+			$accountNumber = mb_substr($account_info, 0, 31);
+			$accountCurrency = mb_substr($account_info, 34, 3);
 			$accountCountry = "BE";
 		}
 		else if ($account_type == "3") {
 			$accountIsIban = true;
-			$accountNumber = substr($account_info, 0, 34);
-			$accountCurrency = substr($account_info, 34, 3);
+			$accountNumber = mb_substr($account_info, 0, 34);
+			$accountCurrency = mb_substr($account_info, 34, 3);
 		}
 		
 		return [$accountIsIban, $accountNumber, $accountCurrency, $accountCountry];
@@ -73,6 +73,6 @@ class InitialStateLineParser implements LineParserInterface
 	
 	public function canAcceptString(string $codaLine)
 	{
-		return strlen($codaLine) == 128 && substr($codaLine, 0, 1) == "1";
+		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "1";
 	}
 }
