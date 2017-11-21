@@ -13,8 +13,8 @@ class MessageOrStructuredMessage
 	
 	public function __construct(string $value, TransactionCode $transactionCode)
 	{
-		validateStringMultipleLengths($value, [54,74], "PlainOrStructuredMessage");
-		
+		validateStringMultipleLengths($value, [54,74], "MessageOrStructuredMessage");
+ 
 		$hasStructuredMessage = (mb_substr($value, 0, 1) === "1")?true:false;
 		$this->structuredMessage = null;
 		$this->message = null;

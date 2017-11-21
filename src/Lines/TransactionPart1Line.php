@@ -53,7 +53,6 @@ class TransactionPart1Line implements LineInterface
 		Amount $amount,
 		Date $valutaDate,
 		TransactionCode $transactionCode,
-		Message $message,
 		MessageOrStructuredMessage $messageOrStructuredMessage,
 		Date $transactionDate,
 		StatementSequenceNumber $statementSequenceNumber,

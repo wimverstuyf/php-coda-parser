@@ -2,6 +2,8 @@
 
 namespace Codelicious\Coda\Values;
 
+use function Codelicious\Coda\Helpers\validateStringDigitOnly;
+use function Codelicious\Coda\Helpers\validateStringLength;
 use UnexpectedValueException;
 
 class SequenceNumberDetail extends UnexpectedValueException
@@ -11,12 +13,8 @@ class SequenceNumberDetail extends UnexpectedValueException
 	
 	public function __construct(string $sequenceNumberDetail)
 	{
-		if (mb_strlen($sequenceNumberDetail) != 4) {
-			throw new InvalidValueException("SequenceNumberDetail", $sequenceNumberDetail, "Value must be 4 long");
-		}
-		if (!ctype_digit($sequenceNumberDetail)) {
-			throw new InvalidValueException("SequenceNumberDetail", $sequenceNumberDetail, "Value must be numeric");
-		}
+		validateStringLength($sequenceNumberDetail, 4, "SequenceNumberDetail");
+		validateStringDigitOnly($sequenceNumberDetail, "SequenceNumberDetail");
 		
 		$value = intval($sequenceNumberDetail);
 		if ($value < 0) {

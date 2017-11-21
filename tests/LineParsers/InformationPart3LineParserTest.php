@@ -18,6 +18,6 @@ class InformationPart3LineParserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $result->getSequenceNumber()->getValue());
         $this->assertEquals(1, $result->getSequenceNumberDetail()->getValue());
-        $this->assertEquals("SOME INFORMATION ABOUT THIS TRANSACTION ", $result->getMessage());
+        $this->assertEquals("SOME INFORMATION ABOUT THIS TRANSACTION ", $result->getMessage()->getValue());
     }
 }

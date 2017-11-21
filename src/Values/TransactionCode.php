@@ -24,7 +24,7 @@ class TransactionCode
 		$this->type = new TransactionCodeType(mb_substr($value, 0, 1));
 		$this->family = new TransactionCodeFamily(mb_substr($value, 1, 2));
 		$this->operation = new TransactionCodeOperation(mb_substr($value, 3, 2));
-		$this->category = new TransactionCodeCategory(mb_susbtr($value, 5, 3));
+		$this->category = new TransactionCodeCategory(mb_substr($value, 5, 3));
 	}
 	
 	public function getType(): TransactionCodeType

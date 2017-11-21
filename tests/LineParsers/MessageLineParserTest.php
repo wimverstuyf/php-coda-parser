@@ -18,7 +18,7 @@ class MessageLineParserTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(1, $result->getSequenceNumber()->getValue());
         $this->assertEquals(5, $result->getSequenceNumberDetail()->getValue());
-		$this->assertEquals("THIS IS A PUBLIC MESSAGE", $result->getContent());
+		$this->assertEquals("THIS IS A PUBLIC MESSAGE ", $result->getContent()->getValue());
     }
 
     public function testSample2()
@@ -33,6 +33,6 @@ class MessageLineParserTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(2, $result->getSequenceNumber()->getValue());
         $this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
-		$this->assertEquals("ACCOUNT INFORMATION", $result->getContent());
+		$this->assertEquals(" ACCOUNT INFORMATION ", $result->getContent()->getValue());
     }
 }

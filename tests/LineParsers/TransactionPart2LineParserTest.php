@@ -18,10 +18,10 @@ class TransactionPart2LineParserTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(1, $result->getSequenceNumber()->getValue());
 		$this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
-		$this->assertEquals(" ANOTHER MESSAGE ", $result->getMessage());
-		$this->assertEquals("54875", $result->getClientReference());
-		$this->assertEquals("GEBCEEBB", $result->getOtherAccountBic());
-		$this->assertEquals("", $result->getCategoryPurpose());
-		$this->assertEquals("", $result->getPurpose());
+		$this->assertEquals(" ANOTHER MESSAGE ", $result->getMessage()->getValue());
+		$this->assertEquals("54875", $result->getClientReference()->getValue());
+		$this->assertEquals("GEBCEEBB", $result->getOtherAccountBic()->getValue());
+		$this->assertEquals("", $result->getCategoryPurpose()->getValue());
+		$this->assertEquals("", $result->getPurpose()->getValue());
 	}
 }

@@ -16,13 +16,16 @@ class InformationPart1LineParserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $result->getSequenceNumber()->getValue());
         $this->assertEquals(1, $result->getSequenceNumberDetail()->getValue());
-        $this->assertEquals("0007500005482", $result->getBankReference());
-        $this->assertEquals("00480000", $result->getTransactionCode());
-        $this->assertEmpty($result->getMessage());
-        $this->assertTrue($result->isHasStructuredMessage());
-        $this->assertEquals("001", $result->getStructuredMessageType());
-        $this->assertEquals("BVBA.BAKKER PIET                                                      ", $result->getStructuredMessageFull());
-        $this->assertEmpty($result->getStructuredMessage());
+        $this->assertEquals("0007500005482", $result->getBankReference()->getValue());
+        $this->assertEquals("0", $result->getTransactionCode()->getType()->getValue());
+	    $this->assertEquals("04", $result->getTransactionCode()->getFamily()->getValue());
+	    $this->assertEquals("80", $result->getTransactionCode()->getOperation()->getValue());
+	    $this->assertEquals("000", $result->getTransactionCode()->getCategory()->getValue());
+        $this->assertNull($result->getMessageOrStructuredMessage()->getMessage());
+        $this->assertNotNull($result->getMessageOrStructuredMessage()->getStructuredMessage());
+        $this->assertEquals("001", $result->getMessageOrStructuredMessage()->getStructuredMessage()->getType());
+        $this->assertEquals("BVBA.BAKKER PIET                                                      ", $result->getMessageOrStructuredMessage()->getStructuredMessage()->getAll());
+        $this->assertEmpty($result->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage());
     }
     
     public function testSampleWithAccents()
@@ -34,7 +37,7 @@ class InformationPart1LineParserTest extends \PHPUnit_Framework_TestCase
         $result = $parser->parse($sample);
 
         $this->assertEquals(1, $result->getSequenceNumber()->getValue());
-        $this->assertEquals("ekeningING Plus BE12 3215 1548 2121 EUR Compte à vue BE25 3215 2158 2315 ", $result->getMessage());
+        $this->assertEquals("ekeningING Plus BE12 3215 1548 2121 EUR Compte à vue BE25 3215 2158 2315 ", $result->getMessageOrStructuredMessage()->getMessage()->getValue());
 
     }
 }

@@ -4,6 +4,7 @@ namespace Codelicious\Coda\Values;
 
 
 use function Codelicious\Coda\Helpers\validateStringLength;
+use function Codelicious\Coda\Helpers\validateStringMultipleLengths;
 
 class AccountName
 {
@@ -12,8 +13,7 @@ class AccountName
 	
 	public function __construct(string $value)
 	{
-		// length 26 or 35
-	    //validateStringLength($value, 26, "AccountName");
+	    validateStringMultipleLengths($value, [26, 35], "AccountName");
 	    
 	    $this->value = trim($value);
 	}

@@ -20,4 +20,9 @@ class AccountNumber
 	{
 		return $this->isIbanNumber;
 	}
+	
+	public function getValue(): string
+	{
+		return $this->value;
+	}
 }

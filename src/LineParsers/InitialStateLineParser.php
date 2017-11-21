@@ -2,10 +2,12 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\InitialStateLine;
 use Codelicious\Coda\Values\Account;
+use Codelicious\Coda\Values\Amount;
 use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\PaperStatementSequenceNumber;
+use Codelicious\Coda\Values\StatementSequenceNumber;
 
 /**
  * @package Codelicious\Coda
@@ -20,13 +22,11 @@ class InitialStateLineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$negative = mb_substr($codaLine, 42, 1) == "1" ? -1 : 1;
-		
 		return new InitialStateLine(
-			getTrimmedData($codaLine, 125, 3),
-			getTrimmedData($codaLine, 2, 3),
+			new PaperStatementSequenceNumber(mb_substr($codaLine, 125, 3)),
+			new StatementSequenceNumber(mb_substr($codaLine, 2, 3)),
 			new Account(mb_substr($codaLine, 1, 1), mb_substr($codaLine, 5, 37), mb_substr($codaLine, 64, 61)),
-			mb_substr($codaLine, 43, 15)*$negative / 1000,
+			new Amount(mb_substr($codaLine, 42, 16), true),
 			new Date(mb_substr($codaLine, 58, 6))
 		);
 	}

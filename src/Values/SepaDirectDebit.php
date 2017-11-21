@@ -2,6 +2,9 @@
 
 namespace Codelicious\Coda\Values;
 
+use function Codelicious\Coda\Helpers\getTrimmedData;
+use function Codelicious\Coda\Helpers\validateStringMultipleLengths;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,82 +12,61 @@ namespace Codelicious\Coda\Values;
  */
 class SepaDirectDebit
 {
+	/** @var Date */
 	private $settlementDate;
+	/** @var int */
 	private $type;
+	/** @var int */
 	private $scheme;
+	/** @var int */
 	private $paidReason;
-	private $creditorIdCode;
-	private $mandateRef;
-	private $communication;
-	private $typeRRef;
-	private $reason;
+	/** @var string */
+	private $creditorIdentificationCode;
+	/** @var string */
+	private $mandateReference;
 	
-	public function __construct(
-		$settlementDate,
-		$type,
-		$scheme,
-		$paidReason,
-		$creditorIdCode,
-		$mandateRef,
-		$communication,
-		$typeRRef,
-		$reason)
+	public function __construct(string $value)
 	{
+		validateStringMultipleLengths($value, [50, 70], "SepaDirectDebit");
 		
-		$this->settlementDate = $settlementDate;
-		$this->type = $type;
-		$this->scheme = $scheme;
-		$this->paidReason = $paidReason;
-		$this->creditorIdCode = $creditorIdCode;
-		$this->mandateRef = $mandateRef;
-		$this->communication = $communication;
-		$this->typeRRef = $typeRRef;
-		$this->reason = $reason;
+		$this->settlementDate = new Date(mb_substr($value, 0, 6));
+		$this->type = (int) mb_substr($value, 6, 1);
+		$this->scheme = (int) mb_substr($value, 7, 1);
+		$this->paidReason = (int) mb_substr($value, 8, 1);
+		$this->creditorIdentificationCode = getTrimmedData($value, 9, 35);
+		$this->mandateReference = getTrimmedData($value, 44, null); //, 35);
+//		$this->communication = getTrimmedData($value, 79, 62);
+//		$this->typeRRef = getTrimmedData($value, 141, 1);
+//		$this->reason	= getTrimmedData($value, 142, 4);
 	}
 	
-	public function getSettlementDate()
+	public function getSettlementDate(): Date
 	{
 		return $this->settlementDate;
 	}
 	
-	public function getType()
+	public function getType(): int
 	{
 		return $this->type;
 	}
 	
-	public function getScheme()
+	public function getScheme(): int
 	{
 		return $this->scheme;
 	}
 	
-	public function getPaidReason()
+	public function getPaidReason(): int
 	{
 		return $this->paidReason;
 	}
 	
-	public function getCreditorIdCode()
+	public function getCreditorIdentificationCode(): string
 	{
-		return $this->creditorIdCode;
+		return $this->creditorIdentificationCode;
 	}
 	
-	public function getMandateRef()
+	public function getMandateReference(): string
 	{
-		return $this->mandateRef;
+		return $this->mandateReference;
 	}
-	
-	public function getCommunication()
-	{
-		return $this->communication;
-	}
-	
-	public function getTypeRRef()
-	{
-		return $this->typeRRef;
-	}
-	
-	public function getReason()
-	{
-		return $this->reason;
-	}
-	
 }

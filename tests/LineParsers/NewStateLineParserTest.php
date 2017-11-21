@@ -2,6 +2,8 @@
 
 namespace Codelicious\Tests\Coda\LineParsers;
 
+use DateTime;
+
 class NewStateLineParserTest extends \PHPUnit_Framework_TestCase
 {
 	public function testSample1()
@@ -14,9 +16,9 @@ class NewStateLineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-		$this->assertEquals("225", $result->getStatementSequenceNumber());
-		$this->assertEquals("001548226815 EUR0BE                  ", $result->getAccount());
-		$this->assertEquals(-500012.100, $result->getBalance());
-		$this->assertEquals("2015-05-12", $result->getDate());
+		$this->assertEquals("225", $result->getStatementSequenceNumber()->getValue());
+		$this->assertEquals("001548226815 EUR0BE", $result->getAccount()->getValue());
+		$this->assertEquals(-500012.100, $result->getBalance()->getValue());
+		$this->assertEquals(new DateTime("2015-05-12"), $result->getDate()->getValue());
 	}
 }

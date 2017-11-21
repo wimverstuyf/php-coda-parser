@@ -2,6 +2,8 @@
 
 namespace Codelicious\Coda\Values;
 
+use function Codelicious\Coda\Helpers\validateStringLength;
+
 class BankIdentificationNumber
 {
 	/** @var string */

@@ -75,7 +75,7 @@ function formatDateString(string $dateCoda)
 
 function validateStringLength(string $value, int $expectedLength, string $typeName)
 {
-	if (strlen($value) != $expectedLength) {
+	if (mb_strlen($value) != $expectedLength) {
 		throw new InvalidValueException($typeName, $value, "Should be $expectedLength long");
 	}
 }
@@ -89,7 +89,7 @@ function validateStringMultipleLengths(string $value, array $expectedLengthArray
 {
 	$hasLength = false;
 	foreach($expectedLengthArray as $expectedLength) {
-		if (strlen($value) == $expectedLength) {
+		if (mb_strlen($value) == $expectedLength) {
 			$hasLength = true;
 		}
 	}

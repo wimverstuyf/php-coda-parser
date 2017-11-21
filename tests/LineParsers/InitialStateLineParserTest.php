@@ -3,6 +3,7 @@
 namespace Codelicious\Tests\Coda\LineParsers;
 
 use Codelicious\Coda\LineParsers\InitialStateLineParser;
+use DateTime;
 
 class InitialStateLineParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,17 +17,17 @@ class InitialStateLineParserTest extends \PHPUnit_Framework_TestCase
 
 		$result = $parser->parse($sample);
 
-		$this->assertEquals("0", $result->getAccountNumberType());
-		$this->assertEquals("155", $result->getStatementSequenceNumber());
-		$this->assertEquals("001548226815", $result->getAccountNumber());
-		$this->assertEquals("EUR", $result->getAccountCurrency());
-		$this->assertEquals("BE", $result->getAccountCountry());
-		$this->assertEquals(false, $result->isAccountIsIban());
-		$this->assertEquals(4004.100, $result->getBalance());
-		$this->assertEquals("2014-12-24", $result->getDate());
-		$this->assertEquals("CODELICIOUS", $result->getAccountName());
-		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->getAccountDescription());
-		$this->assertEquals("255", $result->getPaperStatementSequenceNumber());
+		$this->assertEquals("0", $result->getAccount()->getNumberType()->getValue());
+		$this->assertEquals(155, $result->getStatementSequenceNumber()->getValue());
+		$this->assertEquals("001548226815", $result->getAccount()->getNumber()->getValue());
+		$this->assertEquals("EUR", $result->getAccount()->getCurrency()->getCurrencyCode());
+		$this->assertEquals("BE", $result->getAccount()->getCountry()->getCountryCode());
+		$this->assertEquals(false, $result->getAccount()->getNumber()->isIbanNumber());
+		$this->assertEquals(4004.100, $result->getBalance()->getValue());
+		$this->assertEquals(new DateTime("2014-12-24"), $result->getDate()->getValue());
+		$this->assertEquals("CODELICIOUS", $result->getAccount()->getName()->getValue());
+		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->getAccount()->getDescription()->getValue());
+		$this->assertEquals(255, $result->getPaperStatementSequenceNumber()->getValue());
 	}
 
 	public function testAccountIsIbanIsSetCorrectly ()
@@ -39,6 +40,6 @@ class InitialStateLineParserTest extends \PHPUnit_Framework_TestCase
 
 		$result = $parser->parse($sample);
 
-		$this->assertEquals(true, $result->isAccountIsIban());
+		$this->assertEquals(true, $result->getAccount()->getNumber()->isIbanNumber());
 	}
 }

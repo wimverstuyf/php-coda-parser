@@ -16,7 +16,7 @@ class EndSummaryLineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-		$this->assertEquals(16837.520, $result->getDebetAmount());
-		$this->assertEquals(3967.220, $result->getCreditAmount());
+		$this->assertEquals(16837.520, $result->getDebetAmount()->getValue());
+		$this->assertEquals(3967.220, $result->getCreditAmount()->getValue());
     }
 }
