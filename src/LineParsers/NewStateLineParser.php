@@ -5,6 +5,10 @@ namespace Codelicious\Coda\LineParsers;
 use function Codelicious\Coda\Helpers\formatDateString;
 use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\NewStateLine;
+use Codelicious\Coda\Values\AccountFull;
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\StatementSequenceNumber;
 
 /**
  * @package Codelicious\Coda
@@ -19,13 +23,11 @@ class NewStateLineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$negative = mb_substr($codaLine, 41, 1) == "1" ? -1 : 1;
-		
 		return new NewStateLine(
-			getTrimmedData($codaLine, 1, 3),
-			mb_substr($codaLine, 4, 37), // don't further parse info as it is already present in coda1-line
-			mb_substr($codaLine, 42, 15)*$negative / 1000,
-			formatDateString(mb_substr($codaLine, 57, 6))
+			new StatementSequenceNumber(mb_substr($codaLine, 1, 3)),
+			new AccountFull(mb_substr($codaLine, 4, 37)), // don't further parse info as it is already present in coda1-line
+			new Amount(mb_substr($codaLine, 41, 16), true),
+			new Date(mb_substr($codaLine, 57, 6))
 		);
 	}
 	

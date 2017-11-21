@@ -2,6 +2,10 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\Message;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,17 +13,18 @@ namespace Codelicious\Coda\Lines;
  */
 class MessageLine implements LineInterface
 {
+	/** @var SequenceNumber */
 	private $sequenceNumber;
+	/** @var SequenceNumberDetail */
 	private $sequenceNumberDetail;
+	/** @var Message */
 	private $content;
 	
 	public function __construct(
-		$sequenceNumber, 
-		$sequenceNumberDetail, 
-		$content)
+		SequenceNumber $sequenceNumber,
+		SequenceNumberDetail $sequenceNumberDetail,
+		Message $content)
 	{
-		// TODO validate
-		
 		$this->sequenceNumber = $sequenceNumber;
 		$this->sequenceNumberDetail = $sequenceNumberDetail;
 		$this->content = $content;
@@ -30,17 +35,17 @@ class MessageLine implements LineInterface
 		return new LineType(LineType::Message);
 	}
 	
-	public function getSequenceNumber()
+	public function getSequenceNumber(): SequenceNumber
 	{
 		return $this->sequenceNumber;
 	}
 	
-	public function getSequenceNumberDetail()
+	public function getSequenceNumberDetail(): SequenceNumberDetail
 	{
 		return $this->sequenceNumberDetail;
 	}
 	
-	public function getContent()
+	public function getContent(): Message
 	{
 		return $this->content;
 	}

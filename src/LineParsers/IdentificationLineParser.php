@@ -5,6 +5,17 @@ namespace Codelicious\Coda\LineParsers;
 use function Codelicious\Coda\Helpers\formatDateString;
 use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\IdentificationLine;
+use Codelicious\Coda\Values\AccountName;
+use Codelicious\Coda\Values\ApplicationCode;
+use Codelicious\Coda\Values\BankIdentificationNumber;
+use Codelicious\Coda\Values\Bic;
+use Codelicious\Coda\Values\CompanyIdentificationNumber;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\ExternalApplicationCode;
+use Codelicious\Coda\Values\FileReference;
+use Codelicious\Coda\Values\RelatedReference;
+use Codelicious\Coda\Values\TransactionReference;
+use Codelicious\Coda\Values\VersionCode;
 
 /**
  * @package Codelicious\Coda
@@ -20,18 +31,18 @@ class IdentificationLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new IdentificationLine(
-			formatDateString(mb_substr($codaLine, 5, 6)),
-			getTrimmedData($codaLine, 11, 3),
+			new Date(mb_substr($codaLine, 5, 6)),
+			new BankIdentificationNumber(mb_substr($codaLine, 11, 3)),
 			mb_substr($codaLine, 16, 1) == "D"?true:false,
-			getTrimmedData($codaLine, 14, 2),
-			getTrimmedData($codaLine, 24, 10),
-			getTrimmedData($codaLine, 34, 26),
-			getTrimmedData($codaLine, 60, 11),
-			getTrimmedData($codaLine, 71, 11),
-			getTrimmedData($codaLine, 83, 5),
-			getTrimmedData($codaLine, 88, 16),
-			getTrimmedData($codaLine, 104, 16),
-			getTrimmedData($codaLine, 127, 1)
+			new ApplicationCode(mb_substr($codaLine, 14, 2)),
+			new FileReference(mb_substr($codaLine, 24, 10)),
+			new AccountName(mb_substr($codaLine, 34, 26)),
+			new Bic(mb_substr($codaLine, 60, 11)),
+			new CompanyIdentificationNumber(mb_substr($codaLine, 71, 11)),
+			new ExternalApplicationCode(mb_substr($codaLine, 83, 5)),
+			new TransactionReference(mb_substr($codaLine, 88, 16)),
+			new RelatedReference(mb_substr($codaLine, 104, 16)),
+			new VersionCode(mb_substr($codaLine, 127, 1))
 		);
 	}
 	

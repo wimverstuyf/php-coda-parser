@@ -16,8 +16,8 @@ class TransactionPart3LineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-		$this->assertEquals("0001", $result->getSequenceNumber());
-		$this->assertEquals("0000", $result->getSequenceNumberDetail());
+		$this->assertEquals(1, $result->getSequenceNumber()->getValue());
+		$this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
 		$this->assertEquals("BE54805480215856                  EUR", $result->getOtherAccountNumberAndCurrency());
 		$this->assertEquals("BVBA.BAKKER PIET", $result->getOtherAccountName());
 		$this->assertEquals(" MESSAGE ", $result->getMessage());

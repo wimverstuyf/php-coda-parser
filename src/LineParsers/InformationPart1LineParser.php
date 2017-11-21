@@ -5,6 +5,11 @@ namespace Codelicious\Coda\LineParsers;
 use function Codelicious\Coda\Helpers\getTrimmedData;
 use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\InformationPart1Line;
+use Codelicious\Coda\Values\BankReference;
+use Codelicious\Coda\Values\MessageOrStructuredMessage;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
+use Codelicious\Coda\Values\TransactionCode;
 
 /**
  * @package Codelicious\Coda
@@ -19,44 +24,17 @@ class InformationPart1LineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$hasStructuredMessage = (mb_substr($codaLine, 39, 1) == "1")?TRUE:FALSE;
-		$structuredMessageType = "";
-		$structuredMessageFull = "";
-		$structuredMessage = "";
-		$message = "";
-		if ($hasStructuredMessage) {
-			$structuredMessageType = mb_substr($codaLine, 40, 3);
-			$structuredMessageFull = mb_substr($codaLine, 43, 70);
-			$structuredMessage = $this->parseStructuredMessage($structuredMessageFull, $structuredMessageType);
-		} else {
-			$message = trimSpace(mb_substr($codaLine, 40, 73));
-		}
+		$transactionCode = new TransactionCode(mb_substr($codaLine, 31, 8));
 		
 		return new InformationPart1Line(
-			getTrimmedData($codaLine, 2, 4),
-			getTrimmedData($codaLine, 6, 4),
-			getTrimmedData($codaLine, 10, 21),
-			getTrimmedData($codaLine, 31, 8),
-			$message,
-			$hasStructuredMessage,
-			$structuredMessageType,
-			$structuredMessageFull,
-			$structuredMessage
+			new SequenceNumber(mb_substr($codaLine, 2, 4)),
+			new SequenceNumberDetail(mb_substr($codaLine, 6, 4)),
+			new BankReference(mb_substr($codaLine, 10, 21)),
+			$transactionCode,
+			new MessageOrStructuredMessage(mb_substr($codaLine, 39, 74), $transactionCode)
 		);
 	}
 
-	public function parseStructuredMessage($message, $type)
-	{
-		$structuredMessage = null;
-
-		if ($type == "101" || $type == "102") {
-			$structuredMessage = mb_substr($message, 0, 12);
-		} elseif ($type == "105") {
-			$structuredMessage = mb_substr($message, 42, 12);
-		}
-
-		return $structuredMessage;
-	}
 	
 	public function canAcceptString(string $codaLine)
 	{

@@ -14,8 +14,8 @@ class InformationPart1LineParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $parser->canAcceptString($sample));
         $result = $parser->parse($sample);
 
-        $this->assertEquals("0001", $result->getSequenceNumber());
-        $this->assertEquals("0001", $result->getSequenceNumberDetail());
+        $this->assertEquals(1, $result->getSequenceNumber()->getValue());
+        $this->assertEquals(1, $result->getSequenceNumberDetail()->getValue());
         $this->assertEquals("0007500005482", $result->getBankReference());
         $this->assertEquals("00480000", $result->getTransactionCode());
         $this->assertEmpty($result->getMessage());
@@ -33,7 +33,7 @@ class InformationPart1LineParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $parser->canAcceptString($sample));
         $result = $parser->parse($sample);
 
-        $this->assertEquals("0001", $result->getSequenceNumber());
+        $this->assertEquals(1, $result->getSequenceNumber()->getValue());
         $this->assertEquals("ekeningING Plus BE12 3215 1548 2121 EUR Compte à vue BE25 3215 2158 2315 ", $result->getMessage());
 
     }

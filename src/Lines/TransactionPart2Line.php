@@ -2,6 +2,16 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\Bic;
+use Codelicious\Coda\Values\CategoryPurpose;
+use Codelicious\Coda\Values\ClientReference;
+use Codelicious\Coda\Values\IsoReasonReturnCode;
+use Codelicious\Coda\Values\Message;
+use Codelicious\Coda\Values\Purpose;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
+use Codelicious\Coda\Values\TransactionCodeType;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,35 +19,35 @@ namespace Codelicious\Coda\Lines;
  */
 class TransactionPart2Line implements LineInterface
 {
-	/** @var */
+	/** @var SequenceNumber */
 	private $sequenceNumber;
-	/** @var */
+	/** @var SequenceNumberDetail */
 	private $sequenceNumberDetail;
-	/** @var */
+	/** @var Message */
 	private $message;
-	/** @var */
+	/** @var ClientReference */
 	private $clientReference;
-	/** @var */
+	/** @var Bic */
 	private $otherAccountBic;
-	/** @var */
+	/** @var TransactionCodeType */
 	private $transactionType;
-	/** @var */
+	/** @var IsoReasonReturnCode */
 	private $isoReasonReturnCode;
-	/** @var */
+	/** @var CategoryPurpose */
 	private $categoryPurpose;
-	/** @var */
+	/** @var Purpose */
 	private $purpose;
 	
 	public function __construct(
-		$sequenceNumber,
-		$sequenceNumberDetail,
-		$message,
-		$clientReference,
-		$otherAccountBic,
-		$transactionType,
-		$isoReasonReturnCode,
-		$categoryPurpose,
-		$purpose )
+		SequenceNumber $sequenceNumber,
+		SequenceNumberDetail $sequenceNumberDetail,
+		Message $message,
+		ClientReference $clientReference,
+		Bic $otherAccountBic,
+		TransactionCodeType $transactionType,
+		IsoReasonReturnCode $isoReasonReturnCode,
+		CategoryPurpose $categoryPurpose,
+		Purpose $purpose )
 	{
 		
 		$this->sequenceNumber = $sequenceNumber;
@@ -56,47 +66,47 @@ class TransactionPart2Line implements LineInterface
 		return new LineType(LineType::TransactionPart2);
 	}
 	
-	public function getSequenceNumber()
+	public function getSequenceNumber(): SequenceNumber
 	{
 		return $this->sequenceNumber;
 	}
 	
-	public function getSequenceNumberDetail()
+	public function getSequenceNumberDetail(): SequenceNumberDetail
 	{
 		return $this->sequenceNumberDetail;
 	}
 	
-	public function getMessage()
+	public function getMessage(): Message
 	{
 		return $this->message;
 	}
 	
-	public function getClientReference()
+	public function getClientReference(): ClientReference
 	{
 		return $this->clientReference;
 	}
 	
-	public function getOtherAccountBic()
+	public function getOtherAccountBic(): Bic
 	{
 		return $this->otherAccountBic;
 	}
 	
-	public function getTransactionType()
+	public function getTransactionType(): TransactionCodeType
 	{
 		return $this->transactionType;
 	}
 	
-	public function getIsoReasonReturnCode()
+	public function getIsoReasonReturnCode(): IsoReasonReturnCode
 	{
 		return $this->isoReasonReturnCode;
 	}
 	
-	public function getCategoryPurpose()
+	public function getCategoryPurpose(): CategoryPurpose
 	{
 		return $this->categoryPurpose;
 	}
 	
-	public function getPurpose()
+	public function getPurpose(): Purpose
 	{
 		return $this->purpose;
 	}

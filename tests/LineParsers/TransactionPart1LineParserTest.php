@@ -17,8 +17,8 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-		$this->assertEquals("0001", $result->getSequenceNumber());
-		$this->assertEquals("0000", $result->getSequenceNumberDetail());
+		$this->assertEquals(1, $result->getSequenceNumber()->getValue());
+		$this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
 		$this->assertEquals("0001200002835", $result->getBankReference());
 		$this->assertEquals(1767.820, $result->getAmount());
 		$this->assertEquals("2014-12-25", $result->getValutaDate());
@@ -43,8 +43,8 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-		$this->assertEquals("0001", $result->getSequenceNumber());
-		$this->assertEquals("0000", $result->getSequenceNumberDetail());
+		$this->assertEquals(1, $result->getSequenceNumber()->getValue());
+		$this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
 		$this->assertEquals("0001200002835", $result->getBankReference());
 		$this->assertEquals(2767.820, $result->getAmount());
 		$this->assertEquals("2014-12-25", $result->getValutaDate());
@@ -68,8 +68,8 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(true, $parser->canAcceptString($sample));
 		
 		$result = $parser->parse($sample);
-		$this->assertEquals("0028", $result->getSequenceNumber());
-		$this->assertEquals("0000", $result->getSequenceNumberDetail());
+		$this->assertEquals(28, $result->getSequenceNumber()->getValue());
+		$this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
 		$this->assertEquals("VAAS00026BSDDXXXXXXXX", $result->getBankReference());
 		$this->assertEquals(-50, $result->getAmount());
 		$this->assertEquals("2015-08-05", $result->getValutaDate());

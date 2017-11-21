@@ -2,6 +2,8 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\Amount;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,12 +11,12 @@ namespace Codelicious\Coda\Lines;
  */
 class EndSummaryLine implements LineInterface
 {
-	/** @var */
+	/** @var Amount */
 	private $debetAmount;
-	/** @var */
+	/** @var Amount */
 	private $creditAmount;
 	
-	public function __construct($debetAmount, $creditAmount)
+	public function __construct(Amount $debetAmount, Amount $creditAmount)
 	{
 		$this->debetAmount = $debetAmount;
 		$this->creditAmount = $creditAmount;
@@ -25,12 +27,12 @@ class EndSummaryLine implements LineInterface
 		return new LineType(LineType::EndSummary);
 	}
 	
-	public function getDebetAmount()
+	public function getDebetAmount(): Amount
 	{
 		return $this->debetAmount;
 	}
 	
-	public function getCreditAmount()
+	public function getCreditAmount(): Amount
 	{
 		return $this->creditAmount;
 	}

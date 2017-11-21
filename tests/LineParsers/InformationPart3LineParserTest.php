@@ -16,8 +16,8 @@ class InformationPart3LineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-        $this->assertEquals("0001", $result->getSequenceNumber());
-        $this->assertEquals("0001", $result->getSequenceNumberDetail());
+        $this->assertEquals(1, $result->getSequenceNumber()->getValue());
+        $this->assertEquals(1, $result->getSequenceNumberDetail()->getValue());
         $this->assertEquals("SOME INFORMATION ABOUT THIS TRANSACTION ", $result->getMessage());
     }
 }

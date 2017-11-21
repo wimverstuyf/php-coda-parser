@@ -2,6 +2,11 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\AccountFull;
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\StatementSequenceNumber;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,20 +14,20 @@ namespace Codelicious\Coda\Lines;
  */
 class NewStateLine implements LineInterface
 {
-	/** @var */
+	/** @var StatementSequenceNumber */
 	private $statementSequenceNumber;
-	/** @var */
+	/** @var AccountFull */
 	private $account;
-	/** @var */
+	/** @var Amount */
 	private $balance;
-	/** @var */
+	/** @var Date */
 	private $date;
 	
 	public function __construct(
-		$statementSequenceNumber,
-		$account,
-		$balance,
-		$date )
+		StatementSequenceNumber $statementSequenceNumber,
+		AccountFull $account,
+		Amount $balance,
+		Date $date )
 	{
 		$this->statementSequenceNumber = $statementSequenceNumber;
 		$this->account = $account;
@@ -35,22 +40,22 @@ class NewStateLine implements LineInterface
 		return new LineType(LineType::NewState);
 	}
 	
-	public function getStatementSequenceNumber()
+	public function getStatementSequenceNumber(): StatementSequenceNumber
 	{
 		return $this->statementSequenceNumber;
 	}
 	
-	public function getAccount()
+	public function getAccount(): AccountFull
 	{
 		return $this->account;
 	}
 	
-	public function getBalance()
+	public function getBalance(): Amount
 	{
 		return $this->balance;
 	}
 	
-	public function getDate()
+	public function getDate(): Date
 	{
 		return $this->date;
 	}

@@ -2,11 +2,17 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\formatDateString;
-use function Codelicious\Coda\Helpers\getTrimmedData;
-use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\TransactionPart1Line;
 use Codelicious\Coda\Statements\SepaDirectDebit;
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\BankReference;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\GlobalizationCode;
+use Codelicious\Coda\Values\MessageOrStructuredMessage;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
+use Codelicious\Coda\Values\StatementSequenceNumber;
+use Codelicious\Coda\Values\TransactionCode;
 
 /**
  * @package Codelicious\Coda
@@ -21,92 +27,20 @@ class TransactionPart1LineParser implements LineParserInterface
 	 */
 	public function parse(string $codaLine)
 	{
-		$negative = mb_substr($codaLine, 31, 1) == "1" ? -1 : 1;
-		$hasStructuredMessage = (getTrimmedData($codaLine, 61, 1) == "1")?true:false;
-		$structuredMessageType = "";
-		$structuredMessageFull = "";
-		$structuredMessage = "";
-		$message = "";
-		if ($hasStructuredMessage) {
-			$structuredMessageType = mb_substr($codaLine, 62, 3);
-			$structuredMessageFull = mb_substr($codaLine, 65, 50);
-			$structuredMessage = $this->parseStructuredMessage($structuredMessageFull, $structuredMessageType);
-		}
-		else {
-			$message = trimSpace(mb_substr($codaLine, 62, 53));
-		}
-		
-		$transactionCode = getTrimmedData($codaLine, 53, 8);
-		$transactionCodeFamily = getTrimmedData($transactionCode, 1, 2);
-		
-		$sepaInfo = null;
-		if ($hasStructuredMessage && $structuredMessageType == '127')
-		{
-			$sepaInfo = $this->parseSepaDirectDebit($transactionCodeFamily, $structuredMessageType, $structuredMessageFull);
-		}
+		$transactionCode = new TransactionCode(mb_substr($codaLine, 53, 8));
 		
 		return new TransactionPart1Line(
-			getTrimmedData($codaLine, 2, 4),
-			getTrimmedData($codaLine, 6, 4),
-			getTrimmedData($codaLine, 10, 21),
-			getTrimmedData($codaLine, 32, 15) * $negative / 1000,
-			formatDateString(getTrimmedData($codaLine, 47, 6)),
+			new SequenceNumber(mb_substr($codaLine, 2, 4)),
+			new SequenceNumberDetail(mb_substr($codaLine, 6, 4)),
+			new BankReference(mb_substr($codaLine, 10, 21)),
+			new Amount(mb_substr($codaLine, 31, 1).mb_substr($codaLine, 32, 15), true),
+			new Date(mb_substr($codaLine, 47, 6)),
 			$transactionCode,
-			getTrimmedData($transactionCode, 0, 1), // type
-			$transactionCodeFamily,
-			getTrimmedData($transactionCode, 3, 2), // operation
-			getTrimmedData($transactionCode, 5, 3), // category
-			$message,
-			$hasStructuredMessage,
-			$structuredMessageType,
-			$structuredMessageFull,
-			$structuredMessage,
-			formatDateString(getTrimmedData($codaLine, 115, 6)),
-			getTrimmedData($codaLine, 121, 3),
-			getTrimmedData($codaLine, 124, 1),
-			$sepaInfo
+			new MessageOrStructuredMessage(mb_substr($codaLine, 61, 54), $transactionCode),
+			new Date(mb_substr($codaLine, 115, 6)),
+			new StatementSequenceNumber(mb_substr($codaLine, 121, 3)),
+			new GlobalizationCode(mb_substr($codaLine, 124, 1))
 		);
-	}
-	
-	/**
-	 * @param string $transactionCodeFamily
-	 * @param string $structuredMessageType
-	 * @param string $structuredMessageFull
-	 * @return SepaDirectDebit|null
-	 */
-	private function parseSepaDirectDebit(string $transactionCodeFamily, string $structuredMessageType, string $structuredMessageFull)
-	{
-		if ($transactionCodeFamily != '05' || $structuredMessageType != '127') {
-			return null;
-		}
-		
-		return new SepaDirectDebit(
-			formatDateString(getTrimmedData($structuredMessageFull, 0, 6)),
-			getTrimmedData($structuredMessageFull, 6, 1),
-			getTrimmedData($structuredMessageFull, 7, 1),
-			getTrimmedData($structuredMessageFull, 8, 1),
-			getTrimmedData($structuredMessageFull, 9, 35),
-			getTrimmedData($structuredMessageFull, 44, 35),
-			getTrimmedData($structuredMessageFull, 79, 62),
-			getTrimmedData($structuredMessageFull, 141, 1),
-			getTrimmedData($structuredMessageFull, 142, 4)
-		);
-	}
-	
-	/**
-	 * @param string $message
-	 * @param string $type
-	 * @return null|string
-	 */
-	private function parseStructuredMessage(string $message, string $type)
-	{
-		$structured_message = null;
-
-		if ($type == "101" || $type == "102") {
-			$structured_message = mb_substr($message, 0, 12);
-		}
-
-		return $structured_message;
 	}
 	
 	public function canAcceptString(string $codaLine)

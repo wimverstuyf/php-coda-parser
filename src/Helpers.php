@@ -2,6 +2,7 @@
 
 namespace Codelicious\Coda\Helpers;
 
+use Codelicious\Coda\Exceptions\InvalidValueException;
 use Codelicious\Coda\Lines\LineInterface;
 use Codelicious\Coda\Lines\LineType;
 
@@ -67,7 +68,39 @@ function getTrimmedData($data, $startPosition, $length)
  *
  * @return string
  */
-function formatDateString($dateCoda)
+function formatDateString(string $dateCoda)
 {
 	return '20' . mb_substr($dateCoda, 4, 2) . '-' . mb_substr($dateCoda, 2, 2) . '-' . mb_substr($dateCoda, 0, 2);
+}
+
+function validateStringLength(string $value, int $expectedLength, string $typeName)
+{
+	if (strlen($value) != $expectedLength) {
+		throw new InvalidValueException($typeName, $value, "Should be $expectedLength long");
+	}
+}
+
+/**
+ * @param string $value
+ * @param int[] $expectedLengthArray
+ * @param string $typeName
+ */
+function validateStringMultipleLengths(string $value, array $expectedLengthArray, string $typeName)
+{
+	$hasLength = false;
+	foreach($expectedLengthArray as $expectedLength) {
+		if (strlen($value) == $expectedLength) {
+			$hasLength = true;
+		}
+	}
+	if (!$hasLength) {
+		throw new InvalidValueException($typeName, $value, "Length not valid");
+	}
+}
+
+function validateStringDigitOnly($value, $typeName)
+{
+	if (!ctype_digit($value)) {
+		throw new InvalidValueException($typeName, $value, "Should contain only numeric values");
+	}
 }

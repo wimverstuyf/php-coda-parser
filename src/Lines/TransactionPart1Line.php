@@ -2,6 +2,22 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\BankReference;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\GlobalizationCode;
+use Codelicious\Coda\Values\Message;
+use Codelicious\Coda\Values\MessageOrStructuredMessage;
+use Codelicious\Coda\Values\SepaDirectDebit;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
+use Codelicious\Coda\Values\StatementSequenceNumber;
+use Codelicious\Coda\Values\TransactionCode;
+use Codelicious\Coda\Values\TransactionCodeCategory;
+use Codelicious\Coda\Values\TransactionCodeFamily;
+use Codelicious\Coda\Values\TransactionCodeOperation;
+use Codelicious\Coda\Values\TransactionCodeType;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,65 +25,39 @@ namespace Codelicious\Coda\Lines;
  */
 class TransactionPart1Line implements LineInterface
 {
-	/** @var */
+	/** @var SequenceNumber */
 	private $sequenceNumber;
-	/** @var */
+	/** @var SequenceNumberDetail */
 	private $sequenceNumberDetail;
-	/** @var */
+	/** @var BankReference */
 	private $bankReference;
-	/** @var */
+	/** @var Amount */
 	private $amount;
-	/** @var */
+	/** @var Date */
 	private $valutaDate;
-	/** @var */
+	/** @var TransactionCode */
 	private $transactionCode;
-	/** @var */
-	private $transactionCodeType;
-	/** @var */
-	private $transactionCodeFamily;
-	/** @var */
-	private $transactionCodeOperation;
-	/** @var */
-	private $transactionCodeCategory;
-	/** @var */
-	private $message;
-	/** @var bool */
-	private $hasStructuredMessage;
-	/** @var */
-	private $structuredMessageType;
-	/** @var */
-	private $structuredMessageFull;
-	/** @var */
-	private $structuredMessage;
-	/** @var */
+	/** @var MessageOrStructuredMessage */
+	private $messageOrStructuredMessage;
+	/** @var Date */
 	private $transactionDate;
-	/** @var */
+	/** @var StatementSequenceNumber */
 	private $statementSequenceNumber;
-	/** @var */
+	/** @var GlobalizationCode */
 	private $globalizationCode;
-	/** @var SepaDirectDebit|null */
-	private $sepaDirectDebit;
 	
 	public function __construct(
-		$sequenceNumber,
-		$sequenceNumberDetail,
-		$bankReference,
-		$amount,
-		$valutaDate,
-		$transactionCode,
-		$transactionCodeType,
-		$transactionCodeFamily,
-		$transactionCodeOperation,
-		$transactionCodeCategory,
-		$message,
-		bool $hasStructuredMessage,
-		$structuredMessageType,
-		$structuredMessageFull,
-		$structuredMessage,
-		$transactionDate,
-		$statementSequenceNumber,
-		$globalizationCode,
-		$sepaDirectDebit )
+		SequenceNumber $sequenceNumber,
+		SequenceNumberDetail $sequenceNumberDetail,
+		BankReference $bankReference,
+		Amount $amount,
+		Date $valutaDate,
+		TransactionCode $transactionCode,
+		Message $message,
+		MessageOrStructuredMessage $messageOrStructuredMessage,
+		Date $transactionDate,
+		StatementSequenceNumber $statementSequenceNumber,
+		GlobalizationCode $globalizationCode )
 	{
 		$this->sequenceNumber = $sequenceNumber;
 		$this->sequenceNumberDetail = $sequenceNumberDetail;
@@ -75,119 +65,64 @@ class TransactionPart1Line implements LineInterface
 		$this->amount = $amount;
 		$this->valutaDate = $valutaDate;
 		$this->transactionCode = $transactionCode;
-		$this->transactionCodeType = $transactionCodeType;
-		$this->transactionCodeFamily = $transactionCodeFamily;
-		$this->transactionCodeOperation = $transactionCodeOperation;
-		$this->transactionCodeCategory = $transactionCodeCategory;
-		$this->message = $message;
-		$this->hasStructuredMessage = $hasStructuredMessage;
-		$this->structuredMessageType = $structuredMessageType;
-		$this->structuredMessageFull = $structuredMessageFull;
-		$this->structuredMessage = $structuredMessage;
+		$this->messageOrStructuredMessage = $messageOrStructuredMessage;
 		$this->transactionDate = $transactionDate;
 		$this->statementSequenceNumber = $statementSequenceNumber;
 		$this->globalizationCode = $globalizationCode;
-		$this->sepaDirectDebit = $sepaDirectDebit;
 	}
-	
 	
 	public function getType(): LineType
 	{
 		return new LineType(LineType::TransactionPart1);
 	}
 	
-	public function getSequenceNumber()
+	public function getSequenceNumber(): SequenceNumber
 	{
 		return $this->sequenceNumber;
 	}
 	
-	public function getSequenceNumberDetail()
+	public function getSequenceNumberDetail(): SequenceNumberDetail
 	{
 		return $this->sequenceNumberDetail;
 	}
 	
-	public function getBankReference()
+	public function getBankReference(): BankReference
 	{
 		return $this->bankReference;
 	}
 	
-	public function getAmount()
+	public function getAmount(): Amount
 	{
 		return $this->amount;
 	}
 	
-	public function getValutaDate()
+	public function getValutaDate(): Date
 	{
 		return $this->valutaDate;
 	}
 	
-	public function getTransactionCode()
+	public function getTransactionCode(): TransactionCode
 	{
 		return $this->transactionCode;
 	}
 	
-	public function getTransactionCodeType()
+	public function getMessageOrStructuredMessage(): MessageOrStructuredMessage
 	{
-		return $this->transactionCodeType;
+		return $this->messageOrStructuredMessage;
 	}
 	
-	public function getTransactionCodeFamily()
-	{
-		return $this->transactionCodeFamily;
-	}
-	
-	public function getTransactionCodeOperation()
-	{
-		return $this->transactionCodeOperation;
-	}
-	
-	public function getTransactionCodeCategory()
-	{
-		return $this->transactionCodeCategory;
-	}
-	
-	public function getMessage()
-	{
-		return $this->message;
-	}
-	
-	public function isHasStructuredMessage(): bool
-	{
-		return $this->hasStructuredMessage;
-	}
-	
-	public function getStructuredMessageType()
-	{
-		return $this->structuredMessageType;
-	}
-	
-	public function getStructuredMessageFull()
-	{
-		return $this->structuredMessageFull;
-	}
-	
-	public function getStructuredMessage()
-	{
-		return $this->structuredMessage;
-	}
-	
-	public function getTransactionDate()
+	public function getTransactionDate(): Date
 	{
 		return $this->transactionDate;
 	}
 	
-	public function getStatementSequenceNumber()
+	public function getStatementSequenceNumber(): StatementSequenceNumber
 	{
 		return $this->statementSequenceNumber;
 	}
 	
-	public function getGlobalizationCode()
+	public function getGlobalizationCode(): GlobalizationCode
 	{
 		return $this->globalizationCode;
-	}
-	
-	public function getSepaDirectDebit()
-	{
-		return $this->sepaDirectDebit;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Codelicious\Coda\Statements;
+namespace Codelicious\Coda\Values;
 
 /**
  * @package Codelicious\Coda

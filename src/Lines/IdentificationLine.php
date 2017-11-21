@@ -2,6 +2,18 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\AccountName;
+use Codelicious\Coda\Values\ApplicationCode;
+use Codelicious\Coda\Values\BankIdentificationNumber;
+use Codelicious\Coda\Values\Bic;
+use Codelicious\Coda\Values\CompanyIdentificationNumber;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\ExternalApplicationCode;
+use Codelicious\Coda\Values\FileReference;
+use Codelicious\Coda\Values\RelatedReference;
+use Codelicious\Coda\Values\TransactionReference;
+use Codelicious\Coda\Values\VersionCode;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,35 +21,45 @@ namespace Codelicious\Coda\Lines;
  */
 class IdentificationLine implements LineInterface
 {
+	/** @var Date */
 	private $creationDate;
+	/** @var BankIdentificationNumber */
 	private $bankIdentificationNumber;
+	/** @var bool */
 	private $isDuplicate = false;
+	/** @var ApplicationCode */
 	private $applicationCode;
+	/** @var FileReference */
 	private $fileReference;
+	/** @var AccountName */
 	private $accountName;
+	/** @var Bic */
 	private $accountBic;
+	/** @var CompanyIdentificationNumber */
 	private $accountCompanyIdentificationNumber;
+	/** @var ExternalApplicationCode */
 	private $externalApplicationCode;
+	/** @var TransactionReference */
 	private $transactionReference;
+	/** @var RelatedReference */
 	private $relatedReference;
+	/** @var VersionCode */
 	private $versionCode;
 	
 	public function __construct(
-		$creationDate,
-		$bankIdentificationNumber,
-		$isDuplicate,
-		$applicationCode,
-		$fileReference,
-		$accountName,
-		$accountBic,
-		$accountCompanyIdentificationNumber,
-		$externalApplicationCode,
-		$transactionReference,
-		$relatedReference,
-		$versionCode )
+		Date $creationDate,
+		BankIdentificationNumber $bankIdentificationNumber,
+		bool $isDuplicate,
+		ApplicationCode $applicationCode,
+		FileReference $fileReference,
+		AccountName $accountName,
+		Bic $accountBic,
+		CompanyIdentificationNumber $accountCompanyIdentificationNumber,
+		ExternalApplicationCode $externalApplicationCode,
+		TransactionReference $transactionReference,
+		RelatedReference $relatedReference,
+		VersionCode $versionCode )
 	{
-		// TODO: validate
-		
 		$this->creationDate = $creationDate;
 		$this->bankIdentificationNumber = $bankIdentificationNumber;
 		$this->isDuplicate = $isDuplicate;
@@ -57,12 +79,12 @@ class IdentificationLine implements LineInterface
 		return new LineType(LineType::Identification);
 	}
 	
-	public function getCreationDate()
+	public function getCreationDate(): Date
 	{
 		return $this->creationDate;
 	}
 	
-	public function getBankIdentificationNumber()
+	public function getBankIdentificationNumber(): BankIdentificationNumber
 	{
 		return $this->bankIdentificationNumber;
 	}
@@ -72,47 +94,47 @@ class IdentificationLine implements LineInterface
 		return $this->isDuplicate;
 	}
 	
-	public function getApplicationCode()
+	public function getApplicationCode(): ApplicationCode
 	{
 		return $this->applicationCode;
 	}
 	
-	public function getFileReference()
+	public function getFileReference(): FileReference
 	{
 		return $this->fileReference;
 	}
 	
-	public function getAccountName()
+	public function getAccountName(): AccountName
 	{
 		return $this->accountName;
 	}
 	
-	public function getAccountBic()
+	public function getAccountBic(): Bic
 	{
 		return $this->accountBic;
 	}
 	
-	public function getAccountCompanyIdentificationNumber()
+	public function getAccountCompanyIdentificationNumber(): CompanyIdentificationNumber
 	{
 		return $this->accountCompanyIdentificationNumber;
 	}
 	
-	public function getExternalApplicationCode()
+	public function getExternalApplicationCode(): ExternalApplicationCode
 	{
 		return $this->externalApplicationCode;
 	}
 	
-	public function getTransactionReference()
+	public function getTransactionReference(): TransactionReference
 	{
 		return $this->transactionReference;
 	}
 	
-	public function getRelatedReference()
+	public function getRelatedReference(): RelatedReference
 	{
 		return $this->relatedReference;
 	}
 	
-	public function getVersionCode()
+	public function getVersionCode(): VersionCode
 	{
 		return $this->versionCode;
 	}

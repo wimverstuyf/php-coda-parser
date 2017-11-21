@@ -26,7 +26,7 @@ class InitialStateLineParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("2014-12-24", $result->getDate());
 		$this->assertEquals("CODELICIOUS", $result->getAccountName());
 		$this->assertEquals("PROFESSIONAL ACCOUNT", $result->getAccountDescription());
-		$this->assertEquals("255", $result->getSequenceNumber());
+		$this->assertEquals("255", $result->getPaperStatementSequenceNumber());
 	}
 
 	public function testAccountIsIbanIsSetCorrectly ()

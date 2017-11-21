@@ -4,6 +4,9 @@ namespace Codelicious\Coda\LineParsers;
 
 use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\MessageLine;
+use Codelicious\Coda\Values\Message;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
 
 /**
  * @package Codelicious\Coda
@@ -19,9 +22,9 @@ class MessageLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new MessageLine(
-			mb_substr($codaLine, 2, 4),
-			mb_substr($codaLine, 6, 4),
-			getTrimmedData($codaLine, 32, 80)
+			new SequenceNumber(mb_substr($codaLine, 2, 4)),
+			new SequenceNumberDetail(mb_substr($codaLine, 6, 4)),
+			new Message(mb_substr($codaLine, 32, 80))
 		);
 	}
 	

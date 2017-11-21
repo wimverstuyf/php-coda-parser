@@ -2,6 +2,12 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\Account;
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\PaperStatementSequenceNumber;
+use Codelicious\Coda\Values\StatementSequenceNumber;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,52 +15,28 @@ namespace Codelicious\Coda\Lines;
  */
 class InitialStateLine implements LineInterface
 {
-	/** @var */
-	private $sequenceNumber;
-	/** @var */
+	/** @var PaperStatementSequenceNumber */
+	private $paperStatementSequenceNumber;
+	/** @var StatementSequenceNumber */
 	private $statementSequenceNumber;
-	/** @var */
-	private $accountName;
-	/** @var */
-	private $accountDescription;
-	/** @var */
-	private $accountNumberType;
-	/** @var */
-	private $accountNumber;
-	/** @var */
-	private $accountCurrency;
-	/** @var */
-	private $accountCountry;
-	/** @var bool */
-	private $accountIsIban;
-	/** @var */
+	/** @var Account */
+	private $account;
+	/** @var Amount */
 	private $balance;
-	/** @var */
+	/** @var Date */
 	private $date;
 	
 	public function __construct(
-		$sequenceNumber,
-		$statementSequenceNumber,
-		$accountName,
-		$accountDescription,
-		$accountNumberType,
-		$accountNumber,
-		$accountCurrency,
-		$accountCountry,
-		bool $accountIsIban,
-		$balance,
-		$date )
+		PaperStatementSequenceNumber $paperStatementSequenceNumber,
+		StatementSequenceNumber $statementSequenceNumber,
+		Account $account,
+		Amount $balance,
+		Date $date )
 	{
 		
-		$this->sequenceNumber = $sequenceNumber;
+		$this->paperStatementSequenceNumber = $paperStatementSequenceNumber;
 		$this->statementSequenceNumber = $statementSequenceNumber;
-		$this->accountName = $accountName;
-		$this->accountDescription = $accountDescription;
-		$this->accountNumberType = $accountNumberType;
-		$this->accountNumber = $accountNumber;
-		$this->accountCurrency = $accountCurrency;
-		$this->accountCountry = $accountCountry;
-		$this->accountIsIban = $accountIsIban;
+		$this->account = $account;
 		$this->balance = $balance;
 		$this->date = $date;
 	}
@@ -64,57 +46,27 @@ class InitialStateLine implements LineInterface
 		return new LineType(LineType::InitialState);
 	}
 	
-	public function getSequenceNumber()
+	public function getPaperStatementSequenceNumber(): PaperStatementSequenceNumber
 	{
-		return $this->sequenceNumber;
+		return $this->paperStatementSequenceNumber;
 	}
 	
-	public function getStatementSequenceNumber()
+	public function getStatementSequenceNumber(): StatementSequenceNumber
 	{
 		return $this->statementSequenceNumber;
 	}
 	
-	public function getAccountName()
+	public function getAccount(): Account
 	{
-		return $this->accountName;
+		return $this->account;
 	}
 	
-	public function getAccountDescription()
-	{
-		return $this->accountDescription;
-	}
-	
-	public function getAccountNumberType()
-	{
-		return $this->accountNumberType;
-	}
-	
-	public function getAccountNumber()
-	{
-		return $this->accountNumber;
-	}
-	
-	public function getAccountCurrency()
-	{
-		return $this->accountCurrency;
-	}
-	
-	public function getAccountCountry()
-	{
-		return $this->accountCountry;
-	}
-	
-	public function isAccountIsIban(): bool
-	{
-		return $this->accountIsIban;
-	}
-	
-	public function getBalance()
+	public function getBalance(): Amount
 	{
 		return $this->balance;
 	}
 	
-	public function getDate()
+	public function getDate(): Date
 	{
 		return $this->date;
 	}

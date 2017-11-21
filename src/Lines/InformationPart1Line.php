@@ -2,6 +2,12 @@
 
 namespace Codelicious\Coda\Lines;
 
+use Codelicious\Coda\Values\BankReference;
+use Codelicious\Coda\Values\MessageOrStructuredMessage;
+use Codelicious\Coda\Values\SequenceNumber;
+use Codelicious\Coda\Values\SequenceNumberDetail;
+use Codelicious\Coda\Values\TransactionCode;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,46 +15,29 @@ namespace Codelicious\Coda\Lines;
  */
 class InformationPart1Line implements LineInterface
 {
-	/** @var */
+	/** @var SequenceNumber */
 	private $sequenceNumber;
-	/** @var */
+	/** @var SequenceNumberDetail */
 	private $sequenceNumberDetail;
-	/** @var */
+	/** @var BankReference */
 	private $bankReference;
-	/** @var */
+	/** @var TransactionCode */
 	private $transactionCode;
-	/** @var */
-	private $message;
-	/** @var bool */
-	private $hasStructuredMessage;
-	/** @var */
-	private $structuredMessageType;
-	/** @var */
-	private $structuredMessageFull;
-	/** @var */
-	private $structuredMessage;
+	/** @var MessageOrStructuredMessage */
+	private $messageOrStructuredMessage;
 	
 	public function __construct(
-		$sequenceNumber,
-		$sequenceNumberDetail,
-		$bankReference,
-		$transactionCode,
-		$message,
-		bool $hasStructuredMessage,
-		$structuredMessageType,
-		$structuredMessageFull,
-		$structuredMessage )
+		SequenceNumber $sequenceNumber,
+		SequenceNumberDetail $sequenceNumberDetail,
+		BankReference $bankReference,
+		TransactionCode $transactionCode,
+		MessageOrStructuredMessage $messageOrStructuredMessage)
 	{
-		
 		$this->sequenceNumber = $sequenceNumber;
 		$this->sequenceNumberDetail = $sequenceNumberDetail;
 		$this->bankReference = $bankReference;
 		$this->transactionCode = $transactionCode;
-		$this->message = $message;
-		$this->hasStructuredMessage = $hasStructuredMessage;
-		$this->structuredMessageType = $structuredMessageType;
-		$this->structuredMessageFull = $structuredMessageFull;
-		$this->structuredMessage = $structuredMessage;
+		$this->messageOrStructuredMessage = $messageOrStructuredMessage;
 	}
 	
 	public function getType(): LineType
@@ -56,48 +45,28 @@ class InformationPart1Line implements LineInterface
 		return new LineType(LineType::InformationPart1);
 	}
 	
-	public function getSequenceNumber()
+	public function getSequenceNumber(): SequenceNumber
 	{
 		return $this->sequenceNumber;
 	}
 	
-	public function getSequenceNumberDetail()
+	public function getSequenceNumberDetail(): SequenceNumberDetail
 	{
 		return $this->sequenceNumberDetail;
 	}
 	
-	public function getBankReference()
+	public function getBankReference(): BankReference
 	{
 		return $this->bankReference;
 	}
 	
-	public function getTransactionCode()
+	public function getTransactionCode(): TransactionCode
 	{
 		return $this->transactionCode;
 	}
 	
-	public function getMessage()
+	public function getMessageOrStructuredMessage(): MessageOrStructuredMessage
 	{
-		return $this->message;
-	}
-	
-	public function isHasStructuredMessage(): bool
-	{
-		return $this->hasStructuredMessage;
-	}
-	
-	public function getStructuredMessageType()
-	{
-		return $this->structuredMessageType;
-	}
-	
-	public function getStructuredMessageFull()
-	{
-		return $this->structuredMessageFull;
-	}
-	
-	public function getStructuredMessage()
-	{
-		return $this->structuredMessage;
+		return $this->messageOrStructuredMessage;
 	}
 }

@@ -16,8 +16,8 @@ class InformationPart2LineParserTest extends \PHPUnit_Framework_TestCase
 
         $result = $parser->parse($sample);
 
-        $this->assertEquals("0001", $result->getSequenceNumber());
-        $this->assertEquals("0001", $result->getSequenceNumberDetail());
+        $this->assertEquals(1, $result->getSequenceNumber()->getValue());
+        $this->assertEquals(1, $result->getSequenceNumberDetail()->getValue());
         $this->assertEquals("MAIN STREET 928                    5480 SOME CITY ", $result->getMessage());
     }
 }

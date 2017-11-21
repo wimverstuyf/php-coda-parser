@@ -1,7 +1,9 @@
 <?php
 
 namespace Codelicious\Coda\LineParsers;
+
 use Codelicious\Coda\Lines\EndSummaryLine;
+use Codelicious\Coda\Values\Amount;
 
 /**
  * @package Codelicious\Coda
@@ -17,8 +19,8 @@ class EndSummaryLineParser implements LineParserInterface
 	public function parse(string $codaLine)
 	{
 		return new EndSummaryLine(
-			mb_substr($codaLine, 22, 15)*1/1000, // taken from the account (=debetomzet)
-			mb_substr($codaLine, 37, 15)*1/1000 // added to the account (=creditomzet)
+			new Amount(mb_substr($codaLine, 22, 15)), // taken from the account (=debetomzet)
+			new Amount(mb_substr($codaLine, 37, 15)) // added to the account (=creditomzet)
 		);
 	}
 	
