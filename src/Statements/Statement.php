@@ -1,8 +1,8 @@
 <?php
 
 namespace Codelicious\Coda\Statements;
-use Codelicious\Coda\Values\Amount;
-use Codelicious\Coda\Values\Date;
+
+use DateTime;
 
 /**
  * @package Codelicious\Coda
@@ -11,13 +11,13 @@ use Codelicious\Coda\Values\Date;
  */
 class Statement
 {
-	/** @var Date|null */
+	/** @var DateTime */
 	private $date;
 	/** @var Account */
 	private $account;
-	/** @var Amount|null */
+	/** @var float */
 	private $initialBalance;
-	/** @var Amount|null */
+	/** @var float */
 	private $newBalance;
 	/** @var string */
 	private $informationalMessage;
@@ -25,14 +25,14 @@ class Statement
 	private $transactions;
 	
 	/**
-	 * @param Date|null $date
+	 * @param DateTime $date
 	 * @param Account $account
-	 * @param Amount|null $initialBalance
-	 * @param Amount|null $newBalance
+	 * @param float $initialBalance
+	 * @param float $newBalance
 	 * @param string $informationalMessage
-	 * @param array $transactions
+	 * @param Transaction[] $transactions
 	 */
-	public function __construct($date, Account $account, $initialBalance, $newBalance, string $informationalMessage, array $transactions)
+	public function __construct(DateTime $date, Account $account, float $initialBalance, float $newBalance, string $informationalMessage, array $transactions)
 	{
 		$this->date = $date;
 		$this->account = $account;
@@ -42,41 +42,26 @@ class Statement
 		$this->transactions = $transactions;
 	}
 	
-	/**
-	 * @return Date|null
-	 */
-	public function getDate()
+	public function getDate(): DateTime
 	{
 		return $this->date;
 	}
 	
-	/**
-	 * @return Account
-	 */
 	public function getAccount(): Account
 	{
 		return $this->account;
 	}
 	
-	/**
-	 * @return Amount|null
-	 */
-	public function getInitialBalance()
+	public function getInitialBalance(): float
 	{
 		return $this->initialBalance;
 	}
 	
-	/**
-	 * @return Amount|null
-	 */
-	public function getNewBalance()
+	public function getNewBalance(): float
 	{
 		return $this->newBalance;
 	}
 	
-	/**
-	 * @return string
-	 */
 	public function getInformationalMessage(): string
 	{
 		return $this->informationalMessage;
@@ -89,5 +74,4 @@ class Statement
 	{
 		return $this->transactions;
 	}
-	
 }

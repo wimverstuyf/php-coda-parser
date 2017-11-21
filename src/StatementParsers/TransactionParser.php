@@ -11,6 +11,7 @@ use Codelicious\Coda\Lines\TransactionPart1Line;
 use Codelicious\Coda\Lines\TransactionPart2Line;
 use Codelicious\Coda\Statements\Transaction;
 use Codelicious\Coda\Values\Message;
+use DateTime;
 
 /**
  * @package Codelicious\Coda
@@ -28,14 +29,14 @@ class TransactionParser
 		/** @var TransactionPart1Line $transactionPart1Line */
 		$transactionPart1Line = getFirstLineOfType($lines, new LineType(LineType::TransactionPart1));
 
-		$transactionDate = null;
-		$valutaDate = null;
-		$amount = null;
+		$transactionDate = new DateTime("0001-01-01");
+		$valutaDate = new DateTime("0001-01-01");
+		$amount = 0.0;
 		$sepaDirectDebit = null;
 		if ($transactionPart1Line) {
-			$valutaDate = $transactionPart1Line->getValutaDate();
-			$transactionDate = $transactionPart1Line->getTransactionDate();
-			$amount = $transactionPart1Line->getAmount();
+			$valutaDate = $transactionPart1Line->getValutaDate()->getValue();
+			$transactionDate = $transactionPart1Line->getTransactionDate()->getValue();
+			$amount = $transactionPart1Line->getAmount()->getValue();
 			if ($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()) {
 				$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 			}

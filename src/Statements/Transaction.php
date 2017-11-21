@@ -2,9 +2,8 @@
 
 namespace Codelicious\Coda\Statements;
 
-use Codelicious\Coda\Values\Amount;
-use Codelicious\Coda\Values\Date;
 use Codelicious\Coda\Values\SepaDirectDebit;
+use DateTime;
 
 /**
  * @package Codelicious\Coda
@@ -15,11 +14,11 @@ class Transaction
 {
 	/** @var AccountOtherParty */
 	private $account;
-	/** @var Date|null */
+	/** @var DateTime */
 	private $transactionDate;
-	/** @var Date|null */
+	/** @var DateTime */
 	private $valutaDate;
-	/** @var Amount|null */
+	/** @var float */
 	private $amount;
 	/** @var string */
 	private $message;
@@ -30,14 +29,14 @@ class Transaction
 	
 	/**
 	 * @param AccountOtherParty $account
-	 * @param Date|null $transactionDate
-	 * @param Date|null $valutaDate
-	 * @param Amount|null $amount
+	 * @param DateTime $transactionDate
+	 * @param DateTime $valutaDate
+	 * @param float $amount
 	 * @param string $message
 	 * @param string $structuredMessage
 	 * @param SepaDirectDebit|null $sepaDirectDebit
 	 */
-	public function __construct(AccountOtherParty $account, $transactionDate, $valutaDate, $amount, string $message, string $structuredMessage, $sepaDirectDebit)
+	public function __construct(AccountOtherParty $account, DateTime $transactionDate, DateTime $valutaDate, float $amount, string $message, string $structuredMessage, $sepaDirectDebit)
 	{
 		$this->account = $account;
 		$this->transactionDate = $transactionDate;
@@ -48,25 +47,22 @@ class Transaction
 		$this->sepaDirectDebit = $sepaDirectDebit;
 	}
 	
-	/**
-	 * @return AccountOtherParty
-	 */
-	public function getAccount()
+	public function getAccount(): AccountOtherParty
 	{
 		return $this->account;
 	}
 	
-	public function getTransactionDate()
+	public function getTransactionDate(): DateTime
 	{
 		return $this->transactionDate;
 	}
 	
-	public function getValutaDate()
+	public function getValutaDate(): DateTime
 	{
 		return $this->valutaDate;
 	}
 	
-	public function getAmount()
+	public function getAmount(): float
 	{
 		return $this->amount;
 	}
@@ -81,6 +77,9 @@ class Transaction
 		return $this->structuredMessage;
 	}
 	
+	/**
+	 * @return SepaDirectDebit|null
+	 */
 	public function getSepaDirectDebit()
 	{
 		return $this->sepaDirectDebit;

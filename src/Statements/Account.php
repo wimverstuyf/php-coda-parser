@@ -9,50 +9,56 @@ namespace Codelicious\Coda\Statements;
  */
 class Account
 {
+	/** @var string */
 	private $name;
+	/** @var string */
 	private $bic;
+	/** @var string */
 	private $companyIdentificationNumber;
+	/** @var string */
 	private $number;
-	private $currency;
-	private $country;
+	/** @var string */
+	private $currencyCode;
+	/** @var string */
+	private $countryCode;
 	
-	public function __construct($name, $bic, $companyIdentificationNumber, $number, $currency, $country)
+	public function __construct(string $name, string $bic, string $companyIdentificationNumber, string $number, string $currencyCode, string $countryCode)
 	{
 		$this->name = $name;
 		$this->bic = $bic;
 		$this->companyIdentificationNumber = $companyIdentificationNumber;
 		$this->number = $number;
-		$this->currency = $currency;
-		$this->country = $country;
+		$this->currencyCode = $currencyCode;
+		$this->countryCode = $countryCode;
 	}
 	
-	public function getName()
+	public function getName(): string
 	{
 		return $this->name;
 	}
 	
-	public function getBic()
+	public function getBic(): string
 	{
 		return $this->bic;
 	}
 	
-	public function getCompanyIdentificationNumber()
+	public function getCompanyIdentificationNumber(): string
 	{
 		return $this->companyIdentificationNumber;
 	}
 	
-	public function getNumber()
+	public function getNumber(): string
 	{
 		return $this->number;
 	}
 	
-	public function getCurrency()
+	public function getCurrencyCode(): string
 	{
-		return $this->currency;
+		return $this->currencyCode;
 	}
 	
-	public function getCountry()
+	public function getCountryCode(): string
 	{
-		return $this->country;
+		return $this->countryCode;
 	}
 }

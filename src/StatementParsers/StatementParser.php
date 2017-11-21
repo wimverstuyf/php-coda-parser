@@ -16,6 +16,7 @@ use Codelicious\Coda\Lines\TransactionPart1Line;
 use Codelicious\Coda\Lines\TransactionPart2Line;
 use Codelicious\Coda\Lines\TransactionPart3Line;
 use Codelicious\Coda\Statements\Statement;
+use DateTime;
 
 /**
  * @package Codelicious\Coda
@@ -30,25 +31,25 @@ class StatementParser
 	 */
 	public function parse(array $lines): Statement
 	{
-		$date = null;
+		$date = new DateTime("0001-01-01");
 		/** @var IdentificationLine $identificationLine */
 		$identificationLine = getFirstLineOfType($lines, new LineType(LineType::Identification));
 		if ($identificationLine) {
-			$date = $identificationLine->getCreationDate();
+			$date = $identificationLine->getCreationDate()->getValue();
 		}
 		
-		$initialBalance = null;
+		$initialBalance = 0.0;
 		/** @var InitialStateLine $initialStateLine */
 		$initialStateLine = getFirstLineOfType($lines, new LineType(LineType::InitialState));
 		if ($initialStateLine) {
-			$initialBalance = $initialStateLine->getBalance();
+			$initialBalance = $initialStateLine->getBalance()->getValue();
 		}
 		
-		$newBalance = null;
+		$newBalance = 0.0;
 		/** @var NewStateLine $newStateLine */
 		$newStateLine = getFirstLineOfType($lines, new LineType(LineType::NewState));
 		if ($newStateLine) {
-			$newBalance = $newStateLine->getBalance();
+			$newBalance = $newStateLine->getBalance()->getValue();
 		}
 		
 		$messageParser = new MessageParser();

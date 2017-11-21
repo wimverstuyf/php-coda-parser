@@ -40,12 +40,12 @@ $parser = new Parser();
 $statements = $parser->parseFile('coda-file.cod');
 
 foreach ($statements as $statement) {
-    echo $statement->getDate()->getValue()->format('Y-m-d') . "\n";
+    echo $statement->getDate()->format('Y-m-d') . "\n";
 
     foreach ($statement->getTransactions() as $transaction) {
-        echo $transaction->getAccount()->getName() . ": " . $transaction->getAmount()->getValue() . "\n";
+        echo $transaction->getAccount()->getName() . ": " . $transaction->getAmount() . "\n";
     }
 
-    echo $statement->getNewBalance()->getValue() . "\n";
+    echo $statement->getNewBalance() . "\n";
 }
 ```
