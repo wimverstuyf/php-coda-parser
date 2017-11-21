@@ -30,21 +30,21 @@ class StatementParser
 	 */
 	public function parse(array $lines): Statement
 	{
-		$date = "";
+		$date = null;
 		/** @var IdentificationLine $identificationLine */
 		$identificationLine = getFirstLineOfType($lines, new LineType(LineType::Identification));
 		if ($identificationLine) {
 			$date = $identificationLine->getCreationDate();
 		}
 		
-		$initialBalance = "";
+		$initialBalance = null;
 		/** @var InitialStateLine $initialStateLine */
 		$initialStateLine = getFirstLineOfType($lines, new LineType(LineType::InitialState));
 		if ($initialStateLine) {
 			$initialBalance = $initialStateLine->getBalance();
 		}
 		
-		$newBalance = "";
+		$newBalance = null;
 		/** @var NewStateLine $newStateLine */
 		$newStateLine = getFirstLineOfType($lines, new LineType(LineType::NewState));
 		if ($newStateLine) {
@@ -109,14 +109,14 @@ class StatementParser
 	{
 		$transactions = [];
 		$idx = -1;
-		$sequenceNumber = "";
+		$sequenceNumber = -1;
 		
 		foreach ($lines as $line) {
 			/** @var TransactionPart1Line|TransactionPart2Line|TransactionPart3Line|InformationPart1Line|InformationPart2Line|InformationPart3Line $transactionOrInformationLine */
 			$transactionOrInformationLine = $line;
 			
-			if (!$transactions || $sequenceNumber != $transactionOrInformationLine->getSequenceNumber()) {
-				$sequenceNumber = $transactionOrInformationLine->getSequenceNumber();
+			if (!$transactions || $sequenceNumber != $transactionOrInformationLine->getSequenceNumber()->getValue()) {
+				$sequenceNumber = $transactionOrInformationLine->getSequenceNumber()->getValue();
 				$idx += 1;
 				
 				$transactions[$idx] = [];

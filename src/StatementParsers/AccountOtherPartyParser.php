@@ -29,15 +29,15 @@ class AccountOtherPartyParser
 		
 		$bic = "";
 		if ($transactionPart2Line) {
-			$bic = $transactionPart2Line->getOtherAccountBic();
+			$bic = $transactionPart2Line->getOtherAccountBic()->getValue();
 		}
 		
 		$number = "";
 		$name = "";
 		$currency = "";
 		if ($transactionPart3Line) {
-			$name = $transactionPart3Line->getOtherAccountName();
-			$number = $transactionPart3Line->getOtherAccountNumberAndCurrency();
+			$name = $transactionPart3Line->getOtherAccountName()->getValue();
+			$number = $transactionPart3Line->getOtherAccountNumberAndCurrency()->getValue();
 			// let's try to parse number and currency
 			if ($number) {
 				$lastSpace = strrpos($number, " ");

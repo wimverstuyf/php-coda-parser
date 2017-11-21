@@ -2,6 +2,10 @@
 
 namespace Codelicious\Coda\Statements;
 
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\Date;
+use Codelicious\Coda\Values\SepaDirectDebit;
+
 /**
  * @package Codelicious\Coda
  * @author Wim Verstuyf (wim.verstuyf@codelicious.be)
@@ -9,16 +13,31 @@ namespace Codelicious\Coda\Statements;
  */
 class Transaction
 {
+	/** @var AccountOtherParty */
 	private $account;
+	/** @var Date|null */
 	private $transactionDate;
+	/** @var Date|null */
 	private $valutaDate;
+	/** @var Amount|null */
 	private $amount;
+	/** @var string */
 	private $message;
+	/** @var string */
 	private $structuredMessage;
 	/** @var SepaDirectDebit|null */
 	private $sepaDirectDebit;
 	
-	public function __construct(AccountOtherParty $account, $transactionDate, $valutaDate, $amount, $message, $structuredMessage, $sepaDirectDebit)
+	/**
+	 * @param AccountOtherParty $account
+	 * @param Date|null $transactionDate
+	 * @param Date|null $valutaDate
+	 * @param Amount|null $amount
+	 * @param string $message
+	 * @param string $structuredMessage
+	 * @param SepaDirectDebit|null $sepaDirectDebit
+	 */
+	public function __construct(AccountOtherParty $account, $transactionDate, $valutaDate, $amount, string $message, string $structuredMessage, $sepaDirectDebit)
 	{
 		$this->account = $account;
 		$this->transactionDate = $transactionDate;
@@ -52,12 +71,12 @@ class Transaction
 		return $this->amount;
 	}
 	
-	public function getMessage()
+	public function getMessage(): string
 	{
 		return $this->message;
 	}
 	
-	public function getStructuredMessage()
+	public function getStructuredMessage(): string
 	{
 		return $this->structuredMessage;
 	}
@@ -66,4 +85,6 @@ class Transaction
 	{
 		return $this->sepaDirectDebit;
 	}
+	
+	
 }

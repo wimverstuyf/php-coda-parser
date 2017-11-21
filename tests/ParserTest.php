@@ -5,6 +5,7 @@ namespace Codelicious\Tests\Coda;
 use Codelicious\Coda\Parser;
 use Codelicious\Coda\Statements\Statement;
 use Codelicious\Coda\Statements\Transaction;
+use DateTime;
 
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,15 +82,15 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 		$result = $parser->parseFile($this->getSamplePath('sample1.cod'));
 		
 		$this->assertCount(1, $result);
-		$this->assertEquals(17752.12, $result[0]->getInitialBalance());
-		$this->assertEquals(17832.12, $result[0]->getNewBalance());
-		$this->assertEquals("2017-10-11", $result[0]->getDate());
+		$this->assertEquals(17752.12, $result[0]->getInitialBalance()->getValue());
+		$this->assertEquals(17832.12, $result[0]->getNewBalance()->getValue());
+		$this->assertEquals(new DateTime("2017-10-11"), $result[0]->getDate()->getValue());
 		$this->assertEmpty($result[0]->getInformationalMessage());
 		
 		$this->assertCount(4, $result[0]->getTransactions());
 		$this->assertEquals("GROTE WEG            32            3215    HASSELT", $result[0]->getTransactions()[0]->getMessage());
 		$this->assertEquals("000003505158", $result[0]->getTransactions()[0]->getStructuredMessage());
-		$this->assertEquals(5, $result[0]->getTransactions()[0]->getAmount());
+		$this->assertEquals(5, $result[0]->getTransactions()[0]->getAmount()->getValue());
 		$this->assertEquals("KLANT1 MET NAAM1", $result[0]->getTransactions()[0]->getAccount()->getName());
 		$this->assertEquals("BE22313215646432", $result[0]->getTransactions()[0]->getAccount()->getNumber());
 	}
@@ -106,9 +107,9 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 		
 		$this->assertNotEmpty($statement->getAccount());
 		$this->assertEquals(3, count($statement->getTransactions()));
-		$this->assertEquals("2015-01-18", $statement->getDate());
-		$this->assertEquals(4004.1, $statement->getInitialBalance());
-		$this->assertEquals(-500012.1, $statement->getNewBalance());
+		$this->assertEquals(new DateTime("2015-01-18"), $statement->getDate()->getValue());
+		$this->assertEquals(4004.1, $statement->getInitialBalance()->getValue());
+		$this->assertEquals(-500012.1, $statement->getNewBalance()->getValue());
 		$this->assertEquals("THIS IS A PUBLIC MESSAGE", $statement->getInformationalMessage());
 		
 		$this->assertEquals("CODELICIOUS", $statement->getAccount()->getName());
@@ -123,9 +124,9 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 		$transaction3 = $statement->getTransactions()[2];
 		
 		$this->assertNotEmpty($transaction1->getAccount());
-		$this->assertEquals("2014-12-25", $transaction1->getTransactionDate());
-		$this->assertEquals("2014-12-25", $transaction1->getValutaDate());
-		$this->assertEquals(-767.823, $transaction1->getAmount());
+		$this->assertEquals(new DateTime("2014-12-25"), $transaction1->getTransactionDate()->getValue());
+		$this->assertEquals(new DateTime("2014-12-25"), $transaction1->getValutaDate()->getValue());
+		$this->assertEquals(-767.823, $transaction1->getAmount()->getValue());
 		$this->assertEquals("112/4554/46812   813  ANOTHER MESSAGE  MESSAGE", $transaction1->getMessage());
 		$this->assertEmpty($transaction1->getStructuredMessage());
 		

@@ -1,6 +1,8 @@
 <?php
 
 namespace Codelicious\Coda\Statements;
+use Codelicious\Coda\Values\Amount;
+use Codelicious\Coda\Values\Date;
 
 /**
  * @package Codelicious\Coda
@@ -9,15 +11,28 @@ namespace Codelicious\Coda\Statements;
  */
 class Statement
 {
+	/** @var Date|null */
 	private $date;
+	/** @var Account */
 	private $account;
+	/** @var Amount|null */
 	private $initialBalance;
+	/** @var Amount|null */
 	private $newBalance;
+	/** @var string */
 	private $informationalMessage;
+	/** @var array */
 	private $transactions;
-	private $informationMessage;
 	
-	public function __construct($date, $account, $initialBalance, $newBalance, $informationalMessage, array $transactions)
+	/**
+	 * @param Date|null $date
+	 * @param Account $account
+	 * @param Amount|null $initialBalance
+	 * @param Amount|null $newBalance
+	 * @param string $informationalMessage
+	 * @param array $transactions
+	 */
+	public function __construct($date, Account $account, $initialBalance, $newBalance, string $informationalMessage, array $transactions)
 	{
 		$this->date = $date;
 		$this->account = $account;
@@ -27,27 +42,42 @@ class Statement
 		$this->transactions = $transactions;
 	}
 	
+	/**
+	 * @return Date|null
+	 */
 	public function getDate()
 	{
 		return $this->date;
 	}
 	
+	/**
+	 * @return Account
+	 */
 	public function getAccount(): Account
 	{
 		return $this->account;
 	}
 	
+	/**
+	 * @return Amount|null
+	 */
 	public function getInitialBalance()
 	{
 		return $this->initialBalance;
 	}
 	
+	/**
+	 * @return Amount|null
+	 */
 	public function getNewBalance()
 	{
 		return $this->newBalance;
 	}
 	
-	public function getInformationalMessage()
+	/**
+	 * @return string
+	 */
+	public function getInformationalMessage(): string
 	{
 		return $this->informationalMessage;
 	}

@@ -20,7 +20,7 @@ class MessageParser
 		$messageString = "";
 		
 		foreach ($lines as $message) {
-			$trimmed_content = trim($message->getContent());
+			$trimmed_content = trim($message->getContent()->getValue());
 			if ($trimmed_content && $messageString) {
 				$messageString .= " ";
 			}

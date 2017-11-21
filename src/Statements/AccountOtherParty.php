@@ -9,12 +9,16 @@ namespace Codelicious\Coda\Statements;
  */
 class AccountOtherParty
 {
+	/** @var string */
 	private $name;
+	/** @var string */
 	private $bic;
+	/** @var string */
 	private $number;
+	/** @var string */
 	private $currency;
 	
-	public function __construct($name, $bic, $number, $currency)
+	public function __construct(string $name, string $bic, string $number, string $currency)
 	{
 		$this->name = $name;
 		$this->bic = $bic;
@@ -22,22 +26,22 @@ class AccountOtherParty
 		$this->currency = $currency;
 	}
 	
-	public function getName()
+	public function getName(): string
 	{
 		return $this->name;
 	}
 	
-	public function getBic()
+	public function getBic(): string
 	{
 		return $this->bic;
 	}
 	
-	public function getNumber()
+	public function getNumber(): string
 	{
 		return $this->number;
 	}
 	
-	public function getCurrency()
+	public function getCurrency(): string
 	{
 		return $this->currency;
 	}

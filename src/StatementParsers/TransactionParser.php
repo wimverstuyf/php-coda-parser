@@ -10,6 +10,7 @@ use Codelicious\Coda\Lines\LineType;
 use Codelicious\Coda\Lines\TransactionPart1Line;
 use Codelicious\Coda\Lines\TransactionPart2Line;
 use Codelicious\Coda\Statements\Transaction;
+use Codelicious\Coda\Values\Message;
 
 /**
  * @package Codelicious\Coda
@@ -27,25 +28,27 @@ class TransactionParser
 		/** @var TransactionPart1Line $transactionPart1Line */
 		$transactionPart1Line = getFirstLineOfType($lines, new LineType(LineType::TransactionPart1));
 
-		$transactionDate = "";
-		$valutaDate = "";
-		$amount = 0;
+		$transactionDate = null;
+		$valutaDate = null;
+		$amount = null;
 		$sepaDirectDebit = null;
 		if ($transactionPart1Line) {
 			$valutaDate = $transactionPart1Line->getValutaDate();
 			$transactionDate = $transactionPart1Line->getTransactionDate();
 			$amount = $transactionPart1Line->getAmount();
-			$sepaDirectDebit = $transactionPart1Line->getSepaDirectDebit();
+			if ($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()) {
+				$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
+			}
 		}
 		
 		/** @var InformationPart1Line $informationPart1Line */
 		$informationPart1Line = getFirstLineOfType($lines, new LineType(LineType::InformationPart1));
 
 		$structuredMessage = "";
-		if ($transactionPart1Line && !empty($transactionPart1Line->getStructuredMessage())) {
-			$structuredMessage = $transactionPart1Line->getStructuredMessage();
-		} elseif ($informationPart1Line && !empty($informationPart1Line->getStructuredMessage())) {
-			$structuredMessage = $informationPart1Line->getStructuredMessage();
+		if ($transactionPart1Line && $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
+			$structuredMessage = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage();
+		} elseif ($informationPart1Line && $informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
+			$structuredMessage = $informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage();
 		}
 
 		$linesWithAccountInfo = filterLinesOfTypes(
@@ -86,7 +89,14 @@ class TransactionParser
 			]);
 		
 		$message = implode('', array_map(function($line) {
-				return $line->getMessage();
+				/** @var Message|null $message */
+				$message = null;
+				if (method_exists($line, 'getMessageOrStructuredMessage')) {
+					$message = $line->getMessageOrStructuredMessage()->getMessage();
+				} else {
+					$message = $line->getMessage();
+				}
+				return $message?$message->getValue():"";
 			}, $transactionLines));
 		
 		if (!$message) {
@@ -99,7 +109,14 @@ class TransactionParser
 				]);
 			
 			$message = implode('', array_map(function($line) {
-				return $line->getMessage();
+				/** @var Message|null $message */
+				$message = null;
+				if (method_exists($line, 'getMessageOrStructuredMessage')) {
+					$message = $line->getMessageOrStructuredMessage()->getMessage();
+				} else {
+					$message = $line->getMessage();
+				}
+				return $message?$message->getValue():"";
 			}, $informationLines));
 		}
 		
@@ -107,7 +124,7 @@ class TransactionParser
 			/** @var TransactionPart2Line|null $transactionLine */
 			$transactionLine = getFirstLineOfType($lines, new LineType(LineType::TransactionPart2));
 			if ($transactionLine) {
-				$message = $transactionLine->getClientReference();
+				$message = $transactionLine->getClientReference()->getValue();
 			}
 		}
 		
