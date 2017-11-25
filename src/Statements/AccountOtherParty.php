@@ -16,14 +16,14 @@ class AccountOtherParty
 	/** @var string */
 	private $number;
 	/** @var string */
-	private $currency;
+	private $currencyCode;
 	
-	public function __construct(string $name, string $bic, string $number, string $currency)
+	public function __construct(string $name, string $bic, string $number, string $currencyCode)
 	{
 		$this->name = $name;
 		$this->bic = $bic;
 		$this->number = $number;
-		$this->currency = $currency;
+		$this->currencyCode = $currencyCode;
 	}
 	
 	public function getName(): string
@@ -41,8 +41,8 @@ class AccountOtherParty
 		return $this->number;
 	}
 	
-	public function getCurrency(): string
+	public function getCurrencyCode(): string
 	{
-		return $this->currency;
+		return $this->currencyCode;
 	}
 }

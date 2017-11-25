@@ -133,7 +133,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("BVBA.BAKKER PIET", $transaction1->getAccount()->getName());
 		$this->assertEquals("GEBCEEBB", $transaction1->getAccount()->getBic());
 		$this->assertEquals("BE54805480215856", $transaction1->getAccount()->getNumber());
-		$this->assertEquals("EUR", $transaction1->getAccount()->getCurrency());
+		$this->assertEquals("EUR", $transaction1->getAccount()->getCurrencyCode());
 		
 		$this->assertEquals("54875", $transaction2->getMessage());
 		$this->assertEquals("112455446812", $transaction2->getStructuredMessage());
