@@ -12,7 +12,7 @@ Packagist home page, then define your dependency on Codelicious/Coda in your `co
 ```json
     {
         "require": {
-            "codelicious/php-coda-parser": "^1.0"
+            "codelicious/php-coda-parser": "^2.0"
         }
     }
 ```
@@ -20,7 +20,7 @@ Packagist home page, then define your dependency on Codelicious/Coda in your `co
 Or you can execute the following command in your project root to install this library:
 
 ```sh
-composer require codelicious/php-coda-parser:^1.0
+composer require codelicious/php-coda-parser:^2.0
 ```
 
 ## Demo / API
@@ -37,43 +37,15 @@ An open API is also available at the same page if you don't feel like hosting th
 use Codelicious\Coda\Parser;
 
 $parser = new Parser();
-$statements = $parser->parseFile('coda-file.cod', 'simple');
+$statements = $parser->parseFile('coda-file.cod');
 
 foreach ($statements as $statement) {
-    echo $statement->date . "\n";
+    echo $statement->getDate()->format('Y-m-d') . "\n";
 
-    foreach ($statement->transactions as $transaction) {
-        echo $transaction->account->name . ": " . $transaction->amount . "\n";
+    foreach ($statement->getTransactions() as $transaction) {
+        echo $transaction->getAccount()->getName() . ": " . $transaction->getAmount() . "\n";
     }
 
-    echo $statement->new_balance . "\n";
+    echo $statement->getNewBalance() . "\n";
 }
 ```
-    
-## Statement structure
-
-There are 2 structures available. 'raw' which resembles the original file structure and contains all information and 'simple' which is a simplified version only containing the most important information.
-If you are unsure what to use you should use 'simple'.
-Properties that are not supplied will be `null`.
-
-*   `Codelicious\Coda\Data\Simple\Statement`
-    *   `date` Date of the supplied file (format YYYY-MM-DD)
-    *   `account` Account for which the statements were created. An object implementing `Codelicious\Coda\Data\Simple\Account`
-    *   `original_balance` Balance of the account before the transactions were processed. Up to 3 decimals.
-    *   `new_balance` Balance of the account after the transactions were processed. Up to 3 decimals.
-    *   `free_messages` A list of text messages containing additional information
-    *   `transaction` A list of transactions implemented as `Codelicious\Coda\Data\Simple\Transaction`
-*   `Codelicious\Coda\Data\Simple\Account`
-    *   `name` Name of the holder of the account
-    *   `bic` Bankcode of the account
-    *   `company_id` Official Belgian company number of the account holder
-    *   `number` Banknumber of the account
-    *   `currency` Currency of the account
-    *   `country` Country of the account
-*   `Codelicious\Coda\Data\Simple\Transaction`
-    *   `account` Account of the other party of the transaction. An object implementing `Codelicious\Coda\Data\Simple\Account`
-    *   `transaction_date` Date on which the transaction was requested
-    *   `valuta_date` Date on which the transaction was executed by the bank
-    *   `amount` Amount of the transaction. Up to 3 decimals. A negative number for credit transactions.
-    *   `message` Message of the transaction
-    *   `structured_message` Structured messages of the transaction (if available)

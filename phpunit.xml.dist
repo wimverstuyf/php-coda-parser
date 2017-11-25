@@ -7,7 +7,7 @@
          stopOnFailure="false"
 >
     <testsuites>
-        <testsuite name="Codelicious\Coda Test Suite">
+        <testsuite name="Codelicious\CodaParser Tests">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
