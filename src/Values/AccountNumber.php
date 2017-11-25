@@ -2,7 +2,6 @@
 
 namespace Codelicious\Coda\Values;
 
-
 class AccountNumber
 {
 	/** @var string */

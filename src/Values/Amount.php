@@ -2,7 +2,6 @@
 
 namespace Codelicious\Coda\Values;
 
-
 use function Codelicious\Coda\Helpers\validateStringDigitOnly;
 use function Codelicious\Coda\Helpers\validateStringLength;
 
@@ -11,12 +10,12 @@ class Amount
 	/** @var float */
 	private $value;
 	
-	public function __construct(string $amountAsString, bool $includeSign=false)
+	public function __construct(string $amountAsString, bool $includesSign=false)
 	{
 		validateStringDigitOnly($amountAsString, "Amount");
 
 		$negative = 1;
-		if ($includeSign) {
+		if ($includesSign) {
 			validateStringLength($amountAsString, 16, "Amount");
 			
 			$negative = mb_substr($amountAsString, 0, 1) === "1" ? -1 : 1;

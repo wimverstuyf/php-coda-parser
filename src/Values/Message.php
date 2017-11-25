@@ -2,7 +2,6 @@
 
 namespace Codelicious\Coda\Values;
 
-
 use function Codelicious\Coda\Helpers\trimSpace;
 
 class Message
