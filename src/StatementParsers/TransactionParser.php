@@ -101,6 +101,12 @@ class TransactionParser
 			}, $transactionLines));
 		
 		if (!$message) {
+			/** @var TransactionPart2Line|null $transactionLine */
+			$transactionLine = getFirstLineOfType($lines, new LineType(LineType::TransactionPart2));
+			if ($transactionLine && !empty($transactionLine->getClientReference()->getValue())) {
+				$message = $transactionLine->getClientReference()->getValue();
+			}
+
 			$informationLines = filterLinesOfTypes(
 				$lines,
 				[
@@ -109,7 +115,10 @@ class TransactionParser
 					new LineType(LineType::InformationPart3)
 				]);
 			
-			$message = implode('', array_map(function($line) {
+			if ($message) {
+				$message .= " ";
+			}
+			$message .= implode('', array_map(function($line) {
 				/** @var Message|null $message */
 				$message = null;
 				if (method_exists($line, 'getMessageOrStructuredMessage')) {
@@ -119,14 +128,6 @@ class TransactionParser
 				}
 				return $message?$message->getValue():"";
 			}, $informationLines));
-		}
-		
-		if (!$message) {
-			/** @var TransactionPart2Line|null $transactionLine */
-			$transactionLine = getFirstLineOfType($lines, new LineType(LineType::TransactionPart2));
-			if ($transactionLine) {
-				$message = $transactionLine->getClientReference()->getValue();
-			}
 		}
 		
 		return trim($message);
