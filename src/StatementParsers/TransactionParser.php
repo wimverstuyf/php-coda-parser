@@ -20,10 +20,11 @@ use DateTime;
  */
 class TransactionParser
 {
-	/**
-	 * @param array $lines
-	 * @return Transaction
-	 */
+    /**
+     * @param array $lines
+     * @return Transaction
+     * @throws \Exception
+     */
 	public function parse(array $lines): Transaction
 	{
 		/** @var TransactionPart1Line $transactionPart1Line */
@@ -33,6 +34,16 @@ class TransactionParser
 		$valutaDate = new DateTime("0001-01-01");
 		$amount = 0.0;
 		$sepaDirectDebit = null;
+
+		/** @var string|null $transactionSequence */
+        $transactionSequence = null;
+
+        /** @var string|null $transactionSequence */
+        $transactionSequenceDetail = null;
+
+        /** @var string|null $transactionSequence */
+        $statementSequence = null;
+
 		if ($transactionPart1Line) {
 			$valutaDate = $transactionPart1Line->getValutaDate()->getValue();
 			$transactionDate = $transactionPart1Line->getTransactionDate()->getValue();
@@ -41,11 +52,15 @@ class TransactionParser
 				$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 			}
 		}
-		
+
 		/** @var InformationPart1Line $informationPart1Line */
 		$informationPart1Line = getFirstLineOfType($lines, new LineType(LineType::InformationPart1));
 
 		$structuredMessage = "";
+        $transactionSequence = $transactionPart1Line->getSequenceNumber()->getValue();
+        $transactionSequenceDetail = $transactionPart1Line->getSequenceNumberDetail()->getValue();
+        $statementSequence = $transactionPart1Line->getStatementSequenceNumber()->getValue();
+
 		if ($transactionPart1Line && $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
 			$structuredMessage = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage();
 		} elseif ($informationPart1Line && $informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
@@ -58,12 +73,12 @@ class TransactionParser
 				new LineType(LineType::TransactionPart2),
 				new LineType(LineType::TransactionPart3)
 			]);
-		
+
 		$accountOtherPartyParser = new AccountOtherPartyParser();
 		$account = $accountOtherPartyParser->parse($linesWithAccountInfo);
-		
+
 		$message = $this->constructMessage($lines);
-		
+
 		return new Transaction(
 			$account,
 			$transactionDate,
@@ -71,10 +86,13 @@ class TransactionParser
 			$amount,
 			$message,
 			$structuredMessage,
-			$sepaDirectDebit
+			$sepaDirectDebit,
+            $statementSequence,
+            $transactionSequence,
+            $transactionSequenceDetail
 		);
 	}
-	
+
 	/**
 	 * @param LineInterface[] $lines
 	 * @return string
@@ -88,7 +106,7 @@ class TransactionParser
 				new LineType(LineType::TransactionPart2),
 				new LineType(LineType::TransactionPart3)
 			]);
-		
+
 		$message = implode('', array_map(function($line) {
 				/** @var Message|null $message */
 				$message = null;
@@ -99,7 +117,7 @@ class TransactionParser
 				}
 				return $message?$message->getValue():"";
 			}, $transactionLines));
-		
+
 		if (!$message) {
 			/** @var TransactionPart2Line|null $transactionLine */
 			$transactionLine = getFirstLineOfType($lines, new LineType(LineType::TransactionPart2));
@@ -114,7 +132,7 @@ class TransactionParser
 					new LineType(LineType::InformationPart2),
 					new LineType(LineType::InformationPart3)
 				]);
-			
+
 			if ($message) {
 				$message .= " ";
 			}
@@ -129,7 +147,7 @@ class TransactionParser
 				return $message?$message->getValue():"";
 			}, $informationLines));
 		}
-		
+
 		return trim($message);
 	}
 }
