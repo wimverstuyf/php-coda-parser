@@ -12,21 +12,21 @@ use DateTime;
  */
 class Transaction
 {
-	/** @var AccountOtherParty */
-	private $account;
-	/** @var DateTime */
-	private $transactionDate;
-	/** @var DateTime */
-	private $valutaDate;
-	/** @var float */
-	private $amount;
-	/** @var string */
-	private $message;
-	/** @var string */
-	private $structuredMessage;
-	/** @var SepaDirectDebit|null */
-	private $sepaDirectDebit;
-	/** @var string|null */
+    /** @var AccountOtherParty */
+    private $account;
+    /** @var DateTime */
+    private $transactionDate;
+    /** @var DateTime */
+    private $valutaDate;
+    /** @var float */
+    private $amount;
+    /** @var string */
+    private $message;
+    /** @var string */
+    private $structuredMessage;
+    /** @var SepaDirectDebit|null */
+    private $sepaDirectDebit;
+    /** @var string|null */
     private $statementSequence;
     /** @var string|null */
     private $transactionSequence;
@@ -41,12 +41,12 @@ class Transaction
      * @param string $message
      * @param string $structuredMessage
      * @param SepaDirectDebit|null $sepaDirectDebit
-     * @param $statementSequence
-     * @param $transactionSequence
-     * @param $transactionSequenceDetail
+     * @param string|null $statementSequence
+     * @param string|null $transactionSequence
+     * @param string|null $transactionSequenceDetail
      */
-	public function __construct(
-	    AccountOtherParty $account,
+    public function __construct(
+        AccountOtherParty $account,
         DateTime $transactionDate,
         DateTime $valutaDate,
         float $amount,
@@ -57,56 +57,78 @@ class Transaction
         $transactionSequence,
         $transactionSequenceDetail
     )
-	{
-		$this->account = $account;
-		$this->transactionDate = $transactionDate;
-		$this->valutaDate = $valutaDate;
-		$this->amount = $amount;
-		$this->message = $message;
-		$this->structuredMessage = $structuredMessage;
-		$this->sepaDirectDebit = $sepaDirectDebit;
+    {
+        $this->account = $account;
+        $this->transactionDate = $transactionDate;
+        $this->valutaDate = $valutaDate;
+        $this->amount = $amount;
+        $this->message = $message;
+        $this->structuredMessage = $structuredMessage;
+        $this->sepaDirectDebit = $sepaDirectDebit;
         $this->statementSequence = $statementSequence;
         $this->transactionSequence = $transactionSequence;
         $this->transactionSequenceDetail = $transactionSequenceDetail;
     }
 
-	public function getAccount(): AccountOtherParty
-	{
-		return $this->account;
-	}
+    public function getAccount(): AccountOtherParty
+    {
+        return $this->account;
+    }
 
-	public function getTransactionDate(): DateTime
-	{
-		return $this->transactionDate;
-	}
+    public function getTransactionDate(): DateTime
+    {
+        return $this->transactionDate;
+    }
 
-	public function getValutaDate(): DateTime
-	{
-		return $this->valutaDate;
-	}
+    public function getValutaDate(): DateTime
+    {
+        return $this->valutaDate;
+    }
 
-	public function getAmount(): float
-	{
-		return $this->amount;
-	}
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
 
-	public function getMessage(): string
-	{
-		return $this->message;
-	}
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
 
-	public function getStructuredMessage(): string
-	{
-		return $this->structuredMessage;
-	}
+    public function getStructuredMessage(): string
+    {
+        return $this->structuredMessage;
+    }
 
-	/**
-	 * @return SepaDirectDebit|null
-	 */
-	public function getSepaDirectDebit()
-	{
-		return $this->sepaDirectDebit;
-	}
+    /**
+     * @return SepaDirectDebit|null
+     */
+    public function getSepaDirectDebit()
+    {
+        return $this->sepaDirectDebit;
+    }
 
+    /**
+     * @return string|null
+     */
+    public function getStatementSequence()
+    {
+        return $this->statementSequence;
+    }
 
+    /**
+     * @return string|null
+     */
+    public function getTransactionSequence()
+    {
+        return $this->transactionSequence;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTransactionSequenceDetail()
+    {
+        return $this->transactionSequenceDetail;
+    }
 }

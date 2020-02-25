@@ -2,8 +2,6 @@
 
 namespace Codelicious\Coda\StatementParsers;
 
-use function Codelicious\Coda\Helpers\filterLinesOfTypes;
-use function Codelicious\Coda\Helpers\getFirstLineOfType;
 use Codelicious\Coda\Lines\InformationPart1Line;
 use Codelicious\Coda\Lines\LineInterface;
 use Codelicious\Coda\Lines\LineType;
@@ -12,6 +10,8 @@ use Codelicious\Coda\Lines\TransactionPart2Line;
 use Codelicious\Coda\Statements\Transaction;
 use Codelicious\Coda\Values\Message;
 use DateTime;
+use function Codelicious\Coda\Helpers\filterLinesOfTypes;
+use function Codelicious\Coda\Helpers\getFirstLineOfType;
 
 /**
  * @package Codelicious\Coda
@@ -35,19 +35,22 @@ class TransactionParser
 		$amount = 0.0;
 		$sepaDirectDebit = null;
 
+        /** @var string|null $transactionSequence */
+        $statementSequence = null;
+
 		/** @var string|null $transactionSequence */
         $transactionSequence = null;
 
         /** @var string|null $transactionSequence */
         $transactionSequenceDetail = null;
 
-        /** @var string|null $transactionSequence */
-        $statementSequence = null;
-
 		if ($transactionPart1Line) {
 			$valutaDate = $transactionPart1Line->getValutaDate()->getValue();
 			$transactionDate = $transactionPart1Line->getTransactionDate()->getValue();
 			$amount = $transactionPart1Line->getAmount()->getValue();
+            $statementSequence = $transactionPart1Line->getStatementSequenceNumber()->getValue();
+            $transactionSequence = $transactionPart1Line->getSequenceNumber()->getValue();
+            $transactionSequenceDetail = $transactionPart1Line->getSequenceNumberDetail()->getValue();
 			if ($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()) {
 				$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 			}
@@ -57,9 +60,6 @@ class TransactionParser
 		$informationPart1Line = getFirstLineOfType($lines, new LineType(LineType::InformationPart1));
 
 		$structuredMessage = "";
-        $transactionSequence = $transactionPart1Line->getSequenceNumber()->getValue();
-        $transactionSequenceDetail = $transactionPart1Line->getSequenceNumberDetail()->getValue();
-        $statementSequence = $transactionPart1Line->getStatementSequenceNumber()->getValue();
 
 		if ($transactionPart1Line && $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
 			$structuredMessage = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage();
