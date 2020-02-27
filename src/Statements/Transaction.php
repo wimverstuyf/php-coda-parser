@@ -14,6 +14,10 @@ class Transaction
 {
     /** @var AccountOtherParty */
     private $account;
+    /** @var int */
+    private $statementSequence;
+    /** @var int */
+    private $transactionSequence;
     /** @var DateTime */
     private $transactionDate;
     /** @var DateTime */
@@ -26,48 +30,39 @@ class Transaction
     private $structuredMessage;
     /** @var SepaDirectDebit|null */
     private $sepaDirectDebit;
-    /** @var string|null */
-    private $statementSequence;
-    /** @var string|null */
-    private $transactionSequence;
-    /** @var string|null */
-    private $transactionSequenceDetail;
 
     /**
      * @param AccountOtherParty $account
+     * @param int $statementSequence
+     * @param int $transactionSequence
      * @param DateTime $transactionDate
      * @param DateTime $valutaDate
      * @param float $amount
      * @param string $message
      * @param string $structuredMessage
      * @param SepaDirectDebit|null $sepaDirectDebit
-     * @param string|null $statementSequence
-     * @param string|null $transactionSequence
-     * @param string|null $transactionSequenceDetail
      */
     public function __construct(
         AccountOtherParty $account,
+        int $statementSequence,
+        int $transactionSequence,
         DateTime $transactionDate,
         DateTime $valutaDate,
         float $amount,
         string $message,
         string $structuredMessage,
-        $sepaDirectDebit,
-        $statementSequence,
-        $transactionSequence,
-        $transactionSequenceDetail
+        $sepaDirectDebit
     )
     {
         $this->account = $account;
+        $this->statementSequence = $statementSequence;
+        $this->transactionSequence = $transactionSequence;
         $this->transactionDate = $transactionDate;
         $this->valutaDate = $valutaDate;
         $this->amount = $amount;
         $this->message = $message;
         $this->structuredMessage = $structuredMessage;
         $this->sepaDirectDebit = $sepaDirectDebit;
-        $this->statementSequence = $statementSequence;
-        $this->transactionSequence = $transactionSequence;
-        $this->transactionSequenceDetail = $transactionSequenceDetail;
     }
 
     public function getAccount(): AccountOtherParty
@@ -109,26 +104,18 @@ class Transaction
     }
 
     /**
-     * @return string|null
+     * @return int
      */
-    public function getStatementSequence()
+    public function getStatementSequence(): int
     {
         return $this->statementSequence;
     }
 
     /**
-     * @return string|null
+     * @return int
      */
-    public function getTransactionSequence()
+    public function getTransactionSequence(): int
     {
         return $this->transactionSequence;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTransactionSequenceDetail()
-    {
-        return $this->transactionSequenceDetail;
     }
 }

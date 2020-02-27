@@ -35,25 +35,22 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($transaction1->getTransactionDate());
         $this->assertNotEmpty($transaction1->getValutaDate());
         $this->assertNotEmpty($transaction1->getMessage());
-        $this->assertEquals("1", $transaction1->getTransactionSequence());
-        $this->assertEquals("0", $transaction1->getTransactionSequenceDetail());
-        $this->assertEquals("214", $transaction1->getStatementSequence());
+        $this->assertEquals(1, $transaction1->getTransactionSequence());
+        $this->assertEquals(214, $transaction1->getStatementSequence());
 
         $this->assertNotEmpty($transaction2->getAccount());
         $this->assertNotEmpty($transaction2->getTransactionDate());
         $this->assertNotEmpty($transaction2->getValutaDate());
         $this->assertNotEmpty($transaction2->getStructuredMessage());
-        $this->assertEquals("2", $transaction2->getTransactionSequence());
-        $this->assertEquals("0", $transaction2->getTransactionSequenceDetail());
-        $this->assertEquals("214", $transaction2->getStatementSequence());
+        $this->assertEquals(2, $transaction2->getTransactionSequence());
+        $this->assertEquals(214, $transaction2->getStatementSequence());
 
         $this->assertNotEmpty($transaction3->getAccount());
         $this->assertNotEmpty($transaction3->getTransactionDate());
         $this->assertNotEmpty($transaction3->getValutaDate());
         $this->assertNotEmpty($transaction3->getMessage());
-        $this->assertEquals("9", $transaction3->getTransactionSequence());
-        $this->assertEquals("0", $transaction3->getTransactionSequenceDetail());
-        $this->assertEquals("214", $transaction3->getStatementSequence());
+        $this->assertEquals(9, $transaction3->getTransactionSequence());
+        $this->assertEquals(214, $transaction3->getStatementSequence());
     }
 
     public function testMessageOnMultipleLinesTransactionBlock()
@@ -143,21 +140,18 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("GEBCEEBB", $transaction1->getAccount()->getBic());
         $this->assertEquals("BE54805480215856", $transaction1->getAccount()->getNumber());
         $this->assertEquals("EUR", $transaction1->getAccount()->getCurrencyCode());
-        $this->assertEquals("1", $transaction1->getTransactionSequence());
-        $this->assertEquals("0", $transaction1->getTransactionSequenceDetail());
-        $this->assertEquals("214", $transaction1->getStatementSequence());
+        $this->assertEquals(1, $transaction1->getTransactionSequence());
+        $this->assertEquals(214, $transaction1->getStatementSequence());
 
         $this->assertEquals("54875", $transaction2->getMessage());
         $this->assertEquals("112455446812", $transaction2->getStructuredMessage());
-        $this->assertEquals("2", $transaction2->getTransactionSequence());
-        $this->assertEquals("0", $transaction2->getTransactionSequenceDetail());
-        $this->assertEquals("214", $transaction2->getStatementSequence());
+        $this->assertEquals(2, $transaction2->getTransactionSequence());
+        $this->assertEquals(214, $transaction2->getStatementSequence());
 
         $this->assertEmpty($transaction3->getAccount()->getName());
         $this->assertEquals("GEBCEEBB", $transaction3->getAccount()->getBic());
-        $this->assertEquals("9", $transaction3->getTransactionSequence());
-        $this->assertEquals("0", $transaction1->getTransactionSequenceDetail());
-        $this->assertEquals("214", $transaction3->getStatementSequence());
+        $this->assertEquals(9, $transaction3->getTransactionSequence());
+        $this->assertEquals(214, $transaction3->getStatementSequence());
     }
 
     private function getSamplePath($sampleFile)
