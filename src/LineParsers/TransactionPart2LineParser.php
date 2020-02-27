@@ -2,8 +2,6 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\getTrimmedData;
-use function Codelicious\Coda\Helpers\trimSpace;
 use Codelicious\Coda\Lines\TransactionPart2Line;
 use Codelicious\Coda\Values\Bic;
 use Codelicious\Coda\Values\CategoryPurpose;
@@ -40,7 +38,7 @@ class TransactionPart2LineParser implements LineParserInterface
 			new Purpose(mb_substr($codaLine, 121, 4))
 		);
 	}
-	
+
 	public function canAcceptString(string $codaLine)
 	{
 		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 2) == "22";

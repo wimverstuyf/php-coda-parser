@@ -2,7 +2,6 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\MessageLine;
 use Codelicious\Coda\Values\Message;
 use Codelicious\Coda\Values\SequenceNumber;
@@ -27,7 +26,7 @@ class MessageLineParser implements LineParserInterface
 			new Message(mb_substr($codaLine, 32, 80))
 		);
 	}
-	
+
 	public function canAcceptString(string $codaLine)
 	{
 		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "4";
