@@ -2,8 +2,6 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\formatDateString;
-use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\IdentificationLine;
 use Codelicious\Coda\Values\AccountName;
 use Codelicious\Coda\Values\ApplicationCode;
@@ -45,7 +43,7 @@ class IdentificationLineParser implements LineParserInterface
 			new VersionCode(mb_substr($codaLine, 127, 1))
 		);
 	}
-	
+
 	/**
 	 * Check if the parser take into account this type of line
 	 *
