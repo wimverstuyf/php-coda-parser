@@ -2,8 +2,6 @@
 
 namespace Codelicious\Coda\LineParsers;
 
-use function Codelicious\Coda\Helpers\formatDateString;
-use function Codelicious\Coda\Helpers\getTrimmedData;
 use Codelicious\Coda\Lines\NewStateLine;
 use Codelicious\Coda\Values\AccountFull;
 use Codelicious\Coda\Values\Amount;
@@ -30,7 +28,7 @@ class NewStateLineParser implements LineParserInterface
 			new Date(mb_substr($codaLine, 57, 6))
 		);
 	}
-	
+
 	public function canAcceptString(string $codaLine)
 	{
 		return mb_strlen($codaLine) == 128 && mb_substr($codaLine, 0, 1) == "8";
