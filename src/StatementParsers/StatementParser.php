@@ -37,21 +37,27 @@ class StatementParser
 		if ($identificationLine) {
 			$date = $identificationLine->getCreationDate()->getValue();
 		}
-		
+
 		$initialBalance = 0.0;
+		$sequenceNumber = 0;
 		/** @var InitialStateLine $initialStateLine */
 		$initialStateLine = getFirstLineOfType($lines, new LineType(LineType::InitialState));
+
 		if ($initialStateLine) {
 			$initialBalance = $initialStateLine->getBalance()->getValue();
+			$sequenceNumber = $initialStateLine->getStatementSequenceNumber()->getValue();
 		}
-		
+
+
 		$newBalance = 0.0;
+		$newDate = new DateTime("0001-01-01");
 		/** @var NewStateLine $newStateLine */
 		$newStateLine = getFirstLineOfType($lines, new LineType(LineType::NewState));
 		if ($newStateLine) {
 			$newBalance = $newStateLine->getBalance()->getValue();
+			$newDate = $newStateLine->getDate()->getValue();
 		}
-		
+
 		$messageParser = new MessageParser();
 		$informationalMessage = $messageParser->parse(
 			filterLinesOfTypes(
@@ -59,8 +65,9 @@ class StatementParser
 				[
 					new LineType(LineType::Message)
 				]
-			));
-		
+			)
+		);
+
 		$accountParser = new AccountParser();
 		$account = $accountParser->parse(
 			filterLinesOfTypes(
@@ -71,7 +78,7 @@ class StatementParser
 				]
 			)
 		);
-		
+
 		$transactionLines = $this->groupTransactions(
 			filterLinesOfTypes(
 				$lines,
@@ -85,23 +92,25 @@ class StatementParser
 				]
 			)
 		);
-			
+
 		$transactionParser = new TransactionParser();
 		$transactions = array_map(
 			function(array $lines) use ($transactionParser) {
 				return $transactionParser->parse($lines);
 			}, $transactionLines);
-		
+
 		return new Statement(
 			$date,
 			$account,
+			$sequenceNumber,
 			$initialBalance,
 			$newBalance,
+			$newDate,
 			$informationalMessage,
 			$transactions
 		);
 	}
-	
+
 	/**
 	 * @param LineInterface[] $lines
 	 * @return LineInterface[][]
@@ -111,21 +120,21 @@ class StatementParser
 		$transactions = [];
 		$idx = -1;
 		$sequenceNumber = -1;
-		
+
 		foreach ($lines as $line) {
 			/** @var TransactionPart1Line|TransactionPart2Line|TransactionPart3Line|InformationPart1Line|InformationPart2Line|InformationPart3Line $transactionOrInformationLine */
 			$transactionOrInformationLine = $line;
-			
+
 			if (!$transactions || $sequenceNumber != $transactionOrInformationLine->getSequenceNumber()->getValue()) {
 				$sequenceNumber = $transactionOrInformationLine->getSequenceNumber()->getValue();
 				$idx += 1;
-				
+
 				$transactions[$idx] = [];
 			}
-			
+
 			$transactions[$idx][] = $transactionOrInformationLine;
 		}
-		
+
 		return $transactions;
 	}
 }
