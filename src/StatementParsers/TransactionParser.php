@@ -8,6 +8,7 @@ use Codelicious\Coda\Lines\LineType;
 use Codelicious\Coda\Lines\TransactionPart1Line;
 use Codelicious\Coda\Lines\TransactionPart2Line;
 use Codelicious\Coda\Statements\Transaction;
+use Codelicious\Coda\Statements\TransactionCode;
 use Codelicious\Coda\Values\Message;
 use DateTime;
 use function Codelicious\Coda\Helpers\filterLinesOfTypes;
@@ -34,6 +35,7 @@ class TransactionParser
 		$valutaDate = new DateTime("0001-01-01");
 		$amount = 0.0;
 		$sepaDirectDebit = null;
+		$transactionCode = null;
 
         /** @var int $transactionSequence */
         $statementSequence = 0;
@@ -50,6 +52,15 @@ class TransactionParser
 			if ($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()) {
 				$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 			}
+
+			$valueTransactionCode = $transactionPart1Line->getTransactionCode();
+
+			$transactionCode = new TransactionCode(
+				$valueTransactionCode->getFamily()->getValue(),
+				$valueTransactionCode->getType()->getValue(),
+				$valueTransactionCode->getOperation()->getValue(),
+				$valueTransactionCode->getCategory()->getValue()
+			);
 		}
 
 		/** @var InformationPart1Line $informationPart1Line */
@@ -57,9 +68,17 @@ class TransactionParser
 
 		$structuredMessage = "";
 
-		if ($transactionPart1Line && $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
+		if (
+			$transactionPart1Line &&
+			$transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() &&
+			!empty($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())
+		) {
 			$structuredMessage = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage();
-		} elseif ($informationPart1Line && $informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() && !empty($informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())) {
+		} elseif (
+			$informationPart1Line &&
+			$informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage() &&
+			!empty($informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage())
+		) {
 			$structuredMessage = $informationPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage();
 		}
 
@@ -84,7 +103,8 @@ class TransactionParser
 			$amount,
 			$message,
 			$structuredMessage,
-			$sepaDirectDebit
+			$sepaDirectDebit,
+			$transactionCode,
 		);
 	}
 
