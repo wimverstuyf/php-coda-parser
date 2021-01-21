@@ -28,7 +28,7 @@ class AccountParser
 		$initialStateLine = getFirstLineOfType($lines, new LineType(LineType::InitialState));
 
 		return new Account(
-			($identificationLine?$initialStateLine->getAccount()->getName()->getValue():''),
+			($initialStateLine?$initialStateLine->getAccount()->getName()->getValue():''),
 			($identificationLine?$identificationLine->getAccountBic()->getValue():''),
 			($identificationLine?$identificationLine->getAccountCompanyIdentificationNumber()->getValue():''),
 			($initialStateLine?$initialStateLine->getAccount()->getNumber()->getValue():''),
