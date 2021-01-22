@@ -4,7 +4,7 @@ namespace Codelicious\Tests\Coda\LineParsers;
 
 use Codelicious\Coda\LineParsers\TransactionPart2LineParser;
 
-class TransactionPart2LineParserTest extends \PHPUnit_Framework_TestCase
+class TransactionPart2LineParserTest extends \PHPUnit\Framework\TestCase
 {
 	public function testSample1()
 	{

@@ -7,7 +7,7 @@ use Codelicious\Coda\Statements\Statement;
 use Codelicious\Coda\Statements\Transaction;
 use DateTime;
 
-class ParserTest extends \PHPUnit_Framework_TestCase
+class ParserTest extends \PHPUnit\Framework\TestCase
 {
     public function testSample5SimpleFormat()
     {
@@ -124,6 +124,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("001548226815", $statement->getAccount()->getNumber());
         $this->assertEquals("EUR", $statement->getAccount()->getCurrencyCode());
         $this->assertEquals("BE", $statement->getAccount()->getCountryCode());
+        $this->assertEquals("PROFESSIONAL ACCOUNT", $statement->getAccount()->getDescription());
 
         $transaction1 = $statement->getTransactions()[0];
         $transaction2 = $statement->getTransactions()[1];

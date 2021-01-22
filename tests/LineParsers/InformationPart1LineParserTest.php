@@ -4,7 +4,7 @@ namespace Codelicious\Tests\Coda\LineParsers;
 
 use Codelicious\Coda\LineParsers\InformationPart1LineParser;
 
-class InformationPart1LineParserTest extends \PHPUnit_Framework_TestCase
+class InformationPart1LineParserTest extends \PHPUnit\Framework\TestCase
 {
     public function testSample1()
     {
@@ -27,7 +27,7 @@ class InformationPart1LineParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("BVBA.BAKKER PIET                                                      ", $result->getMessageOrStructuredMessage()->getStructuredMessage()->getAll());
         $this->assertEmpty($result->getMessageOrStructuredMessage()->getStructuredMessage()->getStructuredMessage());
     }
-    
+
     public function testSampleWithAccents()
     {
         $parser = new InformationPart1LineParser();

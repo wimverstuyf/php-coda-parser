@@ -4,7 +4,7 @@ namespace Codelicious\Tests\Coda\LineParsers;
 
 use Codelicious\Coda\LineParsers\EndSummaryLineParser;
 
-class EndSummaryLineParserTest extends \PHPUnit_Framework_TestCase
+class EndSummaryLineParserTest extends \PHPUnit\Framework\TestCase
 {
     public function testSample1()
     {
