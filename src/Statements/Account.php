@@ -21,8 +21,10 @@ class Account
 	private $currencyCode;
 	/** @var string */
 	private $countryCode;
-	
-	public function __construct(string $name, string $bic, string $companyIdentificationNumber, string $number, string $currencyCode, string $countryCode)
+	/** @var string */
+	private $description;
+
+	public function __construct(string $name, string $bic, string $companyIdentificationNumber, string $number, string $currencyCode, string $countryCode, string $description)
 	{
 		$this->name = $name;
 		$this->bic = $bic;
@@ -30,35 +32,41 @@ class Account
 		$this->number = $number;
 		$this->currencyCode = $currencyCode;
 		$this->countryCode = $countryCode;
+		$this->description = $description;
 	}
-	
+
 	public function getName(): string
 	{
 		return $this->name;
 	}
-	
+
 	public function getBic(): string
 	{
 		return $this->bic;
 	}
-	
+
 	public function getCompanyIdentificationNumber(): string
 	{
 		return $this->companyIdentificationNumber;
 	}
-	
+
 	public function getNumber(): string
 	{
 		return $this->number;
 	}
-	
+
 	public function getCurrencyCode(): string
 	{
 		return $this->currencyCode;
 	}
-	
+
 	public function getCountryCode(): string
 	{
 		return $this->countryCode;
+	}
+
+	public function getDescription(): string
+	{
+		return $this->description;
 	}
 }

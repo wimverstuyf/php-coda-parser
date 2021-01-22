@@ -6,7 +6,7 @@ use Codelicious\Coda\LineParsers\TransactionPart1LineParser;
 use Codelicious\Coda\Values\SepaDirectDebit;
 use DateTime;
 
-class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
+class TransactionPart1LineParserTest extends \PHPUnit\Framework\TestCase
 {
     public function testSample1()
     {
@@ -62,15 +62,15 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(214, $result->getStatementSequenceNumber()->getValue());
 		$this->assertEquals(0, $result->getGlobalizationCode()->getValue());
     }
-	
+
 	public function testSepaDirectDebit()
 	{
 		$parser = new TransactionPart1LineParser();
-		
+
 		$sample = '2100280000VAAS00026BSDDXXXXXXXX1000000000050000050815005030001127050815112BEA123XXXXXXXXXXX                  M123  25121421401 0';
-		
+
 		$this->assertEquals(true, $parser->canAcceptString($sample));
-		
+
 		$result = $parser->parse($sample);
 		$this->assertEquals(28, $result->getSequenceNumber()->getValue());
 		$this->assertEquals(0, $result->getSequenceNumberDetail()->getValue());
@@ -89,7 +89,7 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(new DateTime("2014-12-25"), $result->getTransactionDate()->getValue());
 		$this->assertEquals(214, $result->getStatementSequenceNumber()->getValue());
 		$this->assertEquals(0, $result->getGlobalizationCode()->getValue());
-		
+
 		/** @var SepaDirectDebit $sepaDirectDebit */
 		$sepaDirectDebit = $result->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 		$this->assertNotNull($sepaDirectDebit);
@@ -100,5 +100,5 @@ class TransactionPart1LineParserTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('BEA123XXXXXXXXXXX', $sepaDirectDebit->getCreditorIdentificationCode());
 		$this->assertEquals('M123', $sepaDirectDebit->getMandateReference());
 	}
-	
+
 }

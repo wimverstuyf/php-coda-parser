@@ -5,7 +5,7 @@ namespace Codelicious\Tests\Coda\LineParsers;
 use Codelicious\Coda\LineParsers\InitialStateLineParser;
 use DateTime;
 
-class InitialStateLineParserTest extends \PHPUnit_Framework_TestCase
+class InitialStateLineParserTest extends \PHPUnit\Framework\TestCase
 {
 	public function testSample1()
 	{

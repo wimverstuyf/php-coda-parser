@@ -26,14 +26,15 @@ class AccountParser
 		$identificationLine = getFirstLineOfType($lines, new LineType(LineType::Identification));
 		/** @var InitialStateLine|null $initialStateLine */
 		$initialStateLine = getFirstLineOfType($lines, new LineType(LineType::InitialState));
-		
+
 		return new Account(
-			($identificationLine?$identificationLine->getAccountName()->getValue():''),
+			($initialStateLine?$initialStateLine->getAccount()->getName()->getValue():''),
 			($identificationLine?$identificationLine->getAccountBic()->getValue():''),
 			($identificationLine?$identificationLine->getAccountCompanyIdentificationNumber()->getValue():''),
 			($initialStateLine?$initialStateLine->getAccount()->getNumber()->getValue():''),
 			($initialStateLine?$initialStateLine->getAccount()->getCurrency()->getCurrencyCode():''),
-			($initialStateLine?$initialStateLine->getAccount()->getCountry()->getCountryCode():'')
+			($initialStateLine?$initialStateLine->getAccount()->getCountry()->getCountryCode():''),
+			($initialStateLine?$initialStateLine->getAccount()->getDescription()->getValue():'')
 		);
 	}
 }

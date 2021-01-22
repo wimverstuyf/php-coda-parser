@@ -30,6 +30,8 @@ class Transaction
     private $structuredMessage;
     /** @var SepaDirectDebit|null */
     private $sepaDirectDebit;
+    /** @var TransactionCode|null */
+   	private $transactionCode;
 
     /**
      * @param AccountOtherParty $account
@@ -51,7 +53,8 @@ class Transaction
         float $amount,
         string $message,
         string $structuredMessage,
-        $sepaDirectDebit
+        $sepaDirectDebit,
+        TransactionCode $transactionCode
     )
     {
         $this->account = $account;
@@ -63,6 +66,7 @@ class Transaction
         $this->message = $message;
         $this->structuredMessage = $structuredMessage;
         $this->sepaDirectDebit = $sepaDirectDebit;
+        $this->transactionCode = $transactionCode;
     }
 
     public function getAccount(): AccountOtherParty
@@ -117,5 +121,13 @@ class Transaction
     public function getTransactionSequence(): int
     {
         return $this->transactionSequence;
+    }
+
+    /**
+     * @return TransactionCode
+     */
+    public function getTransactionCode(): TransactionCode
+    {
+        return $this->transactionCode;
     }
 }
