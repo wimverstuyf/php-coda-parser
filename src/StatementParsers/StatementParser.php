@@ -97,7 +97,7 @@ class StatementParser
 		$transactions = array_map(
 			function(array $lines) use ($transactionParser) {
 				return $transactionParser->parse($lines);
-			}, $transactionLines);
+			}, $transactionParser->filter($transactionLines));
 
 		return new Statement(
 			$date,
@@ -120,13 +120,20 @@ class StatementParser
 		$transactions = [];
 		$idx = -1;
 		$sequenceNumber = -1;
+		$sequenceNumberDetail = -1;
 
 		foreach ($lines as $line) {
 			/** @var TransactionPart1Line|TransactionPart2Line|TransactionPart3Line|InformationPart1Line|InformationPart2Line|InformationPart3Line $transactionOrInformationLine */
 			$transactionOrInformationLine = $line;
+			$isCollectiveTransaction = method_exists($transactionOrInformationLine, 'getTransactionCode') && $transactionOrInformationLine->getTransactionCode()->getOperation()->getValue() === '07';
 
-			if (!$transactions || $sequenceNumber != $transactionOrInformationLine->getSequenceNumber()->getValue()) {
+			if (
+				!$transactions
+				|| $sequenceNumber != $transactionOrInformationLine->getSequenceNumber()->getValue()
+				|| ($isCollectiveTransaction && $sequenceNumberDetail != $transactionOrInformationLine->getSequenceNumberDetail()->getValue())
+			) {
 				$sequenceNumber = $transactionOrInformationLine->getSequenceNumber()->getValue();
+				$sequenceNumberDetail = $transactionOrInformationLine->getSequenceNumberDetail()->getValue();
 				$idx += 1;
 
 				$transactions[$idx] = [];

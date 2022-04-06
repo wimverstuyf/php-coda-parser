@@ -37,11 +37,13 @@ class TransactionParser
 		$sepaDirectDebit = null;
 		$transactionCode = null;
 
-		/** @var int $transactionSequence */
+		/** @var int $statementSequence */
 		$statementSequence = 0;
 
 		/** @var int $transactionSequence */
 		$transactionSequence = 0;
+		/** @var int $transactionSequenceDetail */
+		$transactionSequenceDetail = 0;
 
 		if ($transactionPart1Line) {
 			$valutaDate = $transactionPart1Line->getValutaDate()->getValue();
@@ -49,6 +51,7 @@ class TransactionParser
 			$amount = $transactionPart1Line->getAmount()->getValue();
 			$statementSequence = $transactionPart1Line->getStatementSequenceNumber()->getValue();
 			$transactionSequence = $transactionPart1Line->getSequenceNumber()->getValue();
+			$transactionSequenceDetail = $transactionPart1Line->getSequenceNumberDetail()->getValue();
 			if ($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()) {
 				$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 			}
@@ -98,6 +101,7 @@ class TransactionParser
 			$account,
 			$statementSequence,
 			$transactionSequence,
+			$transactionSequenceDetail,
 			$transactionDate,
 			$valutaDate,
 			$amount,
@@ -106,6 +110,35 @@ class TransactionParser
 			$sepaDirectDebit,
 			$transactionCode
 		);
+	}
+
+	/**
+	 * @param LineInterface[] $lines
+	 * @return LineInterface[]
+	 */
+	public function filter(array $transactionLines)
+	{
+		$filteredTransactionLines = [];
+		$transactionPart1LineType = new LineType(LineType::TransactionPart1);
+		$informationPart1LineType = new LineType(LineType::InformationPart1);
+
+		foreach ($transactionLines as $transactionLine) {
+			/** @var TransactionPart1Line|null $transactionPart1Line */
+			$transactionPart1Line = getFirstLineOfType($transactionLine, $transactionPart1LineType);
+			/** @var InformationPart1Line|null $informationPart1Line */
+			$informationPart1Line = getFirstLineOfType($transactionLine, $informationPart1LineType);
+
+			if ($transactionPart1Line && $this->isCollectiveTransactionCode($transactionPart1Line->getTransactionCode()) && $transactionPart1Line->getSequenceNumberDetail()->getValue() < 2) {
+				continue;
+			}
+			if ($informationPart1Line && $this->isCollectiveTransactionCode($informationPart1Line->getTransactionCode()) && $informationPart1Line->getSequenceNumberDetail()->getValue() < 2) {
+				continue;
+			}
+
+			$filteredTransactionLines[] = $transactionLine;
+		}
+
+		return $filteredTransactionLines;
 	}
 
 	/**
@@ -164,5 +197,10 @@ class TransactionParser
 		}
 
 		return trim($message);
+	}
+
+	private function isCollectiveTransactionCode(\Codelicious\Coda\Values\TransactionCode $transactionCode): bool
+	{
+		return $transactionCode->getOperation()->getValue() === '07';
 	}
 }

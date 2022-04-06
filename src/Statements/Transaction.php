@@ -18,6 +18,8 @@ class Transaction
     private $statementSequence;
     /** @var int */
     private $transactionSequence;
+    /** @var int */
+    private $transactionSequenceDetail;
     /** @var DateTime */
     private $transactionDate;
     /** @var DateTime */
@@ -48,6 +50,7 @@ class Transaction
         AccountOtherParty $account,
         int $statementSequence,
         int $transactionSequence,
+        int $transactionSequenceDetail,
         DateTime $transactionDate,
         DateTime $valutaDate,
         float $amount,
@@ -60,6 +63,7 @@ class Transaction
         $this->account = $account;
         $this->statementSequence = $statementSequence;
         $this->transactionSequence = $transactionSequence;
+        $this->transactionSequenceDetail = $transactionSequenceDetail;
         $this->transactionDate = $transactionDate;
         $this->valutaDate = $valutaDate;
         $this->amount = $amount;
@@ -121,6 +125,14 @@ class Transaction
     public function getTransactionSequence(): int
     {
         return $this->transactionSequence;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTransactionSequenceDetail(): int
+    {
+        return $this->transactionSequenceDetail;
     }
 
     /**
