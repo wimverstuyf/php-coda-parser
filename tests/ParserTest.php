@@ -185,6 +185,17 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(4, $result[0]->getTransactions()[2]->getTransactionSequenceDetail());
     }
 
+    public function testOnlyGroupedTransactions()
+    {
+        $parser = new Parser();
+
+        /** @var Statement[] $result */
+        $result = $parser->parseFile($this->getSamplePath('sample8.cod'));
+
+        $this->assertCount(1, $result);
+        $this->assertCount(2, $result[0]->getTransactions());
+    }
+
     private function getSamplePath($sampleFile)
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Samples' . DIRECTORY_SEPARATOR . $sampleFile;
