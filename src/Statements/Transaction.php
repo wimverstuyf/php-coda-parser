@@ -57,7 +57,7 @@ class Transaction
         string $message,
         string $structuredMessage,
         $sepaDirectDebit,
-        TransactionCode $transactionCode
+        ?TransactionCode $transactionCode
     )
     {
         $this->account = $account;
