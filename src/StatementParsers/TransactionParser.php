@@ -99,6 +99,12 @@ class TransactionParser
 
 		$message = $this->constructMessage($lines);
 
+		$transactionPart2Line = getFirstLineOfType($lines, new LineType(LineType::TransactionPart2));
+		$clientReference = '';
+		if ($transactionPart2Line !== null && !empty($transactionPart2Line->getClientReference()->getValue())) {
+			$clientReference = $transactionPart2Line->getClientReference()->getValue();
+		}
+
 		return new Transaction(
 			$account,
 			$statementSequence,
@@ -110,7 +116,8 @@ class TransactionParser
 			$message,
 			$structuredMessage,
 			$sepaDirectDebit,
-			$transactionCode
+			$transactionCode,
+			$clientReference
 		);
 	}
 
