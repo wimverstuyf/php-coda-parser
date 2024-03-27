@@ -34,6 +34,8 @@ class Transaction
     private $sepaDirectDebit;
     /** @var TransactionCode|null */
    	private $transactionCode;
+    /** @var string */
+   	private $clientReference;
 
     /**
      * @param AccountOtherParty $account
@@ -45,6 +47,7 @@ class Transaction
      * @param string $message
      * @param string $structuredMessage
      * @param SepaDirectDebit|null $sepaDirectDebit
+     * @param string $clientReference
      */
     public function __construct(
         AccountOtherParty $account,
@@ -57,7 +60,8 @@ class Transaction
         string $message,
         string $structuredMessage,
         $sepaDirectDebit,
-        TransactionCode $transactionCode
+        TransactionCode $transactionCode,
+        $clientReference
     )
     {
         $this->account = $account;
@@ -71,6 +75,7 @@ class Transaction
         $this->structuredMessage = $structuredMessage;
         $this->sepaDirectDebit = $sepaDirectDebit;
         $this->transactionCode = $transactionCode;
+        $this->clientReference = $clientReference;
     }
 
     public function getAccount(): AccountOtherParty
@@ -141,5 +146,13 @@ class Transaction
     public function getTransactionCode(): TransactionCode
     {
         return $this->transactionCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientReference(): string
+    {
+        return $this->clientReference;
     }
 }

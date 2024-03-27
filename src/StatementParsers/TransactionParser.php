@@ -99,6 +99,12 @@ class TransactionParser
 
 		$message = $this->constructMessage($lines);
 
+        $transactionPart2Line = getFirstLineOfType($lines, new LineType(LineType::TransactionPart2));
+        $clientReference = '';
+        if ($transactionPart2Line !== null && !empty($transactionPart2Line->getClientReference()->getValue())) {
+            $clientReference = $transactionPart2Line->getClientReference()->getValue();
+        }
+
 		return new Transaction(
 			$account,
 			$statementSequence,
@@ -110,7 +116,8 @@ class TransactionParser
 			$message,
 			$structuredMessage,
 			$sepaDirectDebit,
-			$transactionCode
+			$transactionCode,
+            $clientReference
 		);
 	}
 
@@ -131,8 +138,8 @@ class TransactionParser
 				continue;
 			}
 
-			if ($transactionPart1Line && 
-				$transactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' && 
+			if ($transactionPart1Line &&
+				$transactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' &&
 				$transactionPart1Line->getGlobalizationCode()->getValue() > 0) {
 
 				$nextTransactionPart1Line = null;
@@ -143,8 +150,8 @@ class TransactionParser
 					}
 				}
 
-				if ($nextTransactionPart1Line && 
-					$nextTransactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' && 
+				if ($nextTransactionPart1Line &&
+					$nextTransactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' &&
 					$nextTransactionPart1Line->getGlobalizationCode()->getValue() < $transactionPart1Line->getGlobalizationCode()->getValue()) {
 
 					continue;
