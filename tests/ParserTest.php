@@ -196,6 +196,18 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(2, $result[0]->getTransactions());
     }
 
+    public function testClientReference()
+    {
+        $parser = new Parser();
+
+        /** @var Statement[] $result */
+        $result = $parser->parseFile($this->getSamplePath('sample9.cod'));
+
+        $this->assertCount(1, $result);
+        $this->assertCount(1, $result[0]->getTransactions());
+        $this->assertSame('243690000141', $result[0]->getTransactions()[0]->getClientReference());
+    }
+
     private function getSamplePath($sampleFile)
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Samples' . DIRECTORY_SEPARATOR . $sampleFile;
