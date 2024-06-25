@@ -208,6 +208,48 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('243690000141', $result[0]->getTransactions()[0]->getClientReference());
     }
 
+    public function testTotaledTransactionsWithDetails()
+    {
+        $parser = new Parser();
+
+        /** @var Statement[] $result */
+        $result = $parser->parseFile($this->getSamplePath('sample10.cod'));
+
+        $this->assertCount(1, $result);
+
+        $this->assertEquals(100, $result[0]->getInitialBalance());
+        $this->assertEquals(1100, $result[0]->getNewBalance());
+        $this->assertEquals(new DateTime('2024-06-06'), $result[0]->getDate());
+        $this->assertEmpty($result[0]->getInformationalMessage());
+
+        $this->assertCount(2, $result[0]->getTransactions());
+        $this->assertEquals(250, $result[0]->getTransactions()[0]->getAmount());
+        $this->assertEquals('KLANT1 MET NAAM1', $result[0]->getTransactions()[0]->getAccount()->getName());
+        $this->assertEquals('BE22313215646432', $result[0]->getTransactions()[0]->getAccount()->getNumber());
+
+        $this->assertEquals(750, $result[0]->getTransactions()[1]->getAmount());
+        $this->assertEquals('KLANT2 MET NAAM2', $result[0]->getTransactions()[1]->getAccount()->getName());
+        $this->assertEquals('BE25646548413215', $result[0]->getTransactions()[1]->getAccount()->getNumber());
+    }
+
+    public function testTotaledTransactionsNoDetails()
+    {
+        $parser = new Parser();
+
+        /** @var Statement[] $result */
+        $result = $parser->parseFile($this->getSamplePath('sample11.cod'));
+
+        $this->assertCount(1, $result);
+
+        $this->assertEquals(100, $result[0]->getInitialBalance());
+        $this->assertEquals(1100, $result[0]->getNewBalance());
+        $this->assertEquals(new DateTime('2024-06-06'), $result[0]->getDate());
+        $this->assertEmpty($result[0]->getInformationalMessage());
+
+        $this->assertCount(1, $result[0]->getTransactions());
+        $this->assertEquals(1000, $result[0]->getTransactions()[0]->getAmount());
+    }
+
     private function getSamplePath($sampleFile)
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Samples' . DIRECTORY_SEPARATOR . $sampleFile;

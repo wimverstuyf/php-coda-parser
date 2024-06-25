@@ -138,8 +138,8 @@ class TransactionParser
 				continue;
 			}
 
-			if ($transactionPart1Line && 
-				$transactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' && 
+			if ($transactionPart1Line &&
+				($transactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' || $transactionPart1Line->getTransactionCode()->getType()->getValue() === '1') &&
 				$transactionPart1Line->getGlobalizationCode()->getValue() > 0) {
 
 				$nextTransactionPart1Line = null;
@@ -150,8 +150,8 @@ class TransactionParser
 					}
 				}
 
-				if ($nextTransactionPart1Line && 
-					$nextTransactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' && 
+				if ($nextTransactionPart1Line &&
+					($nextTransactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' || $nextTransactionPart1Line->getTransactionCode()->getType()->getValue() === '5') &&
 					$nextTransactionPart1Line->getGlobalizationCode()->getValue() < $transactionPart1Line->getGlobalizationCode()->getValue()) {
 
 					continue;
