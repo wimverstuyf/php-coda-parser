@@ -185,6 +185,30 @@ class ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(4, $result[0]->getTransactions()[2]->getTransactionSequenceDetail());
     }
 
+    public function testGroupedTransactionsWithSingleTransaction()
+    {
+        $parser = new Parser();
+
+        /** @var Statement[] $result */
+        $result = $parser->parseFile($this->getSamplePath('sample12.cod'));
+
+        $this->assertCount(1, $result);
+
+        $this->assertEquals(17752.12, $result[0]->getInitialBalance());
+        $this->assertEquals(17832.12, $result[0]->getNewBalance());
+        $this->assertEquals(new DateTime("2017-10-11"), $result[0]->getDate());
+        $this->assertEmpty($result[0]->getInformationalMessage());
+
+        $this->assertCount(1, $result[0]->getTransactions());
+        $this->assertEquals("VOETGANGERSTRAAT 26                1215        ANTWERPEN", $result[0]->getTransactions()[0]->getMessage());
+        $this->assertEquals("000003515846", $result[0]->getTransactions()[0]->getStructuredMessage());
+        $this->assertEquals(-25, $result[0]->getTransactions()[0]->getAmount());
+        $this->assertEquals("KLANT2 NAAM2", $result[0]->getTransactions()[0]->getAccount()->getName());
+        $this->assertEquals("BE25646548413215", $result[0]->getTransactions()[0]->getAccount()->getNumber());
+        $this->assertEquals(1, $result[0]->getTransactions()[0]->getTransactionSequence());
+        $this->assertEquals(2, $result[0]->getTransactions()[0]->getTransactionSequenceDetail());
+    }
+
     public function testOnlyGroupedTransactions()
     {
         $parser = new Parser();
