@@ -182,7 +182,9 @@ class TransactionParser
 				/** @var Message|null $message */
 				$message = null;
 				if (method_exists($line, 'getMessageOrStructuredMessage')) {
-					$message = $line->getMessageOrStructuredMessage()->getMessage();
+                    $message = $line->getMessageOrStructuredMessage()->getStructuredMessage() !== null ?
+                        new Message($line->getMessageOrStructuredMessage()->getStructuredMessage()->getAll()) :
+                        $line->getMessageOrStructuredMessage()->getMessage();
 				} else {
 					$message = $line->getMessage();
 				}
