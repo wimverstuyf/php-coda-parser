@@ -126,7 +126,7 @@ class StatementParser
 			/** @var TransactionPart1Line|TransactionPart2Line|TransactionPart3Line|InformationPart1Line|InformationPart2Line|InformationPart3Line $transactionOrInformationLine */
 			$transactionOrInformationLine = $line;
 			$isCollectiveTransaction = method_exists($transactionOrInformationLine, 'getTransactionCode') && $transactionOrInformationLine->getTransactionCode()->getOperation()->getValue() === '07';
-			$isTotalizedDetail = $transactionOrInformationLine->getType()->getValue() === LineType::TransactionPart1 && $transactionOrInformationLine->getTransactionCode()->getType()->getValue() === '5';
+			$isTotalizedDetail = $transactionOrInformationLine->getType()->getValue() === LineType::TransactionPart1 && ($transactionOrInformationLine->getTransactionCode()->getType()->getValue() === '5' || $transactionOrInformationLine->getTransactionCode()->getType()->getValue() === '6' || $transactionOrInformationLine->getTransactionCode()->getType()->getValue() === '7');
 
 			if (
 				!$transactions

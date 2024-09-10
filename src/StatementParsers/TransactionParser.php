@@ -31,20 +31,6 @@ class TransactionParser
 		/** @var TransactionPart1Line $transactionPart1Line */
 		$transactionPart1Line = getFirstLineOfType($lines, new LineType(LineType::TransactionPart1));
 
-		$transactionDate = new DateTime("0001-01-01");
-		$valutaDate = new DateTime("0001-01-01");
-		$amount = 0.0;
-		$sepaDirectDebit = null;
-		$transactionCode = null;
-
-		/** @var int $statementSequence */
-		$statementSequence = 0;
-
-		/** @var int $transactionSequence */
-		$transactionSequence = 0;
-		/** @var int $transactionSequenceDetail */
-		$transactionSequenceDetail = 0;
-
 		if (!$transactionPart1Line) {
 			throw new \Exception('invalid transaction');
 		}
@@ -55,6 +41,8 @@ class TransactionParser
 		$statementSequence = $transactionPart1Line->getStatementSequenceNumber()->getValue();
 		$transactionSequence = $transactionPart1Line->getSequenceNumber()->getValue();
 		$transactionSequenceDetail = $transactionPart1Line->getSequenceNumberDetail()->getValue();
+
+		$sepaDirectDebit = null;
 		if ($transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()) {
 			$sepaDirectDebit = $transactionPart1Line->getMessageOrStructuredMessage()->getStructuredMessage()->getSepaDirectDebit();
 		}
@@ -139,7 +127,7 @@ class TransactionParser
 			}
 
 			if ($transactionPart1Line &&
-				($transactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' || $transactionPart1Line->getTransactionCode()->getType()->getValue() === '1') &&
+				($transactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' || $transactionPart1Line->getTransactionCode()->getType()->getValue() === '1' || $transactionPart1Line->getTransactionCode()->getType()->getValue() === '2') &&
 				$transactionPart1Line->getGlobalizationCode()->getValue() > 0) {
 
 				$nextTransactionPart1Line = null;
@@ -151,7 +139,7 @@ class TransactionParser
 				}
 
 				if ($nextTransactionPart1Line &&
-					($nextTransactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' || $nextTransactionPart1Line->getTransactionCode()->getType()->getValue() === '5') &&
+					($nextTransactionPart1Line->getTransactionCode()->getOperation()->getValue() === '07' || $nextTransactionPart1Line->getTransactionCode()->getType()->getValue() === '5' || $nextTransactionPart1Line->getTransactionCode()->getType()->getValue() === '6' || $nextTransactionPart1Line->getTransactionCode()->getType()->getValue() === '7') &&
 					$nextTransactionPart1Line->getGlobalizationCode()->getValue() < $transactionPart1Line->getGlobalizationCode()->getValue()) {
 
 					continue;
@@ -182,9 +170,7 @@ class TransactionParser
 				/** @var Message|null $message */
 				$message = null;
 				if (method_exists($line, 'getMessageOrStructuredMessage')) {
-                    $message = $line->getMessageOrStructuredMessage()->getStructuredMessage() !== null ?
-                        new Message($line->getMessageOrStructuredMessage()->getStructuredMessage()->getAll()) :
-                        $line->getMessageOrStructuredMessage()->getMessage();
+					$message = $line->getMessageOrStructuredMessage()->getMessage();
 				} else {
 					$message = $line->getMessage();
 				}
