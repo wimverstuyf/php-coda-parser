@@ -52,4 +52,6 @@ foreach ($statements as $statement) {
 
 ## Ports
 
-You can find a port of the library to C# at [https://github.com/supervos/coda-parser](https://github.com/supervos/coda-parser)
+Ports of the library to other languages:
+- C#: [https://github.com/supervos/coda-parser](https://github.com/supervos/coda-parser)
+- Java: [https://github.com/JeffreyDevloo/coda-parser](https://github.com/JeffreyDevloo/coda-parser)
